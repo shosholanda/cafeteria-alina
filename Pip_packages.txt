@@ -1,0 +1,30 @@
+sudo apt install python3-venv
+sudo apt install python3-pip
+
+
+pip install Flask
+pip install Flask-SQLAlchemy
+pip install pymysql
+
+pip list
+
+#Exported variables  are not persistent
+#You gotta do it every time you turn up the computer
+#Run proyect
+export FLASK_APP=main
+export FLASK_ENV=production
+flask run
+
+#Debug mode
+export FLASK_ENV=development
+flask run 
+
+
+#For SQL
+#Its important the following information in order to connect to the specified database:
+# 1. PORT: 3306 (usually)
+# 2. USERNAME: root (usually)
+# 3. PASSWORD: 1234 (usually, or whatever the password is)
+# Also the database has to be created before:
+CREATE DATABASE <database_name> 
+
