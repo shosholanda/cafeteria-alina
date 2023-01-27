@@ -1,11 +1,11 @@
-from flask import Flask
+from cafeteria_alina import app
 
 #El servidor se inicia desde aquí
-app = Flask(__name__)
 
-@app.route('/')
+@app.route('/credits')
 def hola():
-    return "Mi primer proyecto de software en la vida real!"
+    return "<h1>Davidshiro Pichu</h1>\nMi primer proyecto de software en la vida real!"
 
 
-
+if __name__ == '__main__':
+    app.run()
