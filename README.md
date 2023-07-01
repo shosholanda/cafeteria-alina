@@ -15,10 +15,10 @@ Punto de venta para la cafetería ALINA
 - pip install pymysql
 
 *Importante* Primero hay que crear el ambiente virtual con:
-1. virtualenv [env_name]
+- virtualenv env_name
 
 **activar**
-1. source env_name/bin/activate
+- source env_name/bin/activate
 
 **desactivar**
 - deactivate
@@ -30,7 +30,7 @@ Los paquetes se pueden instalar automáticamente desde la lista de paquetes de `
 
 - (foo)$ pip install -r requirements.txt
 
-O si hay alguna modificación de paquete, guarar con:
+O si hay alguna modificación de paquete, guardar con:
 
 - (foo)$ pip freeze > requirements.txt
 
@@ -46,6 +46,7 @@ You gotta do it every time you turn up the computer
 - flask run
 
 ## Debug mode
+- export FLASK_APP=main
 - export FLASK_ENV=development
 - flask run 
 
