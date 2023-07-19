@@ -7,7 +7,7 @@ class Config:
 
     #Database configuration
     DATABASE_USER = "root"
-    DATABASE_PASSWORD = "1234"
+    DATABASE_PASSWORD = "password"
     IP_ADDRESS = "127.0.0.1"
     PORT = 3306
     SQLALCHEMY_DATABASE_URI = f"mysql+pymysql://{DATABASE_USER}:{DATABASE_PASSWORD}@{IP_ADDRESS}:{PORT}"

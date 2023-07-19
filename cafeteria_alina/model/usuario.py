@@ -1,4 +1,4 @@
-from entity.__init__ import db
+from model.__init__ import db
 
 
 class Usuario(db.Model):
@@ -22,7 +22,7 @@ class Usuario(db.Model):
                  apellido,
                  fecha_nacimiento,
                  tipo_usuario,
-                 salario)
+                 salario):
         self.email = email
         self.passwd = password
         self.nombre = nombre
@@ -33,5 +33,5 @@ class Usuario(db.Model):
 
     # String representation
     def __repr__(self) -> str:
-        return f'id: {email}'
+        return f'id: {self.email}'
 

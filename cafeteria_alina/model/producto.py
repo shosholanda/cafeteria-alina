@@ -1,4 +1,4 @@
-from entity.__init__ import db
+from model.__init__ import db
 
 class Producto(db.Model):
 
@@ -15,7 +15,8 @@ class Producto(db.Model):
     # inversion
     # ganancia
 
-    def __init__(self,
+    def __init__(self):
+        pass
 
 
     def __repr__(self):
