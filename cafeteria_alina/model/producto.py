@@ -1,4 +1,4 @@
-from model.__init__ import db
+from model import db
 
 class Producto(db.Model):
 

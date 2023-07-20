@@ -1,5 +1,5 @@
 import datetime
-from model.__init__ import db
+from model import db
 
 
 class Insumo(db.Model):
