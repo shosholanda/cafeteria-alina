@@ -1,8 +1,8 @@
 #Import el usuario con sus atributos como objetox
-from model.usuario import Usuario
+from cafeteria_alina.model.usuario import Usuario
 
 #Importar la base de datos.
-from model import db
+from cafeteria_alina import db
 
 def get_usuario(correo):
     '''Obtiene un usuario dado su correo.'''

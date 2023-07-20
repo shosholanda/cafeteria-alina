@@ -6,7 +6,7 @@ class Usuario(db.Model):
     __tablename__ = 'usuario'
     correo = db.Column('correo', db.String(100), primary_key = True)
     #Se guarda como hash
-    contraseña = db.Column('contraseña', db.String(40), nullable = False)
+    contraseña = db.Column('contraseña', db.String(102), nullable = False)
     nombre = db.Column('nombre', db.String(100), nullable = False)
     apellido_paterno = db.Column('apellido_paterno', db.String(100), nullable = False)
     apellido_materno = db.Column('apellido_materno', db.String(100), nullable = False)
@@ -21,11 +21,13 @@ class Usuario(db.Model):
                  contraseña,
                  nombre,
                  apellido_paterno,
+                 apellido_materno,
                  fecha_nacimiento):
         self.correo = correo
         self.contraseña = contraseña
         self.nombre = nombre
         self.apellido_paterno = apellido_paterno
+        self.apellido_materno = apellido_materno
         self.fecha_nacimiento = fecha_nacimiento
 
     # String representation
