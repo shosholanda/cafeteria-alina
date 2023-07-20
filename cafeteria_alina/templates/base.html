@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Cafetería ALINA - 
+        {% block title %}
+        {% endblock %}
+    </title>
+</head>
+<body>
+    <header>
+        <div>
+            <h1>Cafetería Alina</h1>
+        </div>
+
+        <nav>
+            <a href="">Registrar usuario</a>
+            <a href="">Iniciar sesion</a>
+        </nav>
+    </header>
+    <section>
+        <header>
+            {% block header %}
+            {% endblock %}
+        </header>
+        {% for message in get_flashed_messages() %}
+            <div>
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% block content %}
+
+        {% endblock %}
+    </section>
+</body>
+</html>

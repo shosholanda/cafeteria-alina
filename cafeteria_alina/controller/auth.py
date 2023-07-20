@@ -2,11 +2,60 @@ import functools
 
 from os import error
 
-from flask import (render_template, Blueprint, flash, g, redirect, request, session, url_for)
+from flask import (
+    render_template, # renderiza el html
+    Blueprint, # Registrar la visita a la página 
+    flash, # agrega mensajes extra (error principalmente) al html
+    g,  # captura si se ha iniciado sesion o no
+    redirect, # redireccionar a una ruta
+    request,  # para metodos post
+    session, # guarda datos de la sesion
+    url_for   # endpoints
+)
 
-from werkzeug.security import check_password_hash, generate_password_hash
+# Bibliotecas de seguridad
+from werkzeug.security import generate_password_hash, check_password_hash
 
-from model import db
+#Crear automáticamente las tablas en mysql
+from cafeteria_alina.model.usuario import Usuario
+
+# Importar las querys requeridas
+from cafeteria_alina.model.repository.repo_usuario import *
+
+''' Controlador para la función de autenticación y registro de usuarios'''
+
+auth = Blueprint('auth', __name__, url_prefix='/auth') # Crear la sesion
+
+# Registrar un usuario
+@auth.route('/registrar', methods=['GET', 'POST'])
+def registrar_usuario():
+    if request.method == 'POST':
+        usuario = request.form.get('usuario')
+        contraseña = request.form.get('contraseña')
+
+        usuario = Usuario(usuario, generate_password_hash(contraseña))
+
+        error = None
+
+        if not usuario:
+            error = 'Se requiere nombre de usuario'
+        elif not contraseña:
+            error = 'Se requere una contraseña'
+
+
+        if not get_usuario(usuario):
+            crear_usuario(usuario)
+
+        else: 
+            error = 'Usuario ya existe'
+
+        
+        
+        
+        flash(error)
+    return render_template('auth/register.html')
+
+
 
 
 

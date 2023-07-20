@@ -1,4 +1,4 @@
-from model import db
+from cafeteria_alina import db
 
 
 class Usuario(db.Model):
@@ -6,7 +6,7 @@ class Usuario(db.Model):
     __tablename__ = 'usuario'
     correo = db.Column('correo', db.String(100), primary_key = True)
     #Se guarda como hash
-    contraseña = db.Colum('contraseña', db.String(40), nullable = False)
+    contraseña = db.Column('contraseña', db.String(40), nullable = False)
     nombre = db.Column('nombre', db.String(100), nullable = False)
     apellido_paterno = db.Column('apellido_paterno', db.String(100), nullable = False)
     apellido_materno = db.Column('apellido_materno', db.String(100), nullable = False)

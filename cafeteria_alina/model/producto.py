@@ -1,4 +1,4 @@
-from model import db
+from cafeteria_alina import db
 
 class Producto(db.Model):
 

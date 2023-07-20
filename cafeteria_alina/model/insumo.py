@@ -1,5 +1,5 @@
 import datetime
-from model import db
+from cafeteria_alina import db
 
 
 class Insumo(db.Model):

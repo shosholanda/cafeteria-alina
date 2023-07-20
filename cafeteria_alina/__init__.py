@@ -15,6 +15,10 @@ app.config.from_object("config.DeveloperConfig")
 # load database conections
 db = SQLAlchemy(app)
 
+# Importar vistas a la aplicación
+from cafeteria_alina.controller.auth import auth
+app.register_blueprint(auth)
+
 # With caution, create the database that has the same config in config.py file
 with app.app_context():
     db.create_all()
