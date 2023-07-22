@@ -4,8 +4,6 @@ from flask import (
 
 from werkzeug.exceptions import abort
 
-from cafeteria_alina.model.usuario import Usuario
-from cafeteria_alina.model.producto import Producto
 
 from cafeteria_alina.model.repository.repo_usuario import *
 
@@ -16,11 +14,11 @@ from cafeteria_alina import db
 
 ''' Controlador para las operaciones de producto '''
 
-inicio = Blueprint('inicio', __name__, url_prefix='/inicio') # Crear la sesion
+inventario = Blueprint('inventario', __name__, url_prefix='/inventario') # Crear la sesion
 
 
-# Página de inicio de sesion, dentro de la sesion
-@inicio.route('/')
+# Ventana inventario
+@inventario.route('/')
 @requiere_inicio_sesion
 def main():
-    return render_template('cafeteria/inicio.html')
+    return "Inventario"

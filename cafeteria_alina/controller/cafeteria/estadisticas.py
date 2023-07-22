@@ -16,11 +16,11 @@ from cafeteria_alina import db
 
 ''' Controlador para las operaciones de producto '''
 
-cafe = Blueprint('cafe', __name__) # Crear la sesion
+estadisticas = Blueprint('estadisticas', __name__, url_prefix='/estadisticas') # Crear la sesion
 
 
 # Ventana de estadísticas
-@cafe.route('/estadisticas')
+@estadisticas.route('/')
 @requiere_inicio_sesion
-def estadisticas():
+def main():
     return "estadisticas"

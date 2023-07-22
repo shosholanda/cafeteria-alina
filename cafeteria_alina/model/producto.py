@@ -8,7 +8,7 @@ class Producto(db.Model):
     descripcion  = db.Column('descripcion', db.Text)
     tamaño = db.Column('tamaño', db.String(10))
     precio = db.Column('precio', db.Float, nullable = False)
-    status = db.Column('status', db.Boolean, default = True)
+    status = db.Column('status', db.Boolean, nullable = False, default=True)
 
     # inversion
     # ganancia

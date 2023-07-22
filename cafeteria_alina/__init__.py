@@ -18,11 +18,21 @@ db = SQLAlchemy(app)
 # Importar vistas a la aplicación
 from cafeteria_alina.controller.auth import auth
 from cafeteria_alina.controller.cafeteria.inicio import inicio
+from cafeteria_alina.controller.cafeteria.estadisticas import estadisticas
+from cafeteria_alina.controller.cafeteria.inventario import inventario
+from cafeteria_alina.controller.cafeteria.productos import productos
+from cafeteria_alina.controller.cafeteria.ventas import ventas
 from cafeteria_alina.controller.cafeteria.perfil import perfil
+from cafeteria_alina.controller.cafeteria.ayuda import ayuda
 
 app.register_blueprint(auth)
 app.register_blueprint(inicio)
 app.register_blueprint(perfil)
+app.register_blueprint(estadisticas)
+app.register_blueprint(inventario)
+app.register_blueprint(productos)
+app.register_blueprint(ventas)
+app.register_blueprint(ayuda)
 
 
 # With caution, create the database that has the same config in config.py file

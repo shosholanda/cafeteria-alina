@@ -12,11 +12,11 @@ from cafeteria_alina import db
 
 ''' Controlador para las operaciones de producto '''
 
-cafe = Blueprint('cafe', __name__) # Crear la sesion
+ventas = Blueprint('ventas', __name__,url_prefix='/ventas') # Crear la sesion
 
 
 # Ventana de ventas
-@cafe.route('/ventas')
+@ventas.route('/')
 @requiere_inicio_sesion
-def ventas():
+def main():
     return "Ventas"

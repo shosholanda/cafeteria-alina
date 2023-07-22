@@ -12,7 +12,7 @@ class Usuario(db.Model):
     apellido_materno = db.Column('apellido_materno', db.String(100), nullable = False)
 
     fecha_nacimiento = db.Column('fecha_nacimiento', db.Date, nullable = False)
-    status = db.Column('status', db.Boolean, default=True)
+    status = db.Column('status', db.Boolean, nullable = False, default=True)
 
 
     #Usuario completo

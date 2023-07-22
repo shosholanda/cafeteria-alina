@@ -38,8 +38,6 @@ def registrar_usuario():
         apellido_materno = request.form.get('apellido_materno')
         fecha_nacimiento = request.form.get('fecha_nacimiento')
 
-
-
         error = None
 
         if not usuario:
@@ -56,7 +54,7 @@ def registrar_usuario():
             error = 'Usuario ya existe'
         
         if error != None:
-            flash(error)
+            flash(error, 'error')
         else:
             return "Usuario registrado correctamente" #redirect(url_for('inicio.main'))
     return render_template('auth/register.html')
@@ -70,11 +68,6 @@ def iniciar_sesion():
         usuario = request.form.get('correo')
         contraseña = request.form.get('contraseña')
         error = None
-
-        if not usuario:
-            error = 'Se requiere nombre de usuario'
-        if not contraseña:
-            error = 'Se requere una contraseña'
         
         user = get_usuario(usuario)
 
