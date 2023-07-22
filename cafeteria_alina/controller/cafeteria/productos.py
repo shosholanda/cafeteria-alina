@@ -20,5 +20,5 @@ productos = Blueprint('productos', __name__, url_prefix='/productos') # Crear la
 
 # Página de productos de página. EStá afuera de la sesion
 @productos.route('/')
-def home():
-    return render_template('home.html')
+def main():
+    return render_template('cafeteria/productos.html')

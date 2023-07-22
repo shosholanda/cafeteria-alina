@@ -106,13 +106,13 @@ def cargar_usuarios_logeados():
 @auth.route('/cerrar-sesion')
 def cerrar_sesion():
     session.clear()
-    return redirect(url_for('home.main'))
+    return redirect(url_for('home'))
 
 # REquerir inicio de sesion
 def requiere_inicio_sesion(vista):
     @functools.wraps(vista)
     def vista_wraped(**kwargs):
         if g.user is None:
-            return redirect(url_for('home.main'))
+            return redirect(url_for('home'))
         return vista(**kwargs)
     return vista_wraped

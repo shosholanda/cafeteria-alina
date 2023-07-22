@@ -17,11 +17,9 @@ db = SQLAlchemy(app)
 
 # Importar vistas a la aplicación
 from cafeteria_alina.controller.auth import auth
-from cafeteria_alina.controller.home import home
 from cafeteria_alina.controller.cafeteria.inicio import inicio
 from cafeteria_alina.controller.cafeteria.perfil import perfil
 
-app.register_blueprint(home)
 app.register_blueprint(auth)
 app.register_blueprint(inicio)
 app.register_blueprint(perfil)

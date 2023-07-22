@@ -6,4 +6,11 @@
 
 {% block content %}
     <h2>Bienvenido</h2>
+    <nav>
+        {% if g.user %}
+        <p>Hola!</p>
+        {% else %}
+        <a href="{{ url_for('auth.iniciar_sesion') }}">Iniciar sesion</a>
+        {% endif %}
+    </nav>
 {% endblock %}

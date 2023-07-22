@@ -8,7 +8,7 @@
     <div>
         Acciones:
     </div>
-    <a href="perfil.html">Perfil</a>
-    <a href="productos.html">productos</a>
+    <a href="{{ url_for('perfil.main' ) }}">Perfil</a>
+    <a href="{{ url_for('auth.cerrar_sesion') }}">Cerrar sesion</a>
     
 {% endblock %}

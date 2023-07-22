@@ -1,5 +1,9 @@
 from cafeteria_alina import app
 
+from flask import (
+    render_template, g, redirect, request, session, url_for
+)
+
 #El servidor se inicia desde aquí
 
 @app.route('/credits')
@@ -8,7 +12,9 @@ def creditos():
 
 @app.route('/')
 def home():
-    return "<h1>Inicio página</h1>"
+    if g.user:
+        return redirect(url_for('inicio.main'))
+    return render_template('home.html')
 
 if __name__ == '__main__':
     app.run()
