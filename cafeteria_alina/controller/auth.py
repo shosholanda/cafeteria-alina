@@ -1,7 +1,5 @@
 import functools
 
-from os import error
-
 from flask import (
     render_template, # renderiza el html
     Blueprint, # Registrar la visita a la página 

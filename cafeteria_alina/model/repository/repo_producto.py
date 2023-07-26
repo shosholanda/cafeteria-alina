@@ -1,8 +1,8 @@
 # Import the entity to read as Entity object
-from model.producto import Producto
+from cafeteria_alina.model.producto import Producto
 
 # Import the database
-from model import db
+from cafeteria_alina import db
 
 
 def get_producto(nombre):
