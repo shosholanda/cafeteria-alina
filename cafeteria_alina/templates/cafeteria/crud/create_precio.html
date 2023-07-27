@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h2>{% block title%}Agregar un nuevo precio para {{producto.nombre}} {% endblock %}</h2>
+{% endblock %}
+
+{% block content %}
+    <form method="POST">
+        <select name="tamaño" id="tamaño">
+            <option value="sin-tamaño">Sin tamaño</option>
+            <option value="chico">Chico</option>
+            <option value="mediano">Mediano</option>
+            <option value="grande">Grande</option>
+        </select>
+        <br>
+        <label for="precio">precio</label>
+        <input type="text" name="precio" id="precio" required>
+            
+        <br>
+    
+        <input type="submit" value="Agregar">
+
+    </form>
+{% endblock %}

@@ -24,6 +24,7 @@ from cafeteria_alina.controller.cafeteria.productos import productos
 from cafeteria_alina.controller.cafeteria.ventas import ventas
 from cafeteria_alina.controller.cafeteria.perfil import perfil
 from cafeteria_alina.controller.cafeteria.ayuda import ayuda
+from cafeteria_alina.controller.cafeteria.precios import precio
 
 app.register_blueprint(auth)
 app.register_blueprint(inicio)
@@ -33,6 +34,7 @@ app.register_blueprint(inventario)
 app.register_blueprint(productos)
 app.register_blueprint(ventas)
 app.register_blueprint(ayuda)
+app.register_blueprint(precio)
 
 
 # With caution, create the database that has the same config in config.py file

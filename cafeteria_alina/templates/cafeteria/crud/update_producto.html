@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block header %}
-    <h2>{% block title%}Agregar producto{% endblock %}</h2>
+    <h2>{% block title%}Editar producto {{producto.nombre}} {% endblock %}</h2>
 {% endblock %}
 
 {% block content %}
@@ -11,9 +11,11 @@
         <br>
         <label for="descripcion">descripcion</label>
         <textarea type="text" name="descripcion" id="descripcion" >
-        
+            
         </textarea>
         <br>
-        <input type="submit" value="Agregar">
+    
+        <input type="submit" value="Actualizar">
+
     </form>
 {% endblock %}

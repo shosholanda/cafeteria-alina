@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h2>{% block title%}Editar el precio de {{ precio.id_producto }} - {{ precio.tamaño}} {% endblock %}</h2>
+{% endblock %}
+
+{% block content %}
+    <form method="POST">
+        Nuevo Tamaño
+        <select name="tamaño" id="tamaño">
+            <option value="">Sin tamaño</option>
+            <option value="chico">Chico</option>
+            <option value="mediano">Mediano</option>
+            <option value="grande">Grande</option>
+        </select>
+        <br>
+        <label for="precio">Nuevo precio</label>
+        <input type="text" name="precio" id="precio" required>
+            
+        <br>
+    
+        <input type="submit" value="Actualizar">
+
+    </form>
+{% endblock %}

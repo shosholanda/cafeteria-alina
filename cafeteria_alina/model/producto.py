@@ -3,13 +3,11 @@ from cafeteria_alina import db
 class Producto(db.Model):
 
     __tablename__ = 'producto'
-    id_producto = db.Column('id_producto', db.Integer, primary_key = True )
+    id_producto = db.Column('id_producto', db.String(100), primary_key = True )
     nombre = db.Column('nombre', db.String(100), nullable = False)
-    descripcion  = db.Column('descripcion', db.Text)
+    descripcion  = db.Column('descripcion', db.Text, default = 'Sin descripcion')
     status = db.Column('status', db.Boolean, nullable = False, default=True)
 
-    # inversion
-    # ganancia
 
     def __init__(self,
                  id_producto,

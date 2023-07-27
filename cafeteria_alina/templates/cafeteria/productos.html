@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h2>{% block title%}Lista de productos{% endblock %}</h2>
+{% endblock %}
+
+{% block content %}
+    <h1>Lista</h1>
+    <div>
+        <a href={{ url_for('productos.create_producto') }}>Agregar un nuevo producto</a>
+    </div>
+
+    <h3>Productos disponibles:</h3>
+    {% for producto in productos %}
+        <div>
+            {{ producto.nombre }}: {{ producto.descripcion }}
+            
+            <a href="{{ url_for('productos.update_producto', id_prod = producto.id_producto) }}">Modificar producto</a>
+            <a href="{{ url_for('productos.delete_producto', id_prod = producto.id_producto) }}">Eliminar producto</a>
+            <a href="{{ url_for('precio.precios_por_producto', id_prod = producto.id_producto) }}">Ver precios</a>
+        </div>
+
+    {% endfor %}
+{% endblock %}
+
