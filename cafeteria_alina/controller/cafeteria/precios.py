@@ -42,8 +42,9 @@ def create_precio(id_prod):
         if error:
             flash(error)
         else:
-            agregar_precio(Precio(id_prod, tam, precio))
-            return "Precio agregado correctamente a " + producto.nombre
+            precio = Precio(id_prod, tam, precio)
+            agregar_precio(precio)
+            return render_template('cafeteria/success.html', tipo = 'Precio', crud = 'agregado', obj = precio)
         
     return render_template('cafeteria/crud/create_precio.html', producto = producto, precios = precios)
 

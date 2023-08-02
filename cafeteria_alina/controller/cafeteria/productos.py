@@ -35,20 +35,25 @@ def create_producto():
         if descripcion:
             descripcion = descripcion.strip().replace('\n', ' ')
 
-        id_producto = nombre.strip().lower().replace(' ', '_') 
+        id_producto = nombre.strip().lower().replace(' ', '_')
 
         producto = get_producto_id(id_producto)
         error = None
 
-        if producto:
+        if producto and producto.status == 1:
             error = f'El producto {id_producto} ya existe. Indique otro producto'
+        elif producto and producto.status == 0:
+            producto.status = 1
+            producto.nombre = nombre
+            producto.descripcion = descripcion
+            agregar_producto(producto)
         else:
             producto = Producto(id_producto, nombre, descripcion)
             agregar_producto(producto)
             
 
         if not error:
-            return "Producto registrado exitosamente!"
+            return render_template('cafeteria/success.html', tipo = 'Producto', crud = 'agregado')
         else:
             flash(error)
     return render_template('cafeteria/crud/create_producto.html')
@@ -70,7 +75,7 @@ def update_producto(id_prod):
             if not producto.descripcion or producto.descripcion.strip() == '':
                 producto.descripcion = "Sin descripcion"
             agregar_producto(producto)
-            return "Producto modificado con éxito!"
+            return render_template('cafeteria/success.html', tipo = 'Producto', crud = 'modificado')
 
     return render_template('cafeteria/crud/update_producto.html', producto = producto)
 

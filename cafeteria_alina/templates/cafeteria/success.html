@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    {% if tipo == "Producto" %}
+    <div>
+        <h4>{% block title %} {{ tipo }} {{ crud }} con éxito! {% endblock %} </h4>
+    </div>
+    {% else %}
+    <div>
+        <h4>{% block title %} {{ tipo }} del {{ obj.id_producto }} {{ crud }} con éxito! {% endblock %} </h4>
+    </div>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+
+    {% if tipo == "Producto" %}
+    <div>
+        <a href="{{ url_for('productos.main' ) }}">Regresar</a>
+    </div>
+    {% endif %}
+
+    {% if tipo == "Precio" %}
+    <div>
+        <a href="{{ url_for('precio.main' ) }}">Regresar</a>
+    </div>
+    {% endif %}
+    
+{% endblock %}
