@@ -57,6 +57,16 @@ Its important the following information in order to connect to the specified dat
 - USERNAME: root (usually)
 - PASSWORD: 1234 (usually, or whatever the password is)
 
+You can acces from terminal as
+> mysql -u <user> -p 
+> 1234
+
 Also the database has to be created before:
 - CREATE DATABASE <database_name> 
 
+
+TEMPLATES = Frontend
+
+MODELS = backend
+
+CONTROLLER = validation

@@ -1,18 +1,26 @@
-import datetime
 from cafeteria_alina import db
 
-
 class Insumo(db.Model):
-    
+    '''
+    Clase que modela una entidad con sus respectivos atributos.
+
+    Entidad: Insumo
+    Nos da los productos que se inverten para generar otros productos.
+    '''
+
+    # Nombre de la tabla
     __tablename__ = 'insumo'
-    gtin = db.Column('gtin', db.String(20), primary_key = True)
-    correo = db.Column('correo', db.ForeginKey('usuario.correo'), nullable = False)
+    # PK
+    gtin = db.Column('gtin', db.Integer, primary_key = True)
+    # Nombre del insumo puesto por el usuario
     nombre = db.Column('nombre', db.String(50), nullable = False)
-    descripcion = db.Column('descripcion', db.String(128))
+    # Precio del insumo.
     precio = db.Column('precio', db.Float, nullable = False)
-    fecha = db.Column('fecha', db.DateTime, default = datetime.datetime.now())
+    # Descripción del insumo (opcional)
+    descripcion = db.Column('descripcion', db.String(128))
 
 
+    # Constructor
     def __init__(self,
                  gtin,
                  correo,
@@ -25,5 +33,6 @@ class Insumo(db.Model):
         self.descripcion = descripcion
         self.precio = precio
 
+    # Representación en cadena
     def __repr__(self) -> str:
-        return f'gtin: {self.gtin}'
+        return f'{self.nombre} - ${self.precio}'
