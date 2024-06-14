@@ -1,4 +1,5 @@
 from cafeteria_alina import db
+from cafeteria_alina.model.tipo_usuario import *
 
 class Usuario(db.Model):
     '''
@@ -25,6 +26,9 @@ class Usuario(db.Model):
     # Nos dice si sigue estando activo o no el trabajador. Por omisión está activo
     status = db.Column('status', db.Boolean, nullable = False, default=True)
 
+    ## Registrar
+    sucursal = db.relationship('Sucursal', back_populates = 'usuarios')
+
     # Constructor
     def __init__(self,
                  correo,
@@ -32,11 +36,13 @@ class Usuario(db.Model):
                  nombre,
                  apellido_paterno,
                  apellido_materno,
+                 tipo,
                  fecha_nacimiento):
         self.correo = correo
         self.nombre = nombre
         self.apellido_paterno = apellido_paterno
         self.apellido_materno = apellido_materno
+        self.tipo = tipo
         self.contraseña = contraseña
         self.fecha_nacimiento = fecha_nacimiento
 

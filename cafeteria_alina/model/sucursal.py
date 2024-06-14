@@ -26,6 +26,11 @@ class Sucursal(db.Model):
     # Nos dice si sigue estando activo o no el producto. Por omisión está activo
     status = db.Column('status', db.Boolean, nullable = False, default=True)
 
+    ## Registrar
+    usuarios = db.relationship('Usuario', back_populates = 'sucursal')
+    
+
+
     # Constructor
     def __init__(self,
                  nombre,

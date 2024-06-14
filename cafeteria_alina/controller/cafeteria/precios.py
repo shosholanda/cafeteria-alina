@@ -4,9 +4,6 @@ from flask import (
 
 from werkzeug.exceptions import abort
 
-# Create the following databases
-from cafeteria_alina.model.precio import Precio
-
 from cafeteria_alina.model.repository.repo_producto import *
 
 from cafeteria_alina.controller.auth import requiere_inicio_sesion
@@ -20,33 +17,35 @@ precio = Blueprint('precio', __name__, url_prefix='/precio') # Crear la sesion
 @precio.route('/')
 @requiere_inicio_sesion
 def main():
-    precios =read_precios()
-    return render_template('cafeteria/precio.html', precios = precios)
+    # precios =read_precios()
+    # return render_template('cafeteria/precio.html', precios = precios)
+    return "Aquí mostramos la lista de productos"
 
 
 # CREATE PRECIO
 @precio.route('/agregar-precio/<id_prod>', methods=('GET', 'POST'))
 @requiere_inicio_sesion
 def create_precio(id_prod):
-    producto = get_producto_id(id_prod)
-    precios = read_precios(id_prod)
-    if request.method == 'POST':
-        tam = request.form.get('tamaño')
+    # producto = get_producto_id(id_prod)
+    # precios = read_precios(id_prod)
+    # if request.method == 'POST':
+    #     tam = request.form.get('tamaño')
         
-        error = None
-        try:
-            precio = float(request.form.get('precio'))
-        except ValueError:
-            error = 'No se ha ingresado un precio válido. Ej. 14.22'
+    #     error = None
+    #     try:
+    #         precio = float(request.form.get('precio'))
+    #     except ValueError:
+    #         error = 'No se ha ingresado un precio válido. Ej. 14.22'
 
-        if error:
-            flash(error)
-        else:
-            precio = Precio(id_prod, tam, precio)
-            agregar_precio(precio)
-            return render_template('cafeteria/success.html', tipo = 'Precio', crud = 'agregado', obj = precio)
+    #     if error:
+    #         flash(error)
+    #     else:
+    #         precio = Precio(id_prod, tam, precio)
+    #         agregar_precio(precio)
+    #         return render_template('cafeteria/success.html', tipo = 'Precio', crud = 'agregado', obj = precio)
         
-    return render_template('cafeteria/crud/create_precio.html', producto = producto, precios = precios)
+    # return render_template('cafeteria/crud/create_precio.html', producto = producto, precios = precios)
+    return "Aquí agregamos "
 
 #UPDATE PRECIO
 @precio.route('/editar-precio/<id_prod>_<tam>', methods=('GET', 'POST'))

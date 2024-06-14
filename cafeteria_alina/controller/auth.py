@@ -45,7 +45,7 @@ def registrar_usuario():
 
 
         if not get_usuario(usuario):
-            user = Usuario(usuario, generate_password_hash(contraseña), nombre, apellido_paterno, apellido_materno, fecha_nacimiento)
+            user = Usuario(usuario, generate_password_hash(contraseña), nombre, apellido_paterno, apellido_materno, 0,fecha_nacimiento)
             crear_usuario(user)
 
         else: 

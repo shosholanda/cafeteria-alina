@@ -17,6 +17,8 @@ class Categoria(db.Model):
     # Descripción del producto (opcional)
     descripcion = db.Column('descripcion', db.Text)
 
+    ## Pertenecer
+    productos = db.relationship('Producto', back_populates = 'categoria')
 
     # Constructor
     def __init__(self, 

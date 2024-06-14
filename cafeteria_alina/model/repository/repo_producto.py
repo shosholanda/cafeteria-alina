@@ -1,6 +1,5 @@
 # Import the entity to read as Entity object
 from cafeteria_alina.model.producto import Producto
-from cafeteria_alina.model.precio import Precio
 
 # Import the database
 from cafeteria_alina import db

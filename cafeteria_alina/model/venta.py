@@ -25,14 +25,10 @@ class Venta(db.Model):
 
     # Constructor
     def __init__(self,
-                 id_venta,
-                 nombre,
-                 precio,
-                 descripcion):
-        self.id_venta = id_venta
-        self.nombre = nombre
-        self.precio = precio
-        self.descripcion = descripcion
+                 total,
+                 usuario):
+        self.total = total
+        self.usuario = usuario
 
     # Representación en cadena
     def __repr__(self) -> str:

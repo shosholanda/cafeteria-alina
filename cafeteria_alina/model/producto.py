@@ -1,4 +1,5 @@
 from cafeteria_alina import db
+from cafeteria_alina.model.tipo_producto import *
 
 class Producto(db.Model):
     '''
@@ -15,25 +16,29 @@ class Producto(db.Model):
     id_producto = db.Column('id_producto', db.Integer, primary_key = True )
     # Nombre del producto puesto por el usuario
     nombre = db.Column('nombre', db.String(100), nullable = False)
-    # Precio del producto. Debe ser consistente con el tamaño
-    precio = db.Column('precio', db.Integer(3), nullable = False)
-    # Tamaño del producto. No hay producto sin tamaño
-    tamaño = db.Column(db.Integer, db.ForeignKey('tamaño.id_tamaño'))
+    # Precio del producto. Debe ser consistente con el tipo
+    precio = db.Column('precio', db.Integer, nullable = False)
+    # tipo del producto. No hay producto sin tipo
+    tipo = db.Column(db.Integer, db.ForeignKey('tipo_producto.id'))
     # Descripción del producto (opcional)
     descripcion  = db.Column('descripcion', db.String(140), default = 'Sin descripción')
     # Nos dice si sigue estando activo o no el producto. Por omisión está activo
     status = db.Column('status', db.Boolean, nullable = False, default=True)
 
+    ## Pertenecer
+    categoria = db.relationship('Categoria', back_populates = 'productos')
+
     # Constructor
     def __init__(self,
-                 id_producto,
                  nombre,
+                 tamaño,
                  precio,
+                 tipo,
                  descripcion):
-        
-        self.id_producto = id_producto
         self.nombre = nombre
+        self.tamaño = tamaño
         self.precio = precio
+        self.tipo = tipo
         self.descripcion = descripcion
 
     # Representación en cadena

@@ -19,4 +19,4 @@ ayuda = Blueprint('ayuda', __name__,url_prefix='/ayuda') # Crear la sesion
 @ayuda.route('/')
 @requiere_inicio_sesion
 def main():
-    return "ayuda"
+    return "AIUDAA"
