@@ -11,7 +11,7 @@ class Categoria(db.Model):
     # Nombre de la tabla
     __tablename__ = 'categoria'
     # PK
-    id_categoria = db.Column('id_categoria', db.Integer, primary_key = True)
+    id = db.Column('id', db.Integer, primary_key = True)
     # Nombre de la categoría puesto por el usuario
     nombre = db.Column('nombre', db.String(100), nullable = False)
     # Descripción del producto (opcional)

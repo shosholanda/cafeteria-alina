@@ -28,34 +28,48 @@ auth = Blueprint('auth', __name__, url_prefix='/auth') # Crear la sesion
 @auth.route('/registrar-usuario', methods=['GET', 'POST'])
 def registrar_usuario():
     if request.method == 'POST':
-
-        usuario = request.form.get('correo')
+        correo = request.form.get('correo')
         contraseña = request.form.get('contraseña')
         nombre = request.form.get('nombre')
         apellido_paterno = request.form.get('apellido_paterno')
         apellido_materno = request.form.get('apellido_materno')
         fecha_nacimiento = request.form.get('fecha_nacimiento')
-
+        
         error = None
 
-        if not usuario:
+        if not correo:
             error = 'Se requiere nombre de usuario'
         if not contraseña:
             error = 'Se requere una contraseña'
 
-
-        if not get_usuario(usuario):
-            user = Usuario(usuario, generate_password_hash(contraseña), nombre, apellido_paterno, apellido_materno, 0,fecha_nacimiento)
+        if not get_usuario(correo):
+            print(generate_password_hash(contraseña))
+            print("ADSFASD")
+            user = Usuario(correo,
+                           generate_password_hash(contraseña),
+                           nombre,
+                           apellido_paterno,
+                           apellido_materno,
+                           1,
+                           fecha_nacimiento)
+            # user = Usuario(correo, generate_password_hash(contraseña), nombre, apellido_paterno, apellido_materno, 0,fecha_nacimiento)
             crear_usuario(user)
+            return "Registro exitoso"
 
-        else: 
-            error = 'Usuario ya existe'
-        
-        if error != None:
-            flash(error, 'error')
-        else:
-            return "Usuario registrado correctamente" #redirect(url_for('inicio.main'))
     return render_template('auth/register.html')
+
+
+
+
+
+    #     else: 
+    #         error = 'Usuario ya existe'
+        
+    #     if error != None:
+    #         flash(error, 'error')
+    #     else:
+    #         return "Usuario registrado correctamente" #redirect(url_for('inicio.main'))
+    # return render_template('auth/register.html')
 
 
 # Iniciar sesion

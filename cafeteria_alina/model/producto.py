@@ -1,5 +1,7 @@
 from cafeteria_alina import db
-from cafeteria_alina.model.tipo_producto import *
+#WTF tengo q importar esta madres
+from cafeteria_alina.model.tipo_producto import TipoProducto
+from cafeteria_alina.model.categoria import Categoria
 
 class Producto(db.Model):
     '''
@@ -25,6 +27,8 @@ class Producto(db.Model):
     # Nos dice si sigue estando activo o no el producto. Por omisión está activo
     status = db.Column('status', db.Boolean, nullable = False, default=True)
 
+    # Necesario para la relacion
+    categoria_id = db.Column(db.Integer, db.ForeignKey('categoria.id'))
     ## Pertenecer
     categoria = db.relationship('Categoria', back_populates = 'productos')
 
