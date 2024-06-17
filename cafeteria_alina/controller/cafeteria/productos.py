@@ -8,6 +8,7 @@ from werkzeug.exceptions import abort
 from cafeteria_alina.model.producto import Producto
 
 from cafeteria_alina.model.repository.repo_producto import *
+from cafeteria_alina.model.repository.repo_tipo_producto import *
 
 from cafeteria_alina.controller.auth import requiere_inicio_sesion
 
@@ -28,36 +29,34 @@ def main():
 @productos.route('/agregar-producto', methods=('GET', 'POST'))
 @requiere_inicio_sesion
 def create_producto():
-    # if request.method == 'POST':
+    if request.method == 'POST':
+        nombre = request.form.get('nombre')
+        descripcion = request.form.get('descripcion')
+        #categoria = request.form.get('categoria') maybe in another table
 
-    #     nombre = request.form.get('nombre')
-    #     descripcion = request.form.get('descripcion')
-    #     if descripcion:
-    #         descripcion = descripcion.strip().replace('\n', ' ')
+        error = None
 
-    #     id_producto = nombre.strip().lower().replace(' ', '_')
+        if nombre:
+            nombre = nombre.strip().title()
+        if descripcion:
+            descripcion = descripcion.strip().replace('\n', ' ')
 
-    #     producto = get_producto_id(id_producto)
-    #     error = None
+        producto = get_producto(nombre)
 
-    #     if producto and producto.status == 1:
-    #         error = f'El producto {id_producto} ya existe. Indique otro producto'
-    #     elif producto and producto.status == 0:
-    #         producto.status = 1
-    #         producto.nombre = nombre
-    #         producto.descripcion = descripcion
-    #         agregar_producto(producto)
-    #     else:
-    #         producto = Producto(id_producto, nombre, precio, tamaño, descripcion)
-    #         agregar_producto(producto)
-            
+        if producto and producto.status == 1:
+            error = f'El producto {nombre} ya existe. Indique otro producto'
+        elif producto and producto.status == 0:
+            producto.status = 1
+            producto.descripcion = descripcion
+            agregar_producto(producto)
+        else:
+            producto = Producto(nombre,descripcion)
+            agregar_producto(producto)
 
-    #     if not error:
-    #         return render_template('cafeteria/success.html', tipo = 'Producto', crud = 'agregado')
-    #     else:
-    #         flash(error)
-    # return render_template('cafeteria/crud/create_producto.html')
-    return "Aquí creamos un producto"
+        if not error:
+            return render_template('cafeteria/success.html', tipo = 'Producto', crud = 'agregado')
+        flash(error)
+    return render_template('cafeteria/crud/create_producto.html', tipo_productos = get_all_available_tipo_producto())
 
 #UPDATE PRODUCTO
 @productos.route('/editar-producto/<id_prod>', methods=('GET', 'POST'))
@@ -82,14 +81,12 @@ def update_producto(id_prod):
     return "Aquí editamos la info del producto " + id_prod
 
 #DELETE PRODUCTO
-@productos.route('/eliminar-producto/<id_prod>')
+@productos.route('/eliminar-producto/<id>')
 @requiere_inicio_sesion
-def delete_producto(id_prod):
-    # producto = get_producto_id(id_prod)
+def delete_producto(id):
+    # producto = get_producto_id(id)
     # eliminar_producto(producto)
     # return redirect(url_for('productos.main'))
-    return "Aquí eliminamos el producto " +id_prod
+    return "Aquí eliminamos el producto " + id
 
 
-
-    

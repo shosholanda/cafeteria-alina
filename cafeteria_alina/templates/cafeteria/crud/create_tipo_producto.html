@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h2>{% block title%}Agregar tipos de producto{% endblock %}</h2>
+{% endblock %}
+
+{% block content %}
+    <form method="POST">
+        <label for="nombre">Tipo del producto </label>
+        <input type="text" name="tipo" id="tipo" required> 
+        <br>
+        <input type="submit" value="Agregar">
+
+    </form>
+{% endblock %}

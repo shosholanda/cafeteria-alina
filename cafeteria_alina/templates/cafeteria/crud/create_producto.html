@@ -6,12 +6,13 @@
 
 {% block content %}
     <form method="POST">
-        <label for="nombre">nombre</label>
+        <label for="nombre">Nombre producto: </label>
         <input type="text" name="nombre" id="nombre" required>
         <br>
-        <label for="descripcion">descripcion</label>
+        <label for="descripcion">Descripción: </label>
         <textarea type="text" name="descripcion" id="descripcion" ></textarea>
         <br>
+
         <input type="submit" value="Agregar">
     </form>
 {% endblock %}
