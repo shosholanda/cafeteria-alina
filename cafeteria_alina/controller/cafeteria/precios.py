@@ -29,59 +29,72 @@ def create_precio(id):
     producto = get_producto_id(id)
     precios = get_all_available_tipo_producto()
     if request.method == 'POST':
-        tam = request.form.get('tipo')
+        tipo = request.form.get('tipo')
         
         error = None
         try:
             precio = float(request.form.get('precio'))
-            nuevo_precio = get_precio_unico(id, tam)
-            if nuevo_precio:
+            nuevo_precio = get_precio_unico(id, tipo)
+            if nuevo_precio and nuevo_precio.status == 1:
                 error = 'Ya existe esta asignación'
         except ValueError:
             error = 'No se ha ingresado un precio válido. Ej. 14.22'
-        
 
         if error:
             flash(error)
         else:
-            precio = Precio(id, tam, precio)
-            agregar_precio(precio)
+            if nuevo_precio and nuevo_precio.status == 0:
+                nuevo_precio.status = 1
+                precio = nuevo_precio
+            else:
+                precio = Precio(id, tipo, precio)
+            add_precio(precio)
             return render_template('cafeteria/success.html', tipo = 'Producto', crud = 'agregado', obj = precio)
         
     return render_template('cafeteria/crud/create_precio.html', producto = producto, precios = precios)
 
 #UPDATE PRECIO
-@precios.route('/editar-precio/<id>_<tipo>', methods=('GET', 'POST'))
+@precios.route('/editar-precio/<id>%<tipo>', methods=('GET', 'POST'))
 @requiere_inicio_sesion
 def update_precio(id, tipo):
+    # Siempre va a existir porque no saldría el endpoint
     precio_existente = get_precio_unico(id, tipo)
+    tipos = get_all_available_tipo_producto()
     if request.method == 'POST':
-        tipo = request.form.get('tamaño')
+        tipo = request.form.get('tipo')
+        precio = request.form.get('precio')
         
         error = None
         try:
-            precio = float(request.form.get('precio'))
+            precio = float(precio)
+            tipo = int(tipo)
         except ValueError:
             error = 'No se ha ingresado un precio válido. Ej. 14.22'
-        if precio_existente:
-            precio_existente.precio = precio
-            agregar_precio(precio_existente)
-        else:
-            agregar_precio(Precio(id, tipo, precio))
         
-        if error:
-            flash(error)
+        if not error:
+
+            copy = get_precio_unico(id, tipo)
+            # Si ya existe el producto al q vamos a modificar
+            # y esta oculto (o no), lo desbloqueamos y actualizamos
+            # El último registro es eliminado
+            if copy :
+                remove_precio(copy)
+            precio_existente.id_tipo = tipo
+            precio_existente.precio = precio
+            add_precio(precio_existente)
+            return render_template('cafeteria/success.html', tipo = 'Producto', crud = 'actualizado', obj = precio)
         else:
-            return "Precio actualizado correctamente a " + id
+            flash(error)
 
 
-    return render_template('cafeteria/crud/update_precio.html', precio = precio_existente)
+    return render_template('cafeteria/crud/update_precio.html', precio = precio_existente, tipos = tipos)
 
 #DELETE PRECIO
-@precios.route('/eliminar-precio/<id>_<tipo>')
+@precios.route('/eliminar-precio/<id>%<tipo>')
 @requiere_inicio_sesion
 def delete_precio(id, tipo):
+    '''Soft delete precio'''
     precio = get_precio_unico(id, tipo)
-    eliminar_precio(precio)
-    return redirect(url_for('precio.precios_por_producto', id = id))
+    hide_precio(precio)
+    return redirect(url_for('productos.main'))
     

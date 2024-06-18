@@ -1,17 +1,19 @@
 {% extends 'base.html' %}
 
 {% block header %}
-    <h2>{% block title%}Editar el precio de {{ precio.id_producto }} - {{ precio.tamaño}} {% endblock %}</h2>
+    {% block title%}
+        <h2>Editar producto </h2> 
+        <p>{{ precio }}</p>
+    {% endblock %}
 {% endblock %}
 
 {% block content %}
     <form method="POST">
         Nuevo Tamaño
-        <select name="tamaño" id="tamaño">
-            <option value="">Sin tamaño</option>
-            <option value="chico">Chico</option>
-            <option value="mediano">Mediano</option>
-            <option value="grande">Grande</option>
+        <select name="tipo" id="tipo">
+            {% for tipo in tipos %}
+            <option value="{{ tipo.id }}">{{ tipo.tipo }}</option>
+            {% endfor %}
         </select>
         <br>
         <label for="precio">Nuevo precio</label>

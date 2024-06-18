@@ -78,7 +78,7 @@ def update_tipo(id):
 @requiere_inicio_sesion
 def delete_tipo(id):
     # producto = get_producto_id(id)
-    # eliminar_producto(producto)
+    # remove_producto(producto)
     # return redirect(url_for('tipo_productos.main'))
     return "Aquí eliminamos el producto " +id
 

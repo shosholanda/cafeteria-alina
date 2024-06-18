@@ -20,17 +20,23 @@ def agregar_producto(producto):
     db.session.add(producto)
     db.session.commit()
 
-def read_productos():
+def get_all_available_productos():
     '''Regresa todos los productos disponibles'''
     productos = Producto.query.filter(Producto.status == 1)
     return productos
 
-def eliminar_producto(producto):
-    '''"Elimina" El producto de la lista de productos. En realidad, solamente se apaga el status,
-    siempre se conserva en la bdd'''
-    producto.status = 0
-    agregar_producto(producto)
+def hide_producto(precio):
+    '''soft delete'''
+    if precio:
+        precio.status = 0
+        add_precio(precio)
+    else:
+        return "hubo un error"
 
+def remove_producto(producto):
+    '''No hay vuelta atrás'''
+    db.session.delete(producto)
+    db.session.commit()
 
 ### Precios
 def get_all_avaliable_precios():
@@ -38,7 +44,7 @@ def get_all_avaliable_precios():
     return Precio.query.filter(Precio.status == 1 and Precio.nombre != None)
 
 
-def agregar_precio(precio):
+def add_precio(precio):
     db.session.add(precio)
     db.session.commit()
 
@@ -50,7 +56,16 @@ def get_precio_unico(id_producto, id_tipo):
     '''Nos da el precio por el id_producto y id_tipo único'''
     return Precio.query.filter(Precio.id_producto == id_producto, Precio.id_tipo == id_tipo).first()
 
-def eliminar_precio(precio):
+def hide_precio(precio):
+    '''soft delete'''
+    if precio:
+        precio.status = 0
+        add_precio(precio)
+    else:
+        return "hubo un error"
+
+def remove_precio(precio):
+    '''No hay vuelta atrás'''
     db.session.delete(precio)
     db.session.commit()
     

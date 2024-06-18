@@ -41,4 +41,4 @@ class Precio(db.Model):
 
     # Representación en cadena
     def __repr__(self) -> str:
-        return f'{self.nombre} - {self.tamaño} : ${self.precio}'
+        return f'{self.producto.nombre} - {self.tipo.tipo} : ${self.precio}'
