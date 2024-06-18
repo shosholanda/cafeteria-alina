@@ -19,15 +19,20 @@ precios = Blueprint('precios', __name__, url_prefix='/precios') # Crear la sesio
 @requiere_inicio_sesion
 def main():
     precios = get_all_avaliable_precios()
-    return render_template('cafeteria/precios.html', precios = precios)
+    productos = get_all_available_productos()
+    return render_template('cafeteria/precios.html', precios = precios, productos = productos)
 
 
 # CREATE PRECIO
 @precios.route('/agregar-precio/<id>', methods=('GET', 'POST'))
 @requiere_inicio_sesion
 def create_precio(id):
+    '''Crea un nuevo precio para el producto <id>'''
     producto = get_producto_id(id)
-    precios = get_all_available_tipo_producto()
+    if not producto:
+        return "No se ha podido cargar el producto " + id
+    
+    precios = get_all_avaliable_precios()
     if request.method == 'POST':
         tipo = request.form.get('tipo')
         
@@ -59,6 +64,9 @@ def create_precio(id):
 def update_precio(id, tipo):
     # Siempre va a existir porque no saldría el endpoint
     precio_existente = get_precio_unico(id, tipo)
+    if precio_existente and precio_existente.status == 0:
+        return "El precio actual no está disponible"
+    
     tipos = get_all_available_tipo_producto()
     if request.method == 'POST':
         tipo = request.form.get('tipo')
@@ -75,8 +83,8 @@ def update_precio(id, tipo):
 
             copy = get_precio_unico(id, tipo)
             # Si ya existe el producto al q vamos a modificar
-            # y esta oculto (o no), lo desbloqueamos y actualizamos
-            # El último registro es eliminado
+            # y esta oculto (o no), lo eliminamos y el nuevo
+            # tomará su lugar
             if copy :
                 remove_precio(copy)
             precio_existente.id_tipo = tipo

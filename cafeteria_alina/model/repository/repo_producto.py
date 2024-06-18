@@ -43,6 +43,10 @@ def get_all_avaliable_precios():
     '''Leer todos los precios que no hayan sido eliminados'''
     return Precio.query.filter(Precio.status == 1 and Precio.nombre != None)
 
+def get_all_precios():
+    '''Leer todos los precios que no hayan sido eliminados'''
+    return Precio.query.all()
+
 
 def add_precio(precio):
     db.session.add(precio)

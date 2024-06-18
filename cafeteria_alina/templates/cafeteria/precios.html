@@ -1,35 +1,40 @@
 {% extends 'base.html' %}
 
 {% block header %}
-    <h2>{% block title%}Lista de Precios del {{ producto.nombre }} {% endblock %}</h2>
+
+    <script>
+        function changeID() {
+            var producto = document.getElementById('producto') 
+            var url = document.getElementById('url')
+
+            // Cómo demonios iba a saber q '' es un placeholder y el arg es ${}
+            let a = `{{ url_for('precios.create_precio', id = '') }}${producto.value}`
+            url.setAttribute("href", a)
+            console.log(":=")
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Puros trucos
+            changeID();
+        });
+    </script>
+    <h2>{% block title%}Lista de Todos los precios {% endblock %}</h2>
 {% endblock %}
 
 {% block content %}
-    <h1>Lista</h1>
-    <div>
-        <a href={{ url_for('precio.create_precio', id_prod = producto.id_producto) }}>Agregar un nuevo precio</a>
-    </div>
 
-    {% if precios == [] %}
-        <div>
-            Aún no se han agregado precios a este producto. Click en agregar nuevo precio.
-        </div>
-    {% else %}
-        <h3>Productos disponibles:</h3>
-        {% for precio in precios %}
-            <div>
-                {{ precio.id_producto }} 
-                {% if precio.tamaño == 'sin-tamaño' %}
-
-                {% else %}
-                    {{ precio.tamaño }}
-                {% endif %}
-                ${{ precio.precio }}
-                <a href="{{ url_for('precio.update_precio', id_prod = precio.id_producto, tam = precio.tamaño) }}">Modificar precio</a>
-                <a href="{{ url_for('precio.delete_precio', id_prod = precio.id_producto, tam = precio.tamaño) }}">Eliminar precio</a>
-            </div>
-
+    <a id ="url" href="{{ url_for('productos.main') }}" onload="changeID();">Agregar un nuevo precio para</a>
+    <select name="producto" id="producto" onchange="changeID()">
+        {% for producto in productos %}
+        <option value="{{ producto.id }}">{{ producto.nombre }}</option>
         {% endfor %}
-    {% endif %}
+    </select>
+    {% for precio in precios %}
+    <div>
+        {{ precio }} 
+        <a href="{{ url_for('precios.update_precio', id = precio.id_producto, tipo = precio.tipo.id) }}">Modificar precio</a>
+        <a href="{{ url_for('precios.delete_precio', id = precio.id_producto, tipo = precio.tipo.id) }}">Eliminar precio</a>
+    </div>
+    {% endfor %}
 {% endblock %}
 

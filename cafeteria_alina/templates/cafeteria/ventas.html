@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h2>{% block title%}Ventas{% endblock %}</h2>
+{% endblock %}
+
+{% block content %}
+    <form method="POST">
+        <label for="nombre">Nombre producto: </label>
+        <input type="text" name="nombre" id="nombre" required>
+        <br>
+        <label for="descripcion">Descripción: </label>
+        <textarea type="text" name="descripcion" id="descripcion" ></textarea>
+        <br>
+        <!-- Añadir categoria -->
+
+        <input type="submit" value="Agregar">
+    </form>
+{% endblock %}

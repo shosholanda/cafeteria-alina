@@ -47,7 +47,7 @@ You gotta do it every time you turn up the computer
 
 ## Debug mode
 - export FLASK_APP=main
-- export FLASK_ENV=development
+- export FLASK_DEBUG=1
 - flask run 
 
 

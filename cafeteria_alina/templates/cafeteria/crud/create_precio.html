@@ -11,7 +11,7 @@
         <label for="tipo">Tipo de producto</label>
         <select name="tipo" id="tipo">
             {% for precio in precios %}
-            <option value="{{ precio.id }}">{{ precio.tipo }}</option>
+            <option value="{{ precio.id }}">{{ precio.tipo.tipo }}</option>
             {% endfor %}
         </select>
         <a href="{{ url_for('tipo-productos.create_tipo') }}">Agregar tipo de producto</a>

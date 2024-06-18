@@ -12,7 +12,7 @@
     <h3>Productos disponibles:</h3>
     {% for producto in productos %}
         <div class="producto" >
-            <b>{{ producto.nombre }}: {{ producto.descripcion }}</b>
+            <b>{{ producto }}</b>
             <a href="{{ url_for('productos.update_producto', id = producto.id) }}">Modificar producto</a>
             <a href="{{ url_for('productos.delete_producto', id = producto.id) }}">Eliminar producto</a>
             <div class="precio">
