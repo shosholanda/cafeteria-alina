@@ -32,7 +32,7 @@ def create_precio(id):
     if not producto:
         return "No se ha podido cargar el producto " + id
     
-    precios = get_all_avaliable_precios()
+    tipos = get_all_tipo_producto()
     if request.method == 'POST':
         tipo = request.form.get('tipo')
         
@@ -56,7 +56,7 @@ def create_precio(id):
             add_precio(precio)
             return render_template('cafeteria/success.html', tipo = 'Producto', crud = 'agregado', obj = precio)
         
-    return render_template('cafeteria/crud/create_precio.html', producto = producto, precios = precios)
+    return render_template('cafeteria/crud/create_precio.html', producto = producto, tipos = tipos)
 
 #UPDATE PRECIO
 @precios.route('/editar-precio/<id>%<tipo>', methods=('GET', 'POST'))
@@ -98,7 +98,7 @@ def update_precio(id, tipo):
     return render_template('cafeteria/crud/update_precio.html', precio = precio_existente, tipos = tipos)
 
 #DELETE PRECIO
-@precios.route('/eliminar-precio/<id>%<tipo>')
+@precios.route('/eliminar-precio/<int:id>%<int:tipo>')
 @requiere_inicio_sesion
 def delete_precio(id, tipo):
     '''Soft delete precio'''

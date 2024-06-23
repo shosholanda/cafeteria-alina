@@ -19,7 +19,7 @@ class Venta(db.Model):
     # Fecha y hora de la transacción
     fecha  = db.Column('fecha', db.DateTime, default = datetime.datetime.now())
     # Usuario operador
-    usuario = db.Column(db.String, db.ForeignKey('usuario.correo'))
+    usuario = db.Column(db.String(100), db.ForeignKey('usuario.correo'))
     # Sucursal
     #sucursal = db.Column(db.Integer, db.ForeignKey('sucursal.id_sucursal'))
 

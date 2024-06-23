@@ -11,10 +11,14 @@ class Transaccion(db.Model):
 
     # Nombre de la tabla
     __tablename__ = 'transaccion'
+    #PK
+    id = db.Column('id', db.Integer, primary_key = True)
     # Numero de referencia
     referencia = db.Column(db.Integer, db.ForeignKey('venta.referencia'))
     # Producto en cuestión
-    id_producto = db.Column(db.Integer, db.ForeignKey('producto.id_producto'))
+    id_producto = db.Column(db.Integer, db.ForeignKey('producto.id'))
+    # tipo del producto
+    tipo = db.Column(db.Integer, db.ForeignKey('tipo_producto.id'))
     # Precio producto
     precio = db.Column('precio', db.Integer, nullable = False)
     # Cantidad de productos
@@ -22,15 +26,23 @@ class Transaccion(db.Model):
     # Subtotal
     subtotal = db.Column('subtotal', db.Integer, nullable = False)
 
+    # Backref
+
 
     # Constructor
     def __init__(self,
-                 id_producto,
                  referencia,
-                 cantidad):
-        self.id_producto = id_producto
+                 id_producto,
+                 tipo,
+                 precio,
+                 cantidad,
+                 subtotal):
         self.referencia = referencia
+        self.id_producto = id_producto
+        self.tipo = tipo
+        self.precio = precio
         self.cantidad = cantidad
+        self.subtotal = subtotal
 
     # Representación en cadena
     def __repr__(self) -> str:

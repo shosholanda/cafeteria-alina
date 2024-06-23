@@ -1,5 +1,6 @@
 # Import the entity to read as Entity object
 from cafeteria_alina.model.producto import Producto
+from cafeteria_alina.model.tipo_producto import TipoProducto
 from cafeteria_alina.model.precio import Precio
 
 # Import the database
@@ -41,7 +42,7 @@ def remove_producto(producto):
 ### Precios
 def get_all_avaliable_precios():
     '''Leer todos los precios que no hayan sido eliminados'''
-    return Precio.query.filter(Precio.status == 1 and Precio.nombre != None)
+    return Precio.query.filter(Precio.status == 1)
 
 def get_all_precios():
     '''Leer todos los precios que no hayan sido eliminados'''
@@ -52,9 +53,9 @@ def add_precio(precio):
     db.session.add(precio)
     db.session.commit()
 
-def read_precios(id_precio):
+def get_all_tipos(id_producto):
     '''Lee todos los precios de cierto producto'''
-    return Precio.query.filter(Precio.id_precio == id_precio)
+    return Precio.query.filter(Precio.id == id_producto)
     
 def get_precio_unico(id_producto, id_tipo):
     '''Nos da el precio por el id_producto y id_tipo único'''
