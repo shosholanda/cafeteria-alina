@@ -16,12 +16,25 @@
         <option value="{{ producto.id }}">{{ producto.nombre }}</option>
         {% endfor %}
     </select>
-    {% for precio in precios %}
-    <div>
-        {{ precio }} 
-        <a href="{{ url_for('precios.update_precio', id = precio.id_producto, tipo = precio.tipo.id) }}">Modificar precio</a>
-        <a href="{{ url_for('precios.delete_precio', id = precio.id_producto, tipo = precio.tipo.id) }}">Eliminar precio</a>
-    </div>
-    {% endfor %}
+
+    <table>
+        <tr>
+            <th>Producto</th>
+            <th>Tipo</th>
+            <th>Precio</th>
+            <th>Opciones</th>
+        </tr>
+        {% for precio in precios %}
+        <tr>
+            <td>{{ precio.producto.nombre }}</td>
+            <td>{{ precio.tipo.tipo }}</td>
+            <td>${{ precio.precio }}</td>
+            <td>
+                <a href="{{ url_for('precios.update_precio', id = precio.id_producto, tipo = precio.tipo.id) }}">Modificar</a>
+                <a href="{{ url_for('precios.delete_precio', id = precio.id_producto, tipo = precio.tipo.id) }}">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
 {% endblock %}
 

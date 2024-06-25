@@ -21,12 +21,11 @@ class Producto(db.Model):
     nombre = db.Column('nombre', db.String(100), nullable = False)
     # Descripción del producto (opcional)
     descripcion  = db.Column('descripcion', db.String(140), default = 'Sin descripción')
+    # Categoria a la que pertenece ## PTM se rompio id_categoria
+    categoria_id = db.Column(db.Integer, db.ForeignKey('categoria.id'))
     # Nos dice si sigue estando activo o no el producto. Por omisión está activo
     status = db.Column('status', db.Boolean, nullable = False, default=True)
-
-
-    # Necesario para la relacion
-    categoria_id = db.Column(db.Integer, db.ForeignKey('categoria.id'))
+ 
     ## Pertenecer
     categoria = db.relationship('Categoria', back_populates = 'productos')
     precios = db.relationship('Precio', back_populates = 'producto')
@@ -34,9 +33,11 @@ class Producto(db.Model):
     # Constructor
     def __init__(self,
                  nombre,
-                 descripcion):
+                 descripcion,
+                 id_categoria):
         self.nombre = nombre
         self.descripcion = descripcion
+        self.categoria_id = id_categoria
 
     # Representación en cadena
     def __repr__(self) -> str:

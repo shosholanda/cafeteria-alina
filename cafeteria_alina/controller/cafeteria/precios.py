@@ -7,7 +7,7 @@ from werkzeug.exceptions import abort
 from cafeteria_alina.model.repository.repo_producto import *
 from cafeteria_alina.model.repository.repo_tipo_producto import *
 
-from cafeteria_alina.controller.auth import requiere_inicio_sesion
+from cafeteria_alina.controller.auth import requiere_inicio_sesion, admin
 
 
 ''' Controlador para las operaciones de precio '''
@@ -17,8 +17,9 @@ precios = Blueprint('precios', __name__, url_prefix='/precios') # Crear la sesio
 # Página de precio de página. EStá afuera de la sesion
 @precios.route('/')
 @requiere_inicio_sesion
+@admin
 def main():
-    precios = get_all_avaliable_precios()
+    precios = get_all_avaliable_precios_by('NOMBRE')
     productos = get_all_available_productos()
     return render_template('cafeteria/precios.html', precios = precios, productos = productos)
 
@@ -26,6 +27,7 @@ def main():
 # CREATE PRECIO
 @precios.route('/agregar-precio/<id>', methods=('GET', 'POST'))
 @requiere_inicio_sesion
+@admin
 def create_precio(id):
     '''Crea un nuevo precio para el producto <id>'''
     producto = get_producto_id(id)
@@ -61,6 +63,7 @@ def create_precio(id):
 #UPDATE PRECIO
 @precios.route('/editar-precio/<id>%<tipo>', methods=('GET', 'POST'))
 @requiere_inicio_sesion
+@admin
 def update_precio(id, tipo):
     # Siempre va a existir porque no saldría el endpoint
     precio_existente = get_precio_unico(id, tipo)
@@ -100,6 +103,7 @@ def update_precio(id, tipo):
 #DELETE PRECIO
 @precios.route('/eliminar-precio/<int:id>%<int:tipo>')
 @requiere_inicio_sesion
+@admin
 def delete_precio(id, tipo):
     '''Soft delete precio'''
     precio = get_precio_unico(id, tipo)

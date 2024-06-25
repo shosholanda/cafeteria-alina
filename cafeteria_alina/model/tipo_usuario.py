@@ -17,6 +17,9 @@ class TipoUsuario(db.Model):
     # Nos dice si sigue estando activo o no el trabajador. Por omisión está activo
     status = db.Column('status', db.Boolean, nullable = False, default=True)
 
+    ## acceder a esta tabla desde precio
+    usuario = db.relationship('Usuario', back_populates = 'tipo', uselist=False)
+
     # Constructor
     def __init__(self,
                  tipo):

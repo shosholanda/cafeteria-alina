@@ -7,7 +7,7 @@ from werkzeug.exceptions import abort
 
 from cafeteria_alina.model.repository.repo_usuario import *
 
-from cafeteria_alina.controller.auth import requiere_inicio_sesion
+from cafeteria_alina.controller.auth import requiere_inicio_sesion, admin
 
 from cafeteria_alina import db
 
@@ -20,5 +20,6 @@ inventario = Blueprint('inventario', __name__, url_prefix='/inventario') # Crear
 # Ventana inventario
 @inventario.route('/')
 @requiere_inicio_sesion
+@admin
 def main():
     return "Inventario"

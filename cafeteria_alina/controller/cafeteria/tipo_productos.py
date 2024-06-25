@@ -6,7 +6,7 @@ from werkzeug.exceptions import abort
 
 from cafeteria_alina.model.repository.repo_tipo_producto import *
 
-from cafeteria_alina.controller.auth import requiere_inicio_sesion
+from cafeteria_alina.controller.auth import requiere_inicio_sesion, admin
 
 
 ''' Controlador para las operaciones de producto '''
@@ -16,6 +16,7 @@ tipo_productos = Blueprint('tipo-productos', __name__, url_prefix='/tipo-product
 # Página de tipo_productos de página. EStá afuera de la sesion
 @tipo_productos.route('/')
 @requiere_inicio_sesion
+@admin
 def main():
     tipo_productos = get_all_available_tipo_producto()
     return render_template('cafeteria/tipo_productos.html', tipo_productos = tipo_productos)
@@ -24,6 +25,7 @@ def main():
 # CREATE PRODUCTO
 @tipo_productos.route('/agregar-tipo', methods=('GET', 'POST'))
 @requiere_inicio_sesion
+@admin
 def create_tipo():
     tipo_productos = get_all_available_tipo_producto()
     if request.method == 'POST':
@@ -54,6 +56,7 @@ def create_tipo():
 #UPDATE PRODUCTO
 @tipo_productos.route('/editar-producto/<id>', methods=('GET', 'POST'))
 @requiere_inicio_sesion
+@admin
 def update_tipo(id):
     # producto = get_producto_id(id)
     # if request.method == 'POST':
@@ -76,6 +79,7 @@ def update_tipo(id):
 #DELETE PRODUCTO
 @tipo_productos.route('/eliminar-producto/<id>')
 @requiere_inicio_sesion
+@admin
 def delete_tipo(id):
     # producto = get_producto_id(id)
     # remove_producto(producto)

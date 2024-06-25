@@ -32,4 +32,4 @@ class Venta(db.Model):
 
     # Representación en cadena
     def __repr__(self) -> str:
-        return f'{self.referencia} : {self.total} - {self.fecha}'
+        return f'{self.referencia} : ${self.total} - {self.fecha}'

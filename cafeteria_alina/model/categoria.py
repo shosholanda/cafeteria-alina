@@ -29,4 +29,4 @@ class Categoria(db.Model):
 
     # Representación en cadena
     def __repr__(self) -> str:
-        return f'Category: {self.nombre}'
+        return f'{self.id}: {self.nombre}'

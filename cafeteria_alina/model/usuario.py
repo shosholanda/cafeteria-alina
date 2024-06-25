@@ -25,11 +25,13 @@ class Usuario(db.Model):
     fecha_nacimiento = db.Column('fecha_nacimiento', db.Date, nullable = False)
     # Privilegios del trabajador    
     tipo_usuario = db.Column(db.Integer, db.ForeignKey('tipo_usuario.id'))
-
     # Sucursal a la que pertenece
     id_sucursal = db.Column(db.Integer, db.ForeignKey('sucursal.id_sucursal'))
+
     ## Registrar
     sucursal = db.relationship('Sucursal', back_populates = 'usuarios')
+    ## Regresa el objeto relacionado a este tipo
+    tipo = db.relationship('TipoUsuario', back_populates = 'usuario', uselist=False)
     
     # Nos dice si sigue estando activo o no el trabajador. Por omisión está activo
     status = db.Column('status', db.Boolean, nullable = False, default=True)

@@ -1,22 +1,26 @@
 {% extends 'base.html' %}
 
 {% block header %}
-    {% if tipo == "Producto" %}
+    {% if tipo %}
     <div>
         <h4>{% block title %} {{ tipo }} {{ crud }} con éxito! {% endblock %} </h4>
     </div>
     {% else %}
     <div>
-        <h4>Se ha modificado el producto con éxito!</h4>
+        <h4>No se ha especificado el tipo</h4>
     </div>
     {% endif %}
 {% endblock %}
 
 {% block content %}
 
-    {% if tipo == "Producto" %}
+    {% if tipo %}
     <div>
         <a href="{{ url_for('productos.main' ) }}">Regresar</a>
+    </div>
+    {% else %}
+    <div>
+        <h4>Perdonanos la vida :(</h4>
     </div>
     {% endif %}
     

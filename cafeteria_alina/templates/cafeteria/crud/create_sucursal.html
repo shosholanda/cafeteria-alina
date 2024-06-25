@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h2>{% block title%}Agregar sucursal{% endblock %}</h2>
+{% endblock %}
+
+
+{% block content %}
+    <b>Nueva sucursal</b>
+    <form method="POST">
+        <label for="nombre">Nombre</label>
+        <input type="text" name="nombre" id="tipo" required> 
+        <br>
+
+        <label for="calle">Calle</label>
+        <input type="text" name="calle" id="tipo" required> 
+    
+        <label for="número">Número exterior</label>
+        <input type="text" name="número" id="tipo" required> 
+        <br>
+
+        <label for="colonia">Colonia</label>
+        <input type="text" name="colonia" id="tipo" required> 
+        <br>
+
+        <label for="municipio">Municipio</label>
+        <input type="text" name="municipio" id="tipo" required> 
+        <br>
+
+        <label for="ciudad">Ciudad</label>
+        <input type="text" name="ciudad" id="tipo" required> 
+        <br>
+
+        <label for="pais">País</label>
+        <input type="text" name="pais" id="tipo" required> 
+        <br>
+
+        <label for="fecha">Fecha de inaguración</label>
+        <input type="date" name="fecha" id="tipo" required> 
+        <br>
+
+        <input type="submit" value="Agregar">
+
+    </form>
+{% endblock %}

@@ -12,8 +12,15 @@
         <label for="descripcion">Descripción: </label>
         <textarea type="text" name="descripcion" id="descripcion" ></textarea>
         <br>
-        <!-- Añadir categoria -->
+        <label for="categoria">Categoria</label>
+        <select name="categoria" id="categoria">
+            {% for categoria in categorias %}
+            <option value="{{ categoria.id }}">{{ categoria.nombre }}</option>
+            {% endfor %}
+        </select>
+        <a href="{{ url_for('categorias.create_categoria')}}">Crear una nueva categoria</a>
 
+        <br>
         <input type="submit" value="Agregar">
     </form>
 {% endblock %}

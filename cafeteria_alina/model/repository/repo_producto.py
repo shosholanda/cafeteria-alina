@@ -24,7 +24,7 @@ def agregar_producto(producto):
 def get_all_available_productos():
     '''Regresa todos los productos disponibles'''
     productos = Producto.query.filter(Producto.status == 1)
-    return productos
+    return productos.order_by(Producto.id)
 
 def hide_producto(precio):
     '''soft delete'''
@@ -43,6 +43,21 @@ def remove_producto(producto):
 def get_all_avaliable_precios():
     '''Leer todos los precios que no hayan sido eliminados'''
     return Precio.query.filter(Precio.status == 1)
+
+def get_all_avaliable_precios_by(columna):
+    '''Lo mismo pero ordenados'''
+    results = get_all_avaliable_precios()\
+        .join(Producto, Precio.id_producto == Producto.id)
+    if columna == 'PRODUCTO':
+        return results.order_by(Precio.id_producto)
+    if columna == 'TIPO':
+        return results.order_by(Precio.id_tipo)
+    if columna == 'PRECIO':
+        return results.order_by(Precio.precio)
+    if columna == 'NOMBRE':
+        return results.order_by(Producto.nombre)
+    return results
+            
 
 def get_all_precios():
     '''Leer todos los precios que no hayan sido eliminados'''

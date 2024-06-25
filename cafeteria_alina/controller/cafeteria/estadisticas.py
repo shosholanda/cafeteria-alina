@@ -9,7 +9,7 @@ from cafeteria_alina.model.producto import Producto
 
 from cafeteria_alina.model.repository.repo_usuario import *
 
-from cafeteria_alina.controller.auth import requiere_inicio_sesion
+from cafeteria_alina.controller.auth import requiere_inicio_sesion, admin
 
 from cafeteria_alina import db
 
@@ -22,5 +22,6 @@ estadisticas = Blueprint('estadisticas', __name__, url_prefix='/estadisticas') #
 # Ventana de estadísticas
 @estadisticas.route('/')
 @requiere_inicio_sesion
+@admin
 def main():
     return "estadisticas"

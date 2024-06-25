@@ -48,13 +48,13 @@ def registrar_usuario():
                            apellido_materno,
                            1,
                            fecha_nacimiento)
-            crear_usuario(user)
+            add_usuario(user)
         else: 
             error = 'Usuario ya existe'
         if error != None:
             flash(error, 'error')
         else:
-            return "Usuario registrado correctamente" #redirect(url_for('inicio.main'))
+            return render_template('cafeteria/success.html', tipo = 'Cuenta', crud = 'creada')
     return render_template('auth/register.html')
 
 
@@ -104,6 +104,17 @@ def requiere_inicio_sesion(vista):
     @functools.wraps(vista)
     def vista_wraped(**kwargs):
         if g.user is None:
+            return redirect(url_for('home'))
+        return vista(**kwargs)
+    return vista_wraped
+
+# Es un admin
+def admin(vista):
+    @functools.wraps(vista)
+    def vista_wraped(**kwargs):
+        user = session['usuario']
+        user = get_usuario(user)
+        if not 'ADMIN' in user.tipo.tipo.upper():
             return redirect(url_for('home'))
         return vista(**kwargs)
     return vista_wraped

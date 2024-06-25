@@ -23,4 +23,8 @@ inicio = Blueprint('inicio', __name__, url_prefix='/inicio') # Crear la sesion
 @inicio.route('/')
 @requiere_inicio_sesion
 def main():
-    return render_template('cafeteria/inicio.html')
+    user_cookie = session['usuario']
+    user = get_usuario(user_cookie)
+    if not user:
+        user = 'persona extraña'
+    return render_template('cafeteria/inicio.html', usuario = user)

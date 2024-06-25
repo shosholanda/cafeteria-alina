@@ -18,6 +18,7 @@ class Transaccion(db.Model):
     # Producto en cuestión
     id_producto = db.Column(db.Integer, db.ForeignKey('producto.id'))
     # tipo del producto
+    # AAAAAA
     tipo = db.Column(db.Integer, db.ForeignKey('tipo_producto.id'))
     # Precio producto
     precio = db.Column('precio', db.Integer, nullable = False)

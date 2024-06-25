@@ -10,24 +10,28 @@ from cafeteria_alina.model.repository.repo_transaccion import *
 from cafeteria_alina.model.transaccion import Transaccion
 from cafeteria_alina.model.venta import Venta
 
-from cafeteria_alina.controller.auth import requiere_inicio_sesion
-import uuid
-
+from cafeteria_alina.controller.auth import requiere_inicio_sesion, admin
 
 ''' Controlador para las operaciones de producto '''
 
 ventas = Blueprint('ventas', __name__,url_prefix='/ventas') # Crear la sesion
 
-
 # Ventana de ventas
 @ventas.route('/')
 @requiere_inicio_sesion
+# Trabajador
+@admin
 def main():
-    return render_template('cafeteria/ventas.html')
+    today = datetime.date.today()
+    ventas_del_dia = get_daily_transactions(today)
+    total_del_dia = get_daily_total_ventas(today)
+    return render_template('cafeteria/ventas.html', ventas = ventas_del_dia, total = total_del_dia)
 
 # Crear una venta (confirmar)
 @ventas.route('/nueva-venta', methods=['GET', 'POST'])
 @requiere_inicio_sesion
+#Trabajador
+@admin
 def create_venta():
     productos = get_all_available_productos()
     tipos = get_all_available_tipo_producto()
@@ -66,6 +70,8 @@ def create_venta():
 #QUERY
 @ventas.route('/tipos-por-producto/<int:id_producto>')
 @requiere_inicio_sesion
+#Trabajador
+@admin
 def tipos_por_producto(id_producto):
     tipos = get_tipos_por_producto_available(id_producto)
     # Convertir a JSON la consulta

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h2>{% block title%}Agregar categoría{% endblock %}</h2>
+{% endblock %}
+
+
+{% block content %}
+    <b>Nueva categoria</b>
+    <form method="POST">
+        <label for="categoria">Categoría</label>
+        <input type="text" name="categoria" id="tipo" required> 
+        <br>
+        
+        <label for="descipcion">Descripcion</label>
+        <textarea type="text" name="descipcion" id="descipcion" required></textarea>
+        
+        <br>
+        <input type="submit" value="Agregar">
+    
+    </form>
+    <b>Categorias existentes</b>
+    {% for categoria in categorias %}
+        <div>
+            {{ categoria }}
+        </div>
+    {% endfor %}
+{% endblock %}

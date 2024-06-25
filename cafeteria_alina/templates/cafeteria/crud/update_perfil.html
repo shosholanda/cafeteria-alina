@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    {% block title%}
+        <h2>Editar perfil </h2> 
+    {% endblock %}
+{% endblock %}
+
+{% block content %}
+    <form method="POST">
+        <div>
+            Hueco pa la foto
+        </div>
+
+        <label for="nombre">Nuevo nombre</label>
+        <input type="text" name="nombre" id="nombre" value="{{ usuario.nombre }}" required>
+
+        <label for="apellido_paterno">Apellido Paterno</label>
+        <input type="text" name="apellido_paterno" value="{{ usuario.apellido_paterno }}" required>
+
+        <label for="apellido_materno">Apellido Materno</label>
+        <input type="text" name="apellido_materno" value="{{ usuario.apellido_materno}}" required>
+
+        <label for="fecha_nacimiento">Fecha de Nacimiento</label>
+        <input type="date" name="fecha_nacimiento" value="{{ usuario.fecha_nacimiento }}" required>
+        <br>
+        <!-- AAAA admin solamente pueden crear otros usuarios -->
+        {% if 'ADMIN' in usuario.tipo.tipo.upper() %}
+        <label for="tipo_usuario">Tipo de usuario</label>
+        <select name="tipo_usuario" id="tipo_usuario">
+            {% for tipo_usuario in tipo_usuarios %}
+            <option value="{{ tipo_usuario.id }}">{{ tipo_usuario.tipo }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="Sucursal">Sucursal asociada</label>
+        <select name="sucursal" id="sucursal">
+            {% for sucursal in sucursales %}
+            <!-- AAA id -->
+            <option value="{{ sucursal.id_sucursal }}">{{ sucursal.nombre }}</option>
+            {% endfor %}
+        </select>
+        {% endif %}
+        
+        <br>
+        <label for="old-password">Contraseña actual</label>
+        <input type="password" name="old-password">
+        
+        <label for="contraseña">Nueva contraseña</label>
+        <input type="password" name="contraseña">
+            
+        <br>
+    
+        <input type="submit" value="Actualizar">
+
+    </form>
+{% endblock %}

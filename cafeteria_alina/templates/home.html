@@ -1,16 +1,13 @@
 {% extends 'base.html' %}
 
 {% block header %}
-    <h2>{% block title%} Home.html{% endblock %}</h2>
+    <h2>{% block title%}{% endblock %}</h2>
 {% endblock %}
 
 {% block content %}
-    <h2>Bienvenido</h2>
+    <h2>Bienvenido usuario!</h2>
     <nav>
-        {% if g.user %}
-        <p>Hola!</p>
-        {% else %}
         <a href="{{ url_for('auth.iniciar_sesion') }}">Iniciar sesion</a>
-        {% endif %}
+        <a href="{{ url_for('auth.registrar_usuario')}}">Crear nueva cuenta</a>
     </nav>
 {% endblock %}

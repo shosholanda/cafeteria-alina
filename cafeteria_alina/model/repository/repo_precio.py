@@ -12,10 +12,3 @@ def get_tipos_por_producto_available(id):
     return Precio.query\
                 .join(TipoProducto, Precio.id_tipo == TipoProducto.id)\
                 .filter(Precio.id_producto == id)
-
-
-
-
-
-
-

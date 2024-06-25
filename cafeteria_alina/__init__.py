@@ -25,6 +25,8 @@ from cafeteria_alina.controller.cafeteria.ventas import ventas
 from cafeteria_alina.controller.cafeteria.perfil import perfil
 from cafeteria_alina.controller.cafeteria.ayuda import ayuda
 from cafeteria_alina.controller.cafeteria.precios import precios
+from cafeteria_alina.controller.cafeteria.categorias import categorias
+from cafeteria_alina.controller.cafeteria.sucursales import sucursales
 from cafeteria_alina.controller.cafeteria.tipo_productos import tipo_productos
 
 app.register_blueprint(auth)
@@ -36,6 +38,8 @@ app.register_blueprint(productos)
 app.register_blueprint(ventas)
 app.register_blueprint(ayuda)
 app.register_blueprint(precios)
+app.register_blueprint(categorias)
+app.register_blueprint(sucursales)
 app.register_blueprint(tipo_productos)
 
 
