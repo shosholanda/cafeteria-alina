@@ -5,14 +5,15 @@
 {% endblock %}
 
 {% block content %}
-    <form method="POST">
+    <form method="POST" autocomplete="off">
         <label for="nombre">Nombre </label>
         <input type="text" name="nombre" id="nombre" value="{{ producto.nombre }}" required>
         <br>
         <label for="descripcion">Descripcion</label>
         <textarea type="text" name="descripcion" id="descripcion" >{{ producto.descripcion }}</textarea>
         <br>
-
+        <b>Cuidado con modificar la categoria, ni yo sé qué es lo que puede pasar! Puede reemplazar otros productos</b>
+        <br>
         <label for="categoria">Categoria</label>
         <select name="categoria" id="categoria">
             {% for categoria in categorias %}

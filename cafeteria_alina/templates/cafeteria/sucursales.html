@@ -15,14 +15,17 @@
             <th>Nombre</th>
             <th>Direccion</th>
             <th>Inaguracion</th>
-            <th>Status</th>
+            <th>Opciones</th>
         </tr>
         {% for sucursal in sucursales %}
         <tr class="available">
             <td>{{ sucursal.nombre }}</td>
             <td>{{ sucursal.direccion() }}</td>
-            <td>{{ sucursal.inaguracion }}</td>
-            <td>{{ sucursal.status }}</td>
+            <td>{{ sucursal.fecha_inaguracion }}</td>
+            <td>
+                <a href="{{ url_for('sucursales.update_sucursal', id = sucursal.id )}}">Modificar</a>
+                <a href="{{ url_for('sucursales.delete_sucursal', id = sucursal.id )}}">Eliminar</a>
+            </td>
         </tr>
         {% endfor %}
     </table>

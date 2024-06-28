@@ -21,7 +21,7 @@ sucursales = Blueprint('sucursales', __name__, url_prefix='/sucursales') # Crear
 @requiere_inicio_sesion
 @admin
 def main():
-    sucursales = get_all_sucursales()
+    sucursales = get_all_available_sucursales()
     return render_template('cafeteria/sucursales.html', sucursales = sucursales)
 
 
@@ -40,17 +40,20 @@ def create_sucursal():
         pais = request.form.get('pais')
         fecha = request.form.get('fecha')
 
-        sucursal = Sucursal(nombre=nombre,
-                            calle=calle,
-                            numero=número,
-                            colonia=colonia,
-                            municipio=municipio,
-                            ciudad=ciudad,
-                            pais=pais,
-                            inaguracion=fecha)
-        add_sucursal(sucursal)
-        return render_template('cafeteria/success.html', tipo = 'Sucursal', crud = 'agregada')
-    
+        if not get_sucursal_by_nombre(nombre):
+            sucursal = Sucursal(nombre=nombre,
+                                calle=calle,
+                                numero=número,
+                                colonia=colonia,
+                                municipio=municipio,
+                                ciudad=ciudad,
+                                pais=pais,
+                                fecha_inaguracion=fecha)
+            add_sucursal(sucursal)
+            flash('Sucursal añadida con éxito!')
+            return redirect(url_for('sucursales.main'))
+        else:
+            flash('No se pueden registrar 2 sucursales en el mismo lugar!')
     return render_template('cafeteria/crud/create_sucursal.html')
 
 #UPDATE PRODUCTO
@@ -62,13 +65,34 @@ def update_sucursal(id):
 
     error = None
     if request.method == 'POST':
+        nombre = request.form.get('nombre')
+        calle = request.form.get('calle')
+        número = request.form.get('número')
+        colonia = request.form.get('colonia')
+        municipio = request.form.get('municipio')
+        ciudad = request.form.get('ciudad')
+        pais = request.form.get('pais')
+        fecha = request.form.get('fecha')
 
-        if error:
-            flash(error)
+        # AAA Validar más a detalle
+        copy = get_sucursal_by_nombre(nombre)
+        if not copy or copy.id == id:
+            sucursal.nombre = nombre
+            sucursal.calle = calle
+            sucursal.numero = número
+            sucursal.colonia = colonia
+            sucursal.municipio = municipio
+            sucursal.ciudad = ciudad
+            sucursal.pais = pais
+            sucursal.fecha = fecha
+
+            add_sucursal(sucursal)
+            flash('Sucursal modificada con éxito!')
+            return redirect(url_for('sucursales.main'))
         else:
-            return render_template('cafeteria/success.html', tipo = 'Producto', crud = 'modificado')
+            flash('No se pueden registrar 2 con el mismo nombre!')
 
-    return render_template('cafeteria/crud/update_sucursal.html', sucursal = sucursal, categorias = categorias)
+    return render_template('cafeteria/crud/update_sucursal.html', sucursal = sucursal)
 
 #DELETE PRODUCTO
 @sucursales.route('/eliminar-sucursal/<int:id>')

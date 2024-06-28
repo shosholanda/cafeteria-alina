@@ -46,43 +46,11 @@ def create_tipo():
             error = 'El tipo ya existe!'
 
         if not error:
-            return render_template('cafeteria/success.html', tipo = 'Producto', crud = 'agregado')
+            flash('tipo de producto agregado!')
+            return redirect(url_for('tipo-productos.create_tipo'))
         else:
             flash(error)
 
 
     return render_template('cafeteria/crud/create_tipo_producto.html', tipo_productos = tipo_productos)
-
-#UPDATE PRODUCTO
-@tipo_productos.route('/editar-producto/<id>', methods=('GET', 'POST'))
-@requiere_inicio_sesion
-@admin
-def update_tipo(id):
-    # producto = get_producto_id(id)
-    # if request.method == 'POST':
-    #     producto.nombre = request.form.get('nombre')
-    #     producto.descripcion = request.form.get('descripcion')
-
-    #     error = None
-    #     if not producto.nombre:
-    #         error = 'Se requiere de al menos un nombre'
-    #         flash(error)
-    #     else:
-    #         if not producto.descripcion or producto.descripcion.strip() == '':
-    #             producto.descripcion = "Sin descripcion"
-    #         agregar_producto(producto)
-    #         return render_template('cafeteria/success.html', tipo = 'Producto', crud = 'modificado')
-
-    # return render_template('cafeteria/crud/update_producto.html', producto = producto)
-    return "Aquí editamos" + id
-
-#DELETE PRODUCTO
-@tipo_productos.route('/eliminar-producto/<id>')
-@requiere_inicio_sesion
-@admin
-def delete_tipo(id):
-    # producto = get_producto_id(id)
-    # remove_producto(producto)
-    # return redirect(url_for('tipo_productos.main'))
-    return "Aquí eliminamos el producto " +id
 

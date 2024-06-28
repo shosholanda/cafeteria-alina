@@ -18,9 +18,9 @@
         <b>Nacimiento</b> {{ usuario.fecha_nacimiento }}
     </div>
 
-    {% if 'ADMIN' in usuario.tipo.tipo.upper() %}
+    {% if 'ADMIN' in usuario.tipo_usuario.nombre.upper() %}
     <div>
-        <b>Tipo usuario</b> {{usuario.tipo.tipo}}
+        <b>Tipo usuario</b> {{usuario.tipo_usuario.nombre}}
     </div>
     <div>
         <b>Sucursal</b> {{ usuario.sucursal.nombre }}

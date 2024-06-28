@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-    {% if 'ADMIN' in usuario.tipo.tipo.upper() %}
+    {% if 'ADMIN' in usuario.tipo_usuario.nombre.upper() %}
     <div>
         <a href={{ url_for('productos.create_producto') }}>Agregar un nuevo producto</a>
     </div>
@@ -18,10 +18,10 @@
     <dl class="producto" >
         {% for producto in productos %}
         <dt>
-            <b>{{ producto.nombre }}</b>
-            {% if 'ADMIN' in usuario.tipo.tipo.upper() %}
-            <a href="{{ url_for('productos.update_producto', id = producto.id) }}">Modificar</a>
-            <a href="{{ url_for('productos.delete_producto', id = producto.id) }}">Eliminar</a>
+            <b>{{ producto.nombre }} | {{ producto.categoria.nombre }}</b>
+            {% if 'ADMIN' in usuario.tipo_usuario.nombre.upper() %}
+            <a href="{{ url_for('productos.update_producto', id_producto = producto.id) }}">Modificar</a>
+            <a href="{{ url_for('productos.delete_producto', id_producto = producto.id) }}">Eliminar</a>
             {% endif %}
         </dt>
         
@@ -30,18 +30,18 @@
             {% if precio.status == 1 %}
             <li>
                 <!-- precio.tipo = {Precio} -> {TipoProducto} -->
-                {{ precio.tipo.tipo }} - ${{ precio.precio }}
-                {% if 'ADMIN' in usuario.tipo.tipo.upper() %}
-                <a href="{{ url_for('precios.update_precio', id = precio.id_producto, tipo = precio.tipo.id) }}">Modificar</a>
-                <a href="{{ url_for('precios.delete_precio', id = precio.id_producto, tipo = precio.tipo.id) }}">Eliminar</a>
+                {{ precio.tipo_producto.nombre }} - ${{ precio.precio }}
+                {% if 'ADMIN' in usuario.tipo_usuario.nombre.upper() %}
+                <a href="{{ url_for('precios.update_precio', id_producto = precio.id_producto, id_tipo_producto= precio.tipo_producto.id) }}">Modificar</a>
+                <a href="{{ url_for('precios.delete_precio', id_producto = precio.id_producto, id_tipo_producto= precio.tipo_producto.id) }}">Eliminar</a>
                 {% endif %}
             </li>
             {% endif %}
         </ul>
         {% endfor %}
 
-        {% if 'ADMIN' in usuario.tipo.tipo.upper() %}
-        <a href="{{ url_for('precios.create_precio', id = producto.id) }}">Agregar variacion</a>
+        {% if 'ADMIN' in usuario.tipo_usuario.nombre.upper() %}
+        <a href="{{ url_for('precios.create_precio', id_producto = producto.id) }}">Agregar variacion</a>
         {% endif %}
 
         {% endfor %} 

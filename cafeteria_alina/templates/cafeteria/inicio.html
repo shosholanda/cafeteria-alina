@@ -8,13 +8,13 @@
     <div>
         Acciones:
     </div>
-    <a href="{{ url_for('perfil.main' ) }}">Perfil</a>
-    <a href="{{ url_for('productos.main' ) }}">Productos</a>
-    {% if 'ADMIN' in usuario.tipo.tipo.upper() %}
-    <a href="{{ url_for('ventas.main' ) }}">Ventas</a>
-    <a href="{{ url_for('precios.main' ) }}">Precios</a>
+    <a href="{{ url_for('perfil.main') }}">Perfil</a>
+    <a href="{{ url_for('productos.main') }}">Productos</a>
+    {% if 'ADMIN' in usuario.tipo_usuario.nombre.upper() %}
+    <a href="{{ url_for('ventas.main') }}">Ventas</a>
+    <a href="{{ url_for('precios.main') }}">Precios</a>
+    <a href="{{ url_for('gastos.main') }}">Gastos</a>
     <a href="{{ url_for('estadisticas.main') }}">Estadísticas</a>
-    <a href="{{ url_for('inventario.main') }}">Inventario</a>
     <a href="{{ url_for('sucursales.main') }}">Sucursales</a>
     {% endif %}
     <a href="{{ url_for('auth.cerrar_sesion') }}">Cerrar sesion</a>

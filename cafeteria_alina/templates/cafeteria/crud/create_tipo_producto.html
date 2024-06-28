@@ -5,11 +5,16 @@
 {% endblock %}
 
 {% block content %}
-    <form method="POST">
+    <form method="POST" autocomplete="off">
         <label for="nombre">Tipo del producto </label>
         <input type="text" name="tipo" id="tipo" required> 
         <br>
         <input type="submit" value="Agregar">
 
     </form>
+    <li>
+        {% for tipo_producto in tipo_productos %}
+        <ul>- {{ tipo_producto }}</ul>
+        {% endfor%}
+    </li>
 {% endblock %}

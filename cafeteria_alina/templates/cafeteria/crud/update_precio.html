@@ -2,17 +2,18 @@
 
 {% block header %}
     {% block title%}
-        <h2>Editar producto </h2> 
+        <h2>Editar precio del producto</h2> 
+        <b>{{ precio.producto.nombre }}</b>
         <p>{{ precio }}</p>
     {% endblock %}
 {% endblock %}
 
 {% block content %}
-    <form method="POST">
+    <form method="POST" autocomplete="off">
         Nuevo Tamaño
-        <select name="tipo" id="tipo">
-            {% for tipo in tipos %}
-            <option value="{{ tipo.id }}">{{ tipo.tipo }}</option>
+        <select name="tipo_producto" id="tipo_producto">
+            {% for tipo_producto in tipo_productos %}
+            <option value="{{ tipo_producto.id }}">{{ tipo_producto.nombre }}</option>
             {% endfor %}
         </select>
         <br>

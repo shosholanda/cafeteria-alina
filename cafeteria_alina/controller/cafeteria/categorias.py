@@ -27,7 +27,6 @@ def main():
 @admin
 def create_categoria():
     categorias = get_all_categorias()
-    print(categorias)
     error = None
     if request.method == 'POST':
         categoria_name = request.form.get('categoria')
@@ -37,15 +36,19 @@ def create_categoria():
             categoria_name = categoria_name.strip().title()
         if descripcion:
             descripcion = descripcion.strip().replace('\n', ' ')
+        else:
+            descripcion = 'Sin descripcion'
 
         if not get_categoria_by_name(categoria_name):
             nueva_categoria = Categoria(categoria_name, descripcion)
             add_categoria(nueva_categoria)
-            return render_template('cafeteria/success.html', tipo = 'Categoria', crud = 'agregada')
+            # Actualizar página
+            flash('Categoría agregada con éxito!')
+            return redirect(url_for('categorias.create_categoria'))
 
         else:
             error = 'La categoria ya existe'
-        
-        flash(error)
+        if error:
+            flash(error)
 
     return render_template('cafeteria/crud/create_categoria.html', categorias = categorias)

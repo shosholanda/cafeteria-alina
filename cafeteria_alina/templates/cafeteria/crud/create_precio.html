@@ -5,13 +5,13 @@
 {% endblock %}
 
 {% block content %}
-    <h3>Agregar un precio nuevo para {{ producto.nombre }}</h3>
+    <h3>{{producto.categoria.nombre }} - {{ producto.nombre }}</h3>
     
-    <form method="POST">
+    <form method="POST" autocomplete="off">
         <label for="tipo">Tipo de producto</label>
         <select name="tipo" id="tipo">
             {% for tipo in tipos %}
-            <option value="{{ tipo.id }}">{{ tipo.tipo }}</option>
+            <option value="{{ tipo.id }}">{{ tipo.nombre }}</option>
             {% endfor %}
         </select>
         <a href="{{ url_for('tipo-productos.create_tipo') }}">Agregar tipo de producto</a>

@@ -8,15 +8,15 @@
 {% endblock %}
 
 {% block content %}
+    <!-- Carrito de compras -->
 
 
     <label for="producto">Producto</label>
     <select name="producto" id="producto">
         {% for producto in productos %}
-        <option value="{{ producto.id }}">{{ producto.nombre }}</option>
+        <option value="{{ producto.id }}">{{ producto.nombre }} - {{ producto.categoria.nombre }}</option>
         {% endfor %}
     </select>
-
 
     <label for="tipo">Tipo de producto</label>
     <select name="tipo" id="tipo">
@@ -24,10 +24,10 @@
     </select>
 
     <label for="cantidad">Cantidad</label>
-    <input type="text" name="cantidad" id="cantidad" class="short-input" required="True">
+    <input type="text" name="cantidad" id="cantidad" class="short-input" required="True" autocomplete="off">
 
     <button id="agregar-carro">Agregar</button>
-    <div id="cart">
+    <div id="cart" class="cart">
         <!-- Aqui irán los productos agregados SIN agregar a la bdd -->
     </div>
     <label for="total">Total $</label>

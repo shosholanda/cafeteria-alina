@@ -4,6 +4,7 @@ from flask import (
 
 from werkzeug.exceptions import abort
 
+from cafeteria_alina.model.repository.repo_precio import *
 from cafeteria_alina.model.repository.repo_producto import *
 from cafeteria_alina.model.repository.repo_tipo_producto import *
 
@@ -25,23 +26,23 @@ def main():
 
 
 # CREATE PRECIO
-@precios.route('/agregar-precio/<id>', methods=('GET', 'POST'))
+@precios.route('/agregar-precio/<id_producto>', methods=('GET', 'POST'))
 @requiere_inicio_sesion
 @admin
-def create_precio(id):
-    '''Crea un nuevo precio para el producto <id>'''
-    producto = get_producto_id(id)
+def create_precio(id_producto):
+    '''Crea un nuevo precio para el producto <id_producto>'''
+    producto = get_producto_id(id_producto)
     if not producto:
-        return "No se ha podido cargar el producto " + id
+        return "No se ha podido cargar el producto " + id_producto
     
     tipos = get_all_tipo_producto()
     if request.method == 'POST':
-        tipo = request.form.get('tipo')
+        id_tipo_producto = request.form.get('tipo')
         
         error = None
         try:
             precio = float(request.form.get('precio'))
-            nuevo_precio = get_precio_unico(id, tipo)
+            nuevo_precio = get_precio_unico(id_producto, id_tipo_producto)
             if nuevo_precio and nuevo_precio.status == 1:
                 error = 'Ya existe esta asignación'
         except ValueError:
@@ -54,25 +55,29 @@ def create_precio(id):
                 nuevo_precio.status = 1
                 precio = nuevo_precio
             else:
-                precio = Precio(id, tipo, precio)
+                precio = Precio(id_producto = id_producto,
+                                id_categoria= 1, 
+                                id_tipo_producto=id_tipo_producto, 
+                                precio = precio)
             add_precio(precio)
-            return render_template('cafeteria/success.html', tipo = 'Producto', crud = 'agregado', obj = precio)
+            flash('Precio para ' + producto.nombre + ' creado con éxito!')
+            return redirect(url_for('productos.main'))
         
     return render_template('cafeteria/crud/create_precio.html', producto = producto, tipos = tipos)
 
 #UPDATE PRECIO
-@precios.route('/editar-precio/<id>%<tipo>', methods=('GET', 'POST'))
+@precios.route('/editar-precio/<id_producto>%<id_tipo_producto>', methods=('GET', 'POST'))
 @requiere_inicio_sesion
 @admin
-def update_precio(id, tipo):
+def update_precio(id_producto, id_tipo_producto):
     # Siempre va a existir porque no saldría el endpoint
-    precio_existente = get_precio_unico(id, tipo)
+    precio_existente = get_precio_unico(id_producto, id_tipo_producto)
     if precio_existente and precio_existente.status == 0:
         return "El precio actual no está disponible"
     
-    tipos = get_all_available_tipo_producto()
+    tipo_productos = get_all_available_tipo_producto()
     if request.method == 'POST':
-        tipo = request.form.get('tipo')
+        tipo = request.form.get('tipo_producto')
         precio = request.form.get('precio')
         
         error = None
@@ -93,20 +98,21 @@ def update_precio(id, tipo):
             precio_existente.id_tipo = tipo
             precio_existente.precio = precio
             add_precio(precio_existente)
-            return render_template('cafeteria/success.html', tipo = 'Producto', crud = 'actualizado', obj = precio)
+            flash('Precio actualizado con éxito a', precio_existente.producto.nombre)
+            return redirect(url_for('precios.main'))
         else:
             flash(error)
 
 
-    return render_template('cafeteria/crud/update_precio.html', precio = precio_existente, tipos = tipos)
+    return render_template('cafeteria/crud/update_precio.html', precio = precio_existente, tipo_productos = tipo_productos)
 
 #DELETE PRECIO
-@precios.route('/eliminar-precio/<int:id>%<int:tipo>')
+@precios.route('/eliminar-precio/<int:id_producto>%<int:id_tipo_producto>')
 @requiere_inicio_sesion
 @admin
-def delete_precio(id, tipo):
+def delete_precio(id_producto, id_tipo_producto):
     '''Soft delete precio'''
-    precio = get_precio_unico(id, tipo)
+    precio = get_precio_unico(id_producto, id_tipo_producto)
     hide_precio(precio)
     return redirect(url_for('productos.main'))
     

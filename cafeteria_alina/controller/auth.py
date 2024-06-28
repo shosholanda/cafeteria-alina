@@ -41,13 +41,14 @@ def registrar_usuario():
         if not contraseña:
             error = 'Se requere una contraseña'
         if not get_usuario(correo):
-            user = Usuario(correo,
-                           generate_password_hash(contraseña),
-                           nombre,
-                           apellido_paterno,
-                           apellido_materno,
-                           1,
-                           fecha_nacimiento)
+            user = Usuario(correo=correo,
+                           contraseña=generate_password_hash(contraseña),
+                           nombre=nombre,
+                           apellido_paterno=apellido_paterno,
+                           apellido_materno=apellido_materno,
+                           id_tipo_usuario=1,
+                           id_sucursal=None,
+                           fecha_nacimiento=fecha_nacimiento)
             add_usuario(user)
         else: 
             error = 'Usuario ya existe'
@@ -112,9 +113,8 @@ def requiere_inicio_sesion(vista):
 def admin(vista):
     @functools.wraps(vista)
     def vista_wraped(**kwargs):
-        user = session['usuario']
-        user = get_usuario(user)
-        if not 'ADMIN' in user.tipo.tipo.upper():
+        user = get_full_usuario(g.user.correo)
+        if not 'ADMIN' in user.tipo_usuario.nombre.upper():
             return redirect(url_for('home'))
         return vista(**kwargs)
     return vista_wraped

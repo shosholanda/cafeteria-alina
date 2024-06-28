@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block content %}
-    <form method="POST">
+    <form method="POST" autocomplete="off">
         <div>
             Hueco pa la foto
         </div>
@@ -25,19 +25,19 @@
         <input type="date" name="fecha_nacimiento" value="{{ usuario.fecha_nacimiento }}" required>
         <br>
         <!-- AAAA admin solamente pueden crear otros usuarios -->
-        {% if 'ADMIN' in usuario.tipo.tipo.upper() %}
+        {% if 'ADMIN' in usuario.tipo_usuario.nombre.upper() %}
         <label for="tipo_usuario">Tipo de usuario</label>
         <select name="tipo_usuario" id="tipo_usuario">
             {% for tipo_usuario in tipo_usuarios %}
-            <option value="{{ tipo_usuario.id }}">{{ tipo_usuario.tipo }}</option>
+            <option value="{{ tipo_usuario.id }}">{{ tipo_usuario.nombre }}</option>
             {% endfor %}
         </select>
 
-        <label for="Sucursal">Sucursal asociada</label>
+        <label for="sucursal">Sucursal asociada</label>
         <select name="sucursal" id="sucursal">
             {% for sucursal in sucursales %}
             <!-- AAA id -->
-            <option value="{{ sucursal.id_sucursal }}">{{ sucursal.nombre }}</option>
+            <option value="{{ sucursal.id }}">{{ sucursal.nombre }}</option>
             {% endfor %}
         </select>
         {% endif %}

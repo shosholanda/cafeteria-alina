@@ -7,28 +7,34 @@ class Venta(db.Model):
 
     Entidad: Venta
     La venta tiene información sobre las transacciones que se han hecho 
-    con qué usuario.
+    con qué usuario y a qué sucursal.
     '''
 
     # Nombre de la tabla
     __tablename__ = 'venta'
     # PK
     referencia = db.Column('referencia', db.Integer, primary_key = True)
+    # Usuario operador
+    id_usuario = db.Column(db.String(100), db.ForeignKey('usuario.correo'))
+    # Sucursal
+    id_sucursal = db.Column(db.Integer, db.ForeignKey('sucursal.id'))
     # Total de la transacción aplicando el IVA
-    total = db.Column('total', db.Integer, nullable = False)
+    total = db.Column('total', db.Float(2), nullable = False)
     # Fecha y hora de la transacción
     fecha  = db.Column('fecha', db.DateTime, default = datetime.datetime.now())
-    # Usuario operador
-    usuario = db.Column(db.String(100), db.ForeignKey('usuario.correo'))
-    # Sucursal
-    #sucursal = db.Column(db.Integer, db.ForeignKey('sucursal.id_sucursal'))
+
+    #Venta.usuario => Usuario() & Usuario.ventas => Venta()
+    usuario = db.relationship('Usuario', back_populates='ventas')
+    sucursal = db.relationship('Sucursal', back_populates='ventas')
 
     # Constructor
     def __init__(self,
                  total,
-                 usuario):
+                 id_usuario,
+                 id_sucursal):
         self.total = total
-        self.usuario = usuario
+        self.id_usuario = id_usuario
+        self.id_sucursal = id_sucursal
 
     # Representación en cadena
     def __repr__(self) -> str:

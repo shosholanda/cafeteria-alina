@@ -24,8 +24,7 @@ productos = Blueprint('productos', __name__, url_prefix='/productos') # Crear la
 @productos.route('/')
 @requiere_inicio_sesion
 def main():
-    user_cookie = session['usuario']
-    user = get_usuario(user_cookie)
+    user = get_usuario(g.user.correo)
     productos =get_all_available_productos()
     return render_template('cafeteria/productos.html', productos = productos, usuario = user)
 
@@ -42,12 +41,23 @@ def create_producto():
 
         error = None
 
-        if nombre:
+        if nombre and categoria:
             nombre = nombre.strip().title()
+        else:
+            error = 'Se requiere de nombre y categoria'
         if descripcion:
             descripcion = descripcion.strip().replace('\n', ' ')
+        else: 
+            descripcion = 'Sin descripcion'
 
-        producto = get_producto(nombre)
+        if error: 
+            flash(error)
+            return render_template('cafeteria/crud/create_producto.html', categorias = get_all_categorias())
+
+        # Pueden haber productos de diferentes categorias
+        # chocolate - caliente
+        # chocolate - smoothiee
+        producto = get_producto_and_categoria(nombre, int(categoria))
 
         if producto and producto.status == 1:
             error = f'El producto {nombre} ya existe. Indique otro producto'
@@ -60,16 +70,17 @@ def create_producto():
             agregar_producto(producto)
 
         if not error:
-            return render_template('cafeteria/success.html', tipo = 'Producto', crud = 'agregado')
+            flash('Producto añadido correctamente!')
+            return redirect(url_for('productos.create_producto'))
         flash(error)
     return render_template('cafeteria/crud/create_producto.html', categorias = get_all_categorias())
 
 #UPDATE PRODUCTO
-@productos.route('/editar-producto/<int:id>', methods=('GET', 'POST'))
+@productos.route('/editar-producto/<int:id_producto>', methods=('GET', 'POST'))
 @requiere_inicio_sesion
 @admin
-def update_producto(id):
-    producto = get_producto_id(id)
+def update_producto(id_producto): 
+    producto = get_producto_id(id_producto)
     categorias = get_all_categorias()
     if request.method == 'POST':
         nombre = request.form.get('nombre')
@@ -81,20 +92,21 @@ def update_producto(id):
             error = 'Se requiere de al menos un nombre'
         if not descripcion or descripcion.strip() == '':
             descripcion = "Sin descripcion"
+        if not categoria:
+            error = 'Se requiere de al menos alguna categoria para clasificar este producto'
         
         if error: 
             flash(error)
             return render_template('cafeteria/crud/update_producto.html', producto = producto, categorias = categorias)
 
-        # No pueden haber 2 con el mismo nombre
-        copy = get_producto(nombre)
+        # No pueden haber 2 con el mismo nombre y categoria
+        copy = get_producto_and_categoria(nombre, int(categoria))
         
         # Reemplazamos si no hay o si es el mismo
         if copy is None or copy.id == producto.id:
             producto.nombre = nombre
             producto.descripcion = descripcion
-            #AAA
-            producto.categoria_id = int(categoria)
+            producto.id_categoria = int(categoria)
             producto.status = 1
             agregar_producto(producto)
 
@@ -106,24 +118,25 @@ def update_producto(id):
                 # Y dejamos el original intacto, que lo elimine el usuario
                 copy.nombre = nombre
                 copy.descripcion = descripcion
-                copy.categoria_id = int(categoria)
+                copy.id_categoria = int(categoria)
                 copy.status == 1
                 agregar_producto(copy)
 
         if error:
             flash(error)
         else:
-            return render_template('cafeteria/success.html', tipo = 'Producto', crud = 'modificado')
+            flash('Producto modificado con éxito!')
+            return redirect(url_for('productos.main'))
 
     return render_template('cafeteria/crud/update_producto.html', producto = producto, categorias = categorias)
 
 #DELETE PRODUCTO
-@productos.route('/eliminar-producto/<id>')
+@productos.route('/eliminar-producto/<id_producto>')
 @requiere_inicio_sesion
 @admin
-def delete_producto(id):
+def delete_producto(id_producto):
     '''Nunca borramos ningun producto'''
-    producto = get_producto_id(id)
+    producto = get_producto_id(id_producto)
     hide_producto(producto)
     return redirect(url_for('productos.main'))
 

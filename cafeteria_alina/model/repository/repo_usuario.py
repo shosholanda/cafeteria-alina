@@ -8,15 +8,14 @@ from cafeteria_alina import db
 
 def get_usuario(correo):
     '''Obtiene un usuario dado su correo.'''
-    return Usuario.query.filter(Usuario.correo == correo ).first()
+    return Usuario.query.get(correo)
 
 def get_full_usuario(correo):
     '''Obtiene el usuario juntando la información de tipo_usuario y sucursal'''
-    # AAA
     return Usuario.query\
-        .filter(Usuario.correo == correo)\
-        .join(TipoUsuario, TipoUsuario.id == Usuario.tipo_usuario)\
-        .join(Sucursal, Sucursal.id_sucursal == Usuario.id_sucursal).first()
+        .join(TipoUsuario, TipoUsuario.id == Usuario.id_tipo_usuario)\
+        .join(Sucursal, Sucursal.id == Usuario.id_sucursal)\
+        .filter(Usuario.correo == correo).first()
 
 def add_usuario(usuario):
     '''Añade este usuario a la base de datos. Si existe lo reemplaza?

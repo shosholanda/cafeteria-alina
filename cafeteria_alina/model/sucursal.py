@@ -11,9 +11,9 @@ class Sucursal(db.Model):
     # Nombre de la tabla
     __tablename__ = 'sucursal'
     # PK
-    id_sucursal = db.Column('id_sucursal', db.Integer, primary_key = True)
+    id = db.Column('id', db.Integer, primary_key = True)
     # Nombre de la sucursal puesto por el usuario
-    nombre = db.Column('nombre', db.String(10))
+    nombre = db.Column('nombre', db.String(10), nullable = False)
     # Dirección separada en campos
     calle = db.Column('calle', db.String(30))
     numero = db.Column('numero', db.String(30))
@@ -22,20 +22,21 @@ class Sucursal(db.Model):
     ciudad = db.Column('ciudad', db.String(30), nullable = False)
     pais = db.Column('pais', db.String(20), nullable = False)
     # Fecha de creación de esta sucursal 
-    # AAA
-    inaguracion = db.Column('fecha_inaguración', db.Date, nullable = False)
+    fecha_inaguracion = db.Column('fecha_inaguración', db.Date, nullable = False)
     # Nos dice si sigue estando activo o no el producto. Por omisión está activo
     status = db.Column('status', db.Boolean, nullable = False, default=True)
+    ## Valor es calculado
 
     ## Registrar
     usuarios = db.relationship('Usuario', back_populates = 'sucursal')
-    
+    ventas = db.relationship('Venta', back_populates = 'sucursal')
+    gastos = db.relationship('Gasto', back_populates = 'sucursal')
 
 
     # Constructor
     def __init__(self,
                  nombre,
-                 inaguracion, 
+                 fecha_inaguracion, 
                  pais, 
                  ciudad, 
                  municipio,
@@ -43,7 +44,7 @@ class Sucursal(db.Model):
                  colonia,
                  numero):
         self.nombre = nombre
-        self.inaguracion = inaguracion
+        self.fecha_inaguracion = fecha_inaguracion
         self.pais = pais
         self.ciudad = ciudad
         self.municipio = municipio
@@ -53,7 +54,7 @@ class Sucursal(db.Model):
 
     # Representación en cadena
     def __repr__(self) -> str:
-        return f'{self.nombre}: {self.calle} {self.numero} | {self.inaguracion}'
+        return f'{self.nombre}: {self.calle} {self.numero} | {self.fecha_inaguracion}'
     
     def direccion(self) -> str:
         return f'{self.calle} {self.numero}, {self.colonia}, {self.municipio}, {self.ciudad}, {self.pais}.'

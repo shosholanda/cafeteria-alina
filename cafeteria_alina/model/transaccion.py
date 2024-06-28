@@ -14,37 +14,29 @@ class Transaccion(db.Model):
     #PK
     id = db.Column('id', db.Integer, primary_key = True)
     # Numero de referencia
-    referencia = db.Column(db.Integer, db.ForeignKey('venta.referencia'))
-    # Producto en cuestión
-    id_producto = db.Column(db.Integer, db.ForeignKey('producto.id'))
-    # tipo del producto
-    # AAAAAA
-    tipo = db.Column(db.Integer, db.ForeignKey('tipo_producto.id'))
-    # Precio producto
-    precio = db.Column('precio', db.Integer, nullable = False)
+    id_referencia = db.Column(db.Integer, db.ForeignKey('venta.referencia'))
+    # Producto relacionado a esta transaccion
+    id_precio = db.Column(db.Integer, db.ForeignKey('precio.id'))
     # Cantidad de productos
     cantidad = db.Column('cantidad', db.Integer, nullable = False)
     # Subtotal
-    subtotal = db.Column('subtotal', db.Integer, nullable = False)
+    subtotal = db.Column('subtotal', db.Float(2), nullable = False)
 
-    # Backref
+    
+    precio = db.relationship('Precio', back_populates='transaccion')
 
 
     # Constructor
     def __init__(self,
-                 referencia,
-                 id_producto,
-                 tipo,
-                 precio,
+                 id_referencia,
+                 id_precio,
                  cantidad,
                  subtotal):
-        self.referencia = referencia
-        self.id_producto = id_producto
-        self.tipo = tipo
-        self.precio = precio
+        self.id_referencia = id_referencia
+        self.id_precio = id_precio
         self.cantidad = cantidad
         self.subtotal = subtotal
 
     # Representación en cadena
     def __repr__(self) -> str:
-        return f'{self.referencia} : {self.id_producto.nombre} - {self.cantidad}'
+        return f'{self.id_referencia} : {self.id_producto.nombre} - {self.cantidad}'

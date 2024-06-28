@@ -1,6 +1,7 @@
 import datetime
 
 # Importamos las tablas
+from cafeteria_alina.model.precio import Precio
 from cafeteria_alina.model.producto import Producto
 from cafeteria_alina.model.tipo_producto import TipoProducto
 from cafeteria_alina.model.venta import Venta
@@ -32,10 +33,9 @@ def get_transactions_by_date(init, finish):
         WHERE fecha < '2024-06-24';
     '''
     return Venta.query\
-        .join(Transaccion, Venta.referencia == Transaccion.referencia)\
-        .join(Producto, Producto.id == Transaccion.id_producto)\
-        .join(TipoProducto, TipoProducto.id == Transaccion.tipo)\
-        .filter(Venta.fecha.between(init, finish))
+        .join(Transaccion, Venta.referencia == Transaccion.id_referencia)\
+        .join(Precio, Transaccion.id_precio == Precio.id)\
+        .filter(Venta.fecha.between(init, finish)).order_by(-Venta.referencia)
 
 
 def add_transaction(transaction):
@@ -63,7 +63,7 @@ def get_total_ventas_by_date(init, finish):
     SELECT SUM(total) FROM QUERY
         WHERE fecha < finish ;'''
     return db.session.query(func.sum(Transaccion.subtotal))\
-        .join(Venta, Venta.referencia == Transaccion.referencia)\
+        .join(Venta, Venta.referencia == Transaccion.id_referencia)\
         .filter(Venta.fecha.between(init, finish)).scalar()
 
 def get_last_ref():

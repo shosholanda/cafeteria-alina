@@ -24,8 +24,7 @@ perfil = Blueprint('perfil', __name__, url_prefix='/perfil') # Crear la sesion
 @perfil.route('/')
 @requiere_inicio_sesion
 def main():
-    user_cookie = session['usuario']
-    user = get_usuario(user_cookie)
+    user = get_usuario(g.user.correo)
     if not user:
         return redirect(url_for('inicio.main'))
     return render_template('cafeteria/perfil.html', usuario = user)
@@ -33,11 +32,10 @@ def main():
 @perfil.route('/update-usuario', methods=['GET', 'POST'])
 @requiere_inicio_sesion
 def update_usuario():
-    user_cookie = session['usuario']
-    user = get_usuario(user_cookie)
+    user = get_usuario(g.user.correo)
 
     if user.id_sucursal:
-        user = get_full_usuario(user_cookie)
+        user = get_full_usuario(g.user.correo)
         
     tipo_usuarios = get_all_tipo_usuario()
     sucursales = get_all_sucursales()
@@ -50,7 +48,7 @@ def update_usuario():
         apellido_paterno = request.form.get('apellido_paterno').strip()
         apellido_materno = request.form.get('apellido_materno').strip()
         fecha_nacimiento = request.form.get('fecha_nacimiento').strip()
-        tipo_usuario = request.form.get('tipo_usuario')
+        id_tipo_usuario = request.form.get('tipo_usuario')
         id_sucursal = request.form.get('sucursal')
         contraseña_actual = request.form.get('contraseña_actual')
         nueva_contraseña = request.form.get('nueva_contraseña')
@@ -60,9 +58,9 @@ def update_usuario():
             user.apellido_paterno = apellido_paterno
             user.apellido_materno = apellido_materno
             user.fecha_nacimiento = fecha_nacimiento
-            if tipo_usuario:
-                tipo_usuario = int(tipo_usuario)
-                user.tipo_usuario = tipo_usuario
+            if id_tipo_usuario:
+                id_tipo_usuario = int(id_tipo_usuario)
+                user.id_tipo_usuario = id_tipo_usuario
             if id_sucursal:
                 id_sucursal = int(id_sucursal)
                 user.id_sucursal = id_sucursal

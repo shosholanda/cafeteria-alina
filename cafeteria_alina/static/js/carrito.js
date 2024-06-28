@@ -5,7 +5,7 @@
 var carro = []
 
 /* Crea un pedido */
-function createBox(producto, tipo, cantidad, total) {
+function createBox(producto, tipo, cantidad, precio, total) {
     let item = document.createElement('div');
     item.className = 'item';
 
@@ -15,10 +15,8 @@ function createBox(producto, tipo, cantidad, total) {
     /* Producto */
     i = document.createElement('div');
     i.setAttribute('name', 'producto');
-    i.setAttribute('value', tipo.selectedOptions[0].getAttribute('id_producto'));
-    let nombre = document.createElement('label');
-    nombre.textContent = producto.selectedOptions[0].textContent;
-    i.appendChild(nombre);
+    i.setAttribute('value', producto.selectedOptions[0].value);
+    i.textContent = producto.selectedOptions[0].textContent;
     item.appendChild(i);
 
     /* Tipo producto */
@@ -42,16 +40,16 @@ function createBox(producto, tipo, cantidad, total) {
     /* Precio del producto */
     i = document.createElement('div');
     i.setAttribute('name', 'precio');
-    i.setAttribute('value', tipo.selectedOptions[0].getAttribute('precio'));
+    i.setAttribute('value', precio.id);
     let price = document.createElement('label');
-    price.textContent = `\$${tipo.selectedOptions[0].getAttribute('precio')}`;
+    price.textContent = `\$${precio.precio}`;
     i.appendChild(price);
     item.appendChild(i);
 
     /* Subtotal */
     i = document.createElement('div');
     i.setAttribute('name', 'subtotal');
-    let s = parseFloat(tipo.selectedOptions[0].getAttribute('precio')) * parseInt(cantidad.value);
+    let s = parseFloat(precio.precio) * parseInt(cantidad.value);
     i.setAttribute('value', s);
     let subtotal = document.createElement('label');
     subtotal.textContent = `\$${s}`;
@@ -81,22 +79,36 @@ function changeTipo(producto, tipo) {
         .then( data => {
             data.forEach(rowTipo => {
                 var option = document.createElement('option');
-                option.value = rowTipo.id_tipo;
-                option.textContent = rowTipo.tipo;
-                option.setAttribute('precio', rowTipo.precio);
-                option.setAttribute('id_producto', rowTipo.id_producto);
+                option.value = rowTipo.id_tipo_producto;
+                option.textContent = rowTipo.tipo_producto;
                 tipo.appendChild(option);
             });
         })
         .catch( error => console.error('Error al buscar tipos: ' + error));   
 }
 
+/**
+ * 
+ * @param {id_producto} id_producto el producto que viene con categoria
+ * @param {id_tipo_producto} id_tipo_producto con el cual se relaciono el precio
+ */
+async function getPrice(id_producto, id_tipo_producto){
+    try {
+        const response = await fetch(`get-precio/${id_producto}&${id_tipo_producto}`);
+        return await response.json();
+    } catch (error) {
+        return console.error('Error al buscar tipos: ' + error);
+    }
+}
+
+/**
+ * Envia las compras agregadas anteriormente al cart.
+ * Crea un JSON con la información colectada por el cart
+ */
 function sendCart(){
     //Convertir a JSON
     let cartData = carro.map(item => {
         return {
-            producto: item.children['producto'].getAttribute('value'),  //id_producto
-            tipo: item.children['tipo'].getAttribute('value'),          //id_tipo
             cantidad: item.children['cantidad'].getAttribute('value'),  //cantidad
             precio: item.children['precio'].getAttribute('value'),      //precio
             subtotal: item.children['subtotal'].getAttribute('value')   //subtotal
@@ -139,7 +151,7 @@ function sendCart(){
     });
 }
 
-// Call the addBoxes function when the page loads
+// Main
 window.onload = function (){
     let add_product = document.getElementById('agregar-carro');
     let cart = document.getElementById('cart');
@@ -157,20 +169,22 @@ window.onload = function (){
     cantidad.value = '';
     total.value = '0';
     
-    add_product.addEventListener('click', function(){
+    add_product.addEventListener('click', async function(){
         if (producto.value === '' || tipo.value === '' || cantidad.value === ''){
-                alert('Rellena los campos de PRODUCTO, TIPO PRODUCTO Y CANTIDAD');
-                return;
+            alert('Rellena los campos de PRODUCTO, TIPO PRODUCTO Y CANTIDAD');
+            return;
         }
+        
+        let precio;
+        // Buscamos el precio de categoria-producto, tipo
+        precio = await getPrice(producto.value, tipo.value);
     
         for (let item of carro){
-            let p_value = item.children['producto'].getAttribute('value');
-            let t_value = item.children['tipo'].getAttribute('value');
-            let c_value = item.children['cantidad'].getAttribute('value');
-            let pr_value = item.children['precio'].getAttribute('value');
-            if ( p_value === producto.value && t_value === tipo.value){
-                let cantidad_nueva = parseInt(cantidad.value) + parseInt(c_value);
-                let subtotal_nuevo = parseFloat(pr_value * cantidad_nueva);
+            let id_precio = item.children['precio'].getAttribute('value');
+            let q_value = item.children['cantidad'].getAttribute('value');
+            if ( id_precio == precio.id){
+                let cantidad_nueva = parseInt(cantidad.value) + parseInt(q_value);
+                let subtotal_nuevo = parseFloat(precio.precio * cantidad_nueva);
                 item.children['cantidad'].setAttribute('value', cantidad_nueva);
                 /* No puede ser [0] */
                 item.children['cantidad'].children[0].textContent = cantidad_nueva;
@@ -182,7 +196,7 @@ window.onload = function (){
         }
         
         /* Si no existe creamos la caja */
-        let nueva_transaccion = createBox(producto, tipo, cantidad, total);
+        let nueva_transaccion = createBox(producto, tipo, cantidad, precio, total);
         carro.push(nueva_transaccion);
         cart.append(nueva_transaccion);
 

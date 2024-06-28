@@ -10,8 +10,8 @@
         <div>
             <p> {{ tipo.tipo }}: status={{ tipo.status }}</p>
             
-            <a href="{{ url_for('tipo-productos.update_tipo', id = tipo.id) }}">Modificar</a>
-            <a href="{{ url_for('tipo-productos.delete_tipo', id = tipo.id) }}">Eliminar</a>
+            <a href="{{ url_for('tipo-productos.update_tipo_gasto', id = tipo.id) }}">Modificar</a>
+            <a href="{{ url_for('tipo-productos.delete_tipo_gasto', id = tipo.id) }}">Eliminar</a>
         </div>
 
     {% endfor %}

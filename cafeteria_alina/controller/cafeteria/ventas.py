@@ -2,11 +2,12 @@ from flask import (
     jsonify, render_template, Blueprint, flash, g, redirect, request, session, url_for
 )
 
-
 from cafeteria_alina.model.repository.repo_precio import *
 from cafeteria_alina.model.repository.repo_producto import *
+from cafeteria_alina.model.repository.repo_categoria import *
 from cafeteria_alina.model.repository.repo_tipo_producto import *
 from cafeteria_alina.model.repository.repo_transaccion import *
+from cafeteria_alina.model.repository.repo_usuario import *
 from cafeteria_alina.model.transaccion import Transaccion
 from cafeteria_alina.model.venta import Venta
 
@@ -40,16 +41,16 @@ def create_venta():
         body = request.json#['body']
         cart = body['cart']
         total = body['total']
-        
+        user = get_full_usuario(g.user.correo)
         error = None
-        v = Venta(total, session['usuario'])
+        v = Venta(total, user.correo, user.id_sucursal)
+
         add_transaction(v)
         last_ref = get_last_ref()
 
         for item in cart:
             try:
-                id_prod = int(item['producto'])
-                tipo = int(item['tipo'])
+                # Get precio from query + categoria
                 precio = float(item['precio'])
                 cant = int(item['cantidad'])
                 subtot = float(item['subtotal'])
@@ -57,17 +58,18 @@ def create_venta():
                 error = "No se pudo recibir la información correctamente"
                 break
 
-            t = Transaccion(last_ref, id_prod, tipo, precio, cant, subtot)
+            t = Transaccion(last_ref, precio, cant, subtot)
             add_transaction(t)
         
         if not error:
+            flash('Venta hecha con éxito!')
             return redirect(url_for('ventas.main'))
             # return jsonify({"redirect": url_for('ventas.main')}), 200
         flash(error)
         
     return render_template('cafeteria/crud/create_venta.html', productos = productos, tipos = tipos)
 
-#QUERY
+#QUERY para cambiar de id_tipo_producto
 @ventas.route('/tipos-por-producto/<int:id_producto>')
 @requiere_inicio_sesion
 #Trabajador
@@ -75,8 +77,18 @@ def create_venta():
 def tipos_por_producto(id_producto):
     tipos = get_tipos_por_producto_available(id_producto)
     # Convertir a JSON la consulta
-    tipos_json = [{'id_producto': id_producto,
-                   'id_tipo': tipo.id_tipo,
-                   'tipo':tipo.tipo.tipo, 
-                   'precio':tipo.precio} for tipo in tipos]
+    tipos_json = [{'id_tipo_producto': tipo.id_tipo_producto,
+                   'tipo_producto':tipo.tipo_producto.nombre} for tipo in tipos]
+    return jsonify(tipos_json)
+
+#QUERY para obtener el precio de un producto
+@ventas.route('/get-precio/<int:id_producto>&<int:id_tipo_producto>')
+@requiere_inicio_sesion
+#Trabajador
+@admin
+def get_precio(id_producto, id_tipo_producto):
+    precio = get_precio_unico(id_producto, id_tipo_producto)
+    # Convertir a JSON la consulta
+    tipos_json = {'id': precio.id,
+                  'precio': precio.precio}
     return jsonify(tipos_json)

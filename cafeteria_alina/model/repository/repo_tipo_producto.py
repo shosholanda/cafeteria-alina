@@ -11,15 +11,15 @@ def get_all_tipo_producto():
 
 def get_all_available_tipo_producto():
     '''Obtiene todos los productos disponibles de la base de datos'''
-    return TipoProducto.query.filter(TipoProducto.status == 1 and TipoProducto.tipo != None)
+    return TipoProducto.query.filter(TipoProducto.status == 1)
 
 def get_by_id(id):
     '''Obtiene el que coincide por id'''
-    return TipoProducto.query.filter(TipoProducto.id == id).first()
+    return TipoProducto.query.get(id)
 
 def get_by_tipo(tipo):
     '''Obtiene el que coincide por cadena'''
-    return TipoProducto.query.filter(TipoProducto.tipo == tipo).first()
+    return TipoProducto.query.filter(TipoProducto.nombre == tipo).first()
 
 def crear_tipo_producto(tipo):
     '''Añade este tipo a la base de datos. Si existe lo reemplaza?
