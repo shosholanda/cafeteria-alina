@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h2>{% block title%}Estadisticas{% endblock %}</h2>
+{% endblock %}
+
+
+{% block content %}
+
+
+    <form method="POST" >
+        <!-- TODO: Añadir para se pueda seleccionar por sucursal -->
+        <h4>Seleccionar un periodo</h4>
+        <label for="init">Inicio</label>
+        <input type="date" name="init" value="{{ init }}" id="init">
+        <label for="finish">Fin</label>
+        <input type="date" name="finish" value="{{ finish }}" id="finish">
+
+        <input type="submit" value="Actualizar">
+    </form>
+
+
+    <h3>Resumen</h3>
+    <div>
+        <i><a href="{{ url_for('ventas.main')}}">Ganancias</a></i>
+        <b>{{ ganancias }}</b>
+    </div>
+    <div>
+        <i><a href="{{ url_for('gastos.main')}}">Perdidas</a></i>
+        <b>{{ perdidas }}</b>
+    </div>
+
+    <div>
+        <u>Ganancia neta</u> 
+        {% if ganancias >= perdidas %}
+        <b style="color: green;"> +{{ ganancias-perdidas }}</b>
+        {% else %}
+        <b style="color: red;"> {{ ganancias - perdidas }} </b>
+        {% endif %}
+    </div>
+    
+    <!-- TODO: Guardas las gráficas en base64 
+    https://stackoverflow.com/questions/48717794/matplotlib-embed-figures-in-auto-generated-html
+    -->
+
+    <h3>Top productos más vendidos</h3>
+    <table>
+        <tr>
+            <th>Producto</th>
+            <th>Categoria</th>
+            <th>Tipo</th>
+            <th>Ventas</th>
+            <th>Ganancias</th>
+        </tr>
+        
+        {% for p in top_productos %}
+        <tr>
+            <td>{{ p.producto }}</td>
+            <td>{{ p.categoria }}</td>
+            <td>{{ p.tipo }}</td>
+            <td>{{ p.cantidad }}</td>
+            <td>${{ p.ganancia }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h3>Historial ({{ total }} resultados)</h3>
+    <table>
+        <tr>
+            <th>Nombre</th>
+            <th>Tipo</th>
+            <th>Cantidad</th>
+            <th>Fecha</th>
+        </tr>
+        
+        {% for h in historial %}
+        <tr>
+            {% if h.gain %}
+            <td>{{ h.nombre }} -<i> {{ h.extra }}</i></td>
+            <td>{{ h.tipo }}</td>
+            <td style="color: green;">+{{ h.cantidad }}</td>
+            {% else %}
+            <td><u>{{ h.nombre }}</u></td>
+            <td><b>{{ h.tipo }}</b></td>
+            <td style="color: red;">-{{ h.cantidad }}</td>
+            {% endif %}
+
+            <td>{{ h.fecha }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+{% endblock %}
+

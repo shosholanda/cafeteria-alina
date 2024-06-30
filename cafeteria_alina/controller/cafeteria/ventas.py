@@ -23,7 +23,7 @@ ventas = Blueprint('ventas', __name__,url_prefix='/ventas') # Crear la sesion
 # Trabajador
 @admin
 def main():
-    today = datetime.date.today()
+    today = datetime.datetime.today()
     ventas_del_dia = get_daily_transactions(today)
     total_del_dia = get_daily_total_ventas(today)
     return render_template('cafeteria/ventas.html', ventas = ventas_del_dia, total = total_del_dia)

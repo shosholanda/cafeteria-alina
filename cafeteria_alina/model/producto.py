@@ -42,3 +42,6 @@ class Producto(db.Model):
     # Representación en cadena
     def __repr__(self) -> str:
         return f'{self.nombre}: {self.descripcion}'
+    
+    def prod_and_cat(self):
+        return f'{self.nombre} - {self.categoria.nombre}'

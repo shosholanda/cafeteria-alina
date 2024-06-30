@@ -8,6 +8,7 @@
     <div>
         Acciones:
     </div>
+    <!-- TODO Seleccionar menú la sucursal para no estar haciendo mil consultas -->
     <a href="{{ url_for('perfil.main') }}">Perfil</a>
     <a href="{{ url_for('productos.main') }}">Productos</a>
     {% if 'ADMIN' in usuario.tipo_usuario.nombre.upper() %}

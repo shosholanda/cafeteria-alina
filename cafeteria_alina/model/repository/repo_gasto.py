@@ -28,9 +28,12 @@ def get_all_weekly_gastos():
     today = datetime.date.today()
     last_day = today.weekday()
     init = today.replace(day=today.day - last_day)
-    today = today.strftime('%Y-%m-%d 23:59:59')
+    today = last_second(today)
+    return get_all_gastos_by_date(init, today)
+
+def get_all_gastos_by_date(init, finish):
     return get_all_avaliable_gastos()\
-            .filter(Gasto.fecha.between(init, today))\
+            .filter(Gasto.fecha.between(init, finish))\
             .order_by(-Gasto.id)
 
 def get_all_weekly_total_gastos():
@@ -39,7 +42,7 @@ def get_all_weekly_total_gastos():
     today = datetime.date.today()
     last_day = today.weekday()
     init = today.replace(day=today.day - last_day)
-    today = today.strftime('%Y-%m-%d 23:59:59')
+    today = last_second(today)
     return get_total_gastos_by_date(init, today)
 
 def get_daily_total_gastos():
@@ -59,3 +62,7 @@ def get_total_gastos_by_date(init, finish):
 def hide_gasto(gasto):
     gasto.status = 0
     add_gasto(gasto)
+
+
+def last_second(date):
+    return date.strftime('%Y-%m-%d 23:59:59')

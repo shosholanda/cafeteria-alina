@@ -114,7 +114,7 @@ def admin(vista):
     @functools.wraps(vista)
     def vista_wraped(**kwargs):
         user = get_full_usuario(g.user.correo)
-        if not 'ADMIN' in user.tipo_usuario.nombre.upper():
+        if not user or not 'ADMIN' in user.tipo_usuario.nombre.upper():
             return redirect(url_for('home'))
         return vista(**kwargs)
     return vista_wraped
