@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Editar perfil
+{% endblock %}
+
+{% block header %}
+<h2>{{ usuario.nombre }} {{ usuario.apellido_paterno}} {{usuario.apellido_materno}}</h2>
+{% endblock %}
+
+{% block content %}
+    <form method="POST" autocomplete="off">
+        <div>
+            Hueco pa la foto
+        </div>
+
+        <label for="nombre">Nuevo nombre</label>
+        <input type="text" name="nombre" id="nombre" value="{{ usuario.nombre }}" required>
+
+        <label for="apellido_paterno">Apellido Paterno</label>
+        <input type="text" name="apellido_paterno" value="{{ usuario.apellido_paterno }}" required>
+
+        <label for="apellido_materno">Apellido Materno</label>
+        <input type="text" name="apellido_materno" value="{{ usuario.apellido_materno}}" required>
+
+        <label for="fecha_nacimiento">Fecha de Nacimiento</label>
+        <input type="date" name="fecha_nacimiento" value="{{ usuario.fecha_nacimiento }}" required>
+        <br>
+        <!-- AAAA admin solamente pueden crear otros usuarios -->
+        {% if 'ADMIN' in usuario.tipo_usuario.nombre.upper() %}
+        <label for="tipo_usuario">Tipo de usuario</label>
+        <select name="tipo_usuario" id="tipo_usuario">
+            {% for tipo_usuario in tipo_usuarios %}
+            <option value="{{ tipo_usuario.id }}">{{ tipo_usuario.nombre }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="sucursal">Sucursal asociada</label>
+        <select name="sucursal" id="sucursal">
+            {% for sucursal in sucursales %}
+            <!-- AAA id -->
+            <option value="{{ sucursal.id }}">{{ sucursal.nombre }}</option>
+            {% endfor %}
+        </select>
+        {% endif %}
+        
+        <br>
+        <label for="old-password">Contraseña actual</label>
+        <input type="password" name="old-password">
+        
+        <label for="contraseña">Nueva contraseña</label>
+        <input type="password" name="contraseña">
+            
+        <br>
+    
+        <input type="submit" value="Actualizar">
+
+    </form>
+{% endblock %}

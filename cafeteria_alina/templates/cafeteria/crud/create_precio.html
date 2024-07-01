@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h2>{% block title%}Agregar variación{% endblock %}</h2>
+{% endblock %}
+
+{% block content %}
+    <h3>{{producto.categoria.nombre }} - {{ producto.nombre }}</h3>
+    
+    <form method="POST" autocomplete="off">
+        <label for="tipo">Tipo de producto</label>
+        <select name="tipo" id="tipo">
+            {% for tipo in tipos %}
+            <option value="{{ tipo.id }}">{{ tipo.nombre }}</option>
+            {% endfor %}
+        </select>
+        <a href="{{ url_for('tipo-productos.create_tipo') }}">Agregar tipo de producto</a>
+        <br>
+        <label for="precio">Nuevo precio</label>
+        <input type="text" name="precio" id="precio" required>
+        <br>
+
+        <input type="submit" value="Agregar">
+    </form>
+{% endblock %}

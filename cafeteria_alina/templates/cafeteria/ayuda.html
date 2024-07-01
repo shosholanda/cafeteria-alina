@@ -1,0 +1,211 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h2>{% block title %} Ayuda {% endblock %}</h2>
+{% endblock %}
+
+{% block content %}
+<div>
+    <h3>Introducción</h3>
+    <p>Vaya! Parece que estás un poco perdida no? Por supuesto que esta sección de ayuda te orientará a usar el punto de venta.
+        Siempre podrás regresar a esta página en el menú de ayuda.
+    </p>
+    <p>Lo primero que necesitas hacer es tener una cuenta en esta aplicación (<i>Ya sé, son como las tarjetas. Tienes muchas y solo usas 1</i>)
+        Pero, esta cuenta nos ayudará a poder visualizar las ventas, ya que de lo contrario, cualquier persona podría modificar los precios de
+        los productos, ver estadísticas o agregar compras sin comprar!.</p>
+    <a href="{{ url_for('auth.registrar_usuario')}}">Crear nueva cuenta</a>
+    <p>Una vez teniendo una cuenta, debes iniciar sesión para poder estar dentro de la página de la cafetería y poder ver productos y así. 
+        Por omisión, las cuentas recién creadas no tienen permisos para administrar la cafetería, sino que habrá una cuenta maestra para poder
+        crear nuevas cuentas. Por lo mientras, solo hay que modificar la base de datos, es decir el admin lo hace hehe.
+    </p>
+    <a href="{{ url_for('auth.iniciar_sesion') }}">Iniciar sesion</a>
+
+    <p>Una vez con la sesión iniciada, deberías poder entrar a la página de inicio de la cafetería, donde encontrarás diversas actividades!</p>
+    <a href="{{ url_for('inicio.main' ) }}">Home</a>
+</div>
+
+<div>
+    <h3>Primera configuración</h3>
+    <p>Para poder empezar a configurar el punto de venta, lo primero que deberás hacer es ir al la página de <a href="{{ url_for('sucursales.main') }}">Sucursales</a>
+        y deberás crear una nueva sucursal, si es que no existe ya que todas las ventas que se hagan deberán registrarse a una sucursal. La 
+        información capturada es para por si se llegan a crear más sucurusales. 
+    </p>
+    <p>Una vez teniendo al menos una sucursal el usuario debe estar relacionado se debe relacionar al usuario a alguna sucursal en 
+        <a href="{{ url_for('perfil.update_usuario')}}">Actualizar información</a> seleccionando la sucursal correcta. Este proceso debería 
+        solamente poder hacerlo el admin <b>Admin</b>. Las cuentas de tipo trabajador, o cliente no podrán cambiar esta informacion.
+    </p>
+    <p>
+        <em>Revisa que la caja de <b>Tipo Usuario</b> siga siendo Admin</em>.
+        Ten cuidado de no cambiar un admin a trabajador, o a cliente porque perderás los permisos para manipular el punto de venta, y para 
+        recuperarlos deberás consultar al ADMIN.
+    </p>
+    <p>
+        Una vez seguidos estos pasos, podrás pasar al siguiente punto!
+    </p>
+    <h3>Registrar productos</h3>
+    <p>Cada uno de los productos vendido por la cadena de cafeterías debe de registrarse, así como cada uno de sus precios asociados a ciertos
+        tipos, tamaños de producto. Este proceso solo pasa una vez, después podrás manipular los productos como quieras.
+    </p>
+    <p>
+        Lo primero, se deberían crear las categorías las cuales pertenece cada producto, es decir, la categoría ayuda a diferenciar un 
+        chocolate caliente de un chocolate frío, es decir, deberían haber las categorías bebidas calientes y bebidas frías ya que son 2 
+        diferentes productos. Las categorías también se pueden pensar como grupos de productos, como postres, smoothies etc.
+    </p>
+    <h4>Categorias</h4>
+    <p>
+        Para crear una categoría podemos ir a la parte de <a href="{{ url_for('categorias.create_categoria')}}"><i>Productos > Crear nuevo producto > Crear nueva categoría</i></a>. 
+        Ahí podrás crear una nueva categoria junto con una descripcion de la misma. Se recomienda no dejar vacío el campo. Una vez llenados los 
+        campos, con el botón agregar, veremos nuestra nueva categoría dentro de las categorías existentes. Agrega las que creas necesarias.
+    </p>
+    <h4>Productos</h4>
+    <p>
+        Una vez teniendo alguna categoría podemos agregar productos nuevos, asociados a alguna categoría en la parte de <a href="{{ url_for('productos.create_producto')}}"><i>Productos > Crear nuevo producto </i></a>. 
+        Similarmente podemos agregar un nuevo producto. Aquí va directamente el nombre del producto, por ejemplo como <b>Croissant, Frapuccino etc</b>
+        Asegúrate de que tenga la categoría correcta y una breve descripcion. Finalmente el botón agregar creará el producto <em>SOLAMENTE</em>, es decir, todavía no agregamos precios
+        porque todavía falta ver el tamaño que tenga este producto, ya que existen de varios tamaños.
+    </p>
+    <p>Si el producto que acabas de registrar no aparece en la lista de <a href="{{ url_for('productos.main') }}">Productos</a>, intenta recargar la página,
+    apretando el botón de recargar o la tecla <b>f5</b>
+    </p>
+    
+
+    <h4>Precios</h4>
+    <p>Una vez teniendo al menos un producto, podemos empezar a etiquetarles precios dependiendo del tamaño o tipo que sea el producto.</p>
+    <p>En la lista de <a href="{{ url_for('productos.main') }}">Productos</a>, podemos agregar una <i>variación</i> a un producto en específico
+        Debes tener en cuenta que primero debes tener registrados tipos de producto, es decir, que la lista de <a href="{{ url_for('tipo-productos.create_tipo') }}">Tipos de producto</a>
+        no esté vacia, de lo contrario, deberás agregar al menos un tipo/tamaño para poder asociar con el producto.
+        Aquí unas recomendaciones
+        <ul>
+            <li>NORMAL <i>(No tiene más tamaños asignados, ej. Croissant)</i></li>
+            <li>CHICO</li>
+            <li>MEDIANO</li>
+            <li>GRANDE</li>
+        </ul>
+    </p>
+    <p>Una vez que tenemos algun tipo de producto registrado, <em>AHORA SÍ</em> podemos registrar un producto con su respectivo precio.
+        No escribir el precio con $, solamente el valor numérico. Si todo sale bien, tendremos un mensaje de éxito! Y al mismo tiempo, 
+        actualizado el producto con su nuevo precio. 
+    </p>
+    <p><b>NOTA:</b>
+        Tanto productos como precios podemos modificarlos si es que cometimos un error a la hora de crear el <i>precio/producto</i>
+        o eliminarlos, si es que así lo deseamos, y por lo tanto ya no aparecerá en la lista de productos y tampoco podremos venderlo,
+        pero sí podríamos ver las estadísticas con este producto/precio.
+    </p>
+    <p>También podemos ver <b>TODOS</b> los precios registrados si nos vamos a la pesataña de <a href="{{ url_for('precios.main') }}">Precios</a>
+        Donde de la misma manera, podremos agregar nuevos precios a nuestros productos, modificar o eliminar. solo que aparecen en un formato de
+        tabla, un poco más organizado. 
+    </p>
+
+    <h4>Venta</h4>
+    <p>Una vez registrados los productos que necesitemos, podremos empezar a registrar las ventas en nuestro punto de venta.
+        Nos vamos a la pestaña de <a href="{{ url_for('ventas.main') }}">Ventas</a> donde podremos ver las ventas acomuladas del día de hoy.
+        Nos vamos a la liga de <a href="{{ url_for('ventas.create_venta' )}}">Nueva cuenta</a> para poder crear una cuenta nueva.
+    </p>
+    <p>
+        <b>NOTA:</b> Una cuenta es un pago por grupo de productos que quiera comprar un cliente y no puede estar vacío.
+    </p>
+    <p>En la parte de producto, seleccionamos el producto que agregaremos a la cuenta. El tipo de producto <i>(tamaño)</i> estará disponible
+    dependiendo del tipo de producto que tengamos, es decir no es posible que un <i>Croissant</i> tenga tamaño <i>CHICO</i>.
+        Luego de seleccionar el tipo de producto, ponemos la cantidad que se requiera y damos click en <i>AGREGAR</i>. Se creará una caja
+        Con la información del producto añadido, que va de la siguiente forma:
+        <ol>
+            <li>Nombre y categoría del producto</li>
+            <li>Tipo del producto</li>
+            <li>Cantidad de productos</li>
+            <li>Precio del producto original</li>
+            <li>Subtotal de ese producto</li>
+        </ol>
+        Si se añaden más productos de las mismas especificaciones, se suma la cantidad de productos. Puedes agregar cuantos productos quieras!
+        Si necesitas eliminar productos de la cuenta, no se puede realizar esta operación, por lo que hay que volver a hacer el carro :( 
+        Se sigue trabajando en esta funcionalidad
+    </p>
+    <p>
+        <b>SUPER TIP:</b> En lugar de buscar el producto 1x1, picale a la caja una vez, e inmediatamente empieza a escribir el nombre del producto que
+        quieras añadir. El mismo selector te llevará a la parte donde está ese producto, y puedes ver fácilmente el tipo que requieras.
+        <br>
+        <b>SUPER TIP2: </b>Si andas llevando varias cuentas al mismo tiempo, puedes abrir nuevas pestañas en la pestaña <a href="{{ url_for('ventas.create_venta' )}}">Nueva cuenta</a>
+    </p>
+    <p>Cuando ya no se agreguen más productos a la cuenta, da click en comprar. Esto registrará la venta en la tabla de ventas diarias, pero al día siguiente
+        desaparecerá. Si quieres ver maś ventas, ve al link <a href="{{ url_for('estadisticas.main' )}}">Ver más ventas</a>. Se sigue trabajando en una mejor
+        interfaz para el carro de compra, y el poder modificar productos dentro del carrito de compra.
+    </p>
+
+    <p>
+        Todo este proceso es necesario para poder registrar las ventas, y las cuentas de tipo <i>@TRABAJADOR</i> también podrán registrar ventas, pero no modificar
+        productos ni precios, tampoco podrán ver las estadisticas. Lo siguiente solo queda en manos del <i>@ADMIN</i>
+    </p>
+
+    <h3>Gastos</h3>
+    <p>Así como los productos generan ingresos, también podemos registrar gastos que genera péridas ya que queremos que pase que las ganacias sean mayores a los gastos</p>
+    <p>En la pestaña de <a href="{{ url_for('gastos.main') }}">Gastos</a> podremos ver los gastos que se han hecho durante la semana, empezando por lunes.
+        Pero antes, también podemos crear gastos y clasificarlos por <i>TIPOS DE GASTOS</i>, por lo que debemos crear tipos de gastos primero si nos vamos a
+        <a href="{{ url_for('tipo-gastos.create_tipo')}}">Gastos > Crear nuevo gasto > Crear tipo de gasto</a>.
+        
+    </p>
+    <p>
+        Al igual que los otros tipos, debemos tener al menos uno 
+        asignado. <i>Recuerda que hay varios tipos de gastos, variables fijos o generales.</i> Aquí una pequeña idea de qué tipo de gastos podrían haber.
+        <ul>
+            <li>Salario</li>
+            <li>Mantenimiento</li>
+            <li>Renta</li>
+            <li>Insumos <i>(Muy importante)</i></li>
+            <li>Materias primas <i>(Muy importante)</i></li>
+        </ul>
+        Esto es solamente para poder <u>etiquetar</u> a los gastos para saber de qué tipo son.
+    </p>
+    <p>
+        Una vez teniendo algún tipo de gasto asociado, ahora sí podemos crear gastos y etiquetarlos, además de que a qué sucursal pertenecen estos gastos en el link de
+        <a href="{{ url_for('gastos.create_gasto')}}">Crear nuevo gasto</a>. En el nombre ponemos un nombre representativo a este pago, así como el monto que estamos perdiendo
+        al hacer este gasto. Un ejemplo de un gasto podría ser con los valores:
+        <ol>
+            <li>ALINA - <i>sucursal</i></li>
+            <li>Croissant - <i>nombre gasto</i></li>
+            <li>Insumo - <i>tipo gasto</i></li>
+            <li>132 - <i>monto</i></li>
+        </ol>
+        Una vez agregado, nos aparecerá en la tabla la información de el gasto que hemos efectuado, además de que tenemos las operaciones de <i>modificar</i> y <i>eliminar</i>.
+    </p>
+
+    <h3>Estadísticas</h3>
+    <p>Finalmente, tenemos las estadísticas, son muy generales, pero sirven para un primer análisis de negocio y para saber a qué rumbo se dirige la sucursal.
+        A lo largo del tiempo, recopilarás  información de ventas y gastos que nos ayudarán a entender cómo se desarrolla el negocio.
+        Recordemos que la <i>Utilidad neta</i> es la que buscamos, que esta se calcula a partir de la fórmula
+        
+    </p>
+    <p style="text-align: center;">
+        UTILIDAD NETA = <i>INGRESOS - GASTOS</i>
+    </p>
+        
+    <p>
+        Donde los <i>INGRESOS</i> son todas las ventas que se hagan de productos, y los <i>GASTOS</i> es el conjunto de pérdidas que se ha tenido, incluyendo varios tipos.
+        Este simple indicativo es un primer acercamiento a un análisis de negocio  más profundo, donde gracias a los productos registrados podemos empezar a variar
+        precios basada en el análisis. 
+        
+    </p>
+    <p>
+        <b>NOTA: </b>En los campos de <u>Inicio</u> y <u>Fin</u> establecemos el periodo del cual queremos analizar la información. Además que puede ser que no aparezcan algunas 
+        últimas ventas porque todavía no termina el día.
+    </p>
+    <ul>
+        <li>
+            La primera sección es un resumen, nos dice cómo va este indicativo de utilidad neta. Lo recomendable es tomar un periodo de tipo largo, como una quincena o mes
+            y ver este indicativo para tener un mejor entendimiento de las fuerzas entre ganancias y pérdidas.
+        </li>
+        <li>
+            La segunda sección nos muestra el <i>TOP 10</i> de productos que más se han vendido y las ganancias que han generado, que nos puede servir para poder optimizar el precio 
+            y la creación de este producto, o para deducir temporalidad de productos a lo largo del plazo seleccionado
+        </li>
+        <li>
+            Finalmente tenemos el historial de gastos-perdidas en el plazo determinado para poder analizar aproximadamente cuántas ganancias/pérdidas se realizan en el transcurso
+            del tiempo selecionado.
+        </li>
+    </ul>
+    
+    <p>
+        Sigues perdida? Consulta al administrador del sistema :B lo puedes encontrar en la página de créditos :)
+    </p>
+    <b>No olvides cerrar sesión cuando finalice el día, ya que los chismosos pueden entrar a revisar cosas!</b>
+</div>
+    
+{% endblock %}

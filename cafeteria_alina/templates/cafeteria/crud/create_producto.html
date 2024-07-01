@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h2>{% block title%}Agregar producto{% endblock %}</h2>
+{% endblock %}
+
+{% block content %}
+    <form method="POST" autocomplete="off">
+        <label for="nombre">Nombre producto: </label>
+        <input type="text" name="nombre" id="nombre" required>
+        <br>
+        <label for="descripcion">Descripción: </label>
+        <textarea type="text" name="descripcion" id="descripcion" ></textarea>
+        <br>
+        <label for="categoria">Categoria</label>
+        <select name="categoria" id="categoria">
+            {% for categoria in categorias %}
+            <option value="{{ categoria.id }}">{{ categoria.nombre }}</option>
+            {% endfor %}
+        </select>
+        <a href="{{ url_for('categorias.create_categoria')}}">Crear una nueva categoria</a>
+
+        <br>
+        <input type="submit" value="Agregar">
+    </form>
+{% endblock %}

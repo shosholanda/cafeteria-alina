@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Perfil
+{% endblock %}
+
+{% block header %}
+<h2>{{ usuario.nombre }} {{ usuario.apellido_paterno}} {{usuario.apellido_materno}}</h2>
+{% endblock %}
+
+{% block content %}
+    <h3>Informacion</h3>
+    
+    <a href="{{ url_for('perfil.update_usuario')}}">Actualizar información</a>
+
+    <div>
+        <label for="nombre"><b>Correo</b></label>
+        <input type="text" value="{{ usuario.correo }}" disabled>
+    </div>
+
+    <div>
+        <b>Nacimiento</b> {{ usuario.fecha_nacimiento }}
+    </div>
+
+    {% if 'ADMIN' in usuario.tipo_usuario.nombre.upper() %}
+    <div>
+        <b>Tipo usuario</b> {{usuario.tipo_usuario.nombre}}
+    </div>
+    <div>
+        <b>Sucursal</b> {{ usuario.sucursal.nombre }}
+    </div>
+    {% endif %}
+    
+{% endblock %}

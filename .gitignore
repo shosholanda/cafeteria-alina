@@ -1,0 +1,7 @@
+#Ignore all python cache
+*__pycache__/
+
+
+#Ignore backup drawio files
+*.drawio.*
+

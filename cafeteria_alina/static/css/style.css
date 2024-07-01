@@ -1,0 +1,43 @@
+/* Main style */
+body {
+    background-color: linen;
+}
+
+/* Productos carro */
+.item {
+    width: 200px;
+    height: 200px;
+    background-color: #3498db;
+    margin: 10px;
+    display: inline-block;
+    text-align: center;
+    line-height: 27px;
+    color: white;
+}
+
+.cart {
+    display: flex; /* q mierda */
+    justify-content: left;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 90%;
+}
+
+th{
+    border: 2px solid #cccccc;
+    text-align: left;
+    padding: 8px;
+}
+  
+td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}

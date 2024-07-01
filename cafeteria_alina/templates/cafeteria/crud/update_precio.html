@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    {% block title%}
+        <h2>Editar precio del producto</h2> 
+        <b>{{ precio.producto.nombre }}</b>
+        <p>{{ precio }}</p>
+    {% endblock %}
+{% endblock %}
+
+{% block content %}
+    <form method="POST" autocomplete="off">
+        Nuevo Tamaño
+        <select name="tipo_producto" id="tipo_producto">
+            {% for tipo_producto in tipo_productos %}
+            <option value="{{ tipo_producto.id }}">{{ tipo_producto.nombre }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <label for="precio">Nuevo precio</label>
+        <input type="text" name="precio" id="precio" required>
+            
+        <br>
+    
+        <input type="submit" value="Actualizar">
+
+    </form>
+{% endblock %}

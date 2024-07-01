@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h2>{% block title%}Ventas{% endblock %}</h2>
+{% endblock %}
+
+{% block content %}
+    <a href="{{ url_for('ventas.create_venta' )}}">Nueva cuenta</a>
+    <br>
+    <a href="{{ url_for('estadisticas.main' )}}">Ver más ventas</a>
+
+    <h4>Ventas de hoy</h4>
+    {% if total %}
+    <p>Acumulado: ${{ total }}</p>
+    {% else %}
+    <p>Sin ventas todavía</p>
+    {% endif %}
+    <table>
+        <tr>
+            <th>Referencia</th>
+            <th>Total</th>
+            <th>Fecha</th>
+        </tr>
+        {% for venta in ventas %} 
+        <tr>
+            <td>{{ venta.referencia }}</td>
+            <td>${{ venta.total }}</td>
+            <td>{{ venta.fecha }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

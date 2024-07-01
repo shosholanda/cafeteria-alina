@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h2>{% block title%}Editar sucursal{% endblock %}</h2>
+{% endblock %}
+
+
+{% block content %}
+    <b>Modificar sucursal</b>
+    <form method="POST" autocomplete="off">
+        <label for="nombre">Nombre</label>
+        <input type="text" name="nombre" value="{{ sucursal.nombre }}"required> 
+        <br>
+
+        <label for="calle">Calle</label>
+        <input type="text" name="calle" value="{{ sucursal.calle}}" required> 
+    
+        <label for="número">Número exterior</label>
+        <input type="text" name="número" value="{{ sucursal.numero }}" required> 
+        <br>
+
+        <label for="colonia">Colonia</label>
+        <input type="text" name="colonia" value="{{ sucursal.colonia }}" required> 
+        <br>
+
+        <label for="municipio">Municipio</label>
+        <input type="text" name="municipio" value="{{ sucursal.municipio }}" required> 
+        <br>
+
+        <label for="ciudad">Ciudad</label>
+        <input type="text" name="ciudad" value="{{ sucursal.ciudad}}" required> 
+        <br>
+
+        <label for="pais">País</label>
+        <input type="text" name="pais" value="{{ sucursal.pais }}" required> 
+        <br>
+
+        <label for="fecha">Fecha de inaguración</label>
+        <input type="date" name="fecha" value="{{ sucursal.fecha_inaguracion }}" required> 
+        <br>
+
+        <input type="submit" value="Editar">
+
+    </form>
+{% endblock %}

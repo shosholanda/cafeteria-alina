@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h2>{% block title%}Lista de Todos los precios {% endblock %}</h2>
+{% endblock %}
+{% block script %}
+    <script type="text/javascript" src="{{ url_for('static', filename='js/precios.js') }}"></script>
+{% endblock %}
+
+
+{% block content %}
+
+    <a id ="url" href="{{ url_for('productos.main') }}" data-url-base="{{ url_for('precios.create_precio', id_producto='') }}">Agregar un nuevo precio para</a>
+    <select name="producto" id="producto">
+        {% for producto in productos %}
+        <option value="{{ producto.id }}">{{ producto.nombre }} - {{producto.categoria.nombre}}</option>
+        {% endfor %}
+    </select>
+
+    <!-- AAA Sort by column table -->
+    <table>
+        <tr>
+            <th>Categoria</th>
+            <th>Producto</th>
+            <th>Tipo</th>
+            <th>Precio</th>
+            <th>Opciones</th>
+        </tr>
+        {% for precio in precios %}
+        <tr>
+            <td>{{ precio.producto.categoria.nombre }}</td>
+            <td>{{ precio.producto.nombre }}</td>
+            <td>{{ precio.tipo_producto.nombre }}</td>
+            <td>${{ precio.precio }}</td>
+            <td>
+                <a href="{{ url_for('precios.update_precio', id_producto = precio.id_producto, id_tipo_producto = precio.tipo_producto.id) }}">Modificar</a>
+                <a href="{{ url_for('precios.delete_precio', id_producto = precio.id_producto, id_tipo_producto = precio.tipo_producto.id) }}">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
+
