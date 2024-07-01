@@ -5,7 +5,7 @@ from flask import (
 
 from cafeteria_alina.model.repository.repo_usuario import *
 
-from cafeteria_alina.controller.auth import requiere_inicio_sesion
+from cafeteria_alina.controller.auth import requiere_inicio_sesion, admin
 
 from cafeteria_alina import db
 
@@ -18,5 +18,6 @@ ayuda = Blueprint('ayuda', __name__,url_prefix='/ayuda') # Crear la sesion
 # Ventana de ayuda
 @ayuda.route('/')
 @requiere_inicio_sesion
+@admin
 def main():
-    return "AIUDAA"
+    return render_template('cafeteria/ayuda.html')

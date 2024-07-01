@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
 
+{% block title %}
+Editar perfil
+{% endblock %}
+
 {% block header %}
-    {% block title%}
-        <h2>Editar perfil </h2> 
-    {% endblock %}
+<h2>{{ usuario.nombre }} {{ usuario.apellido_paterno}} {{usuario.apellido_materno}}</h2>
 {% endblock %}
 
 {% block content %}

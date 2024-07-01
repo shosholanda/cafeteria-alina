@@ -16,5 +16,11 @@ def home():
         return redirect(url_for('inicio.main'))
     return render_template('home.html')
 
+def cafeteria_alina():
+    '''Correr desde el server waitress-serve'''
+    return app
+
 if __name__ == '__main__':
+    # Excecute with flask run
     app.run()
+
