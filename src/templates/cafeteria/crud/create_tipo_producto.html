@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title%}
+Agregar tipo
+{% endblock %}
+
+{% block header %}
+    <h2>Agregar tipos de producto</h2>
+{% endblock %}
+
+{% block content %}
+    <form method="POST" autocomplete="off">
+        <label for="nombre">Tipo del producto </label>
+        <input type="text" name="tipo" id="tipo" required> 
+        <br>
+        <input type="submit" value="Agregar">
+
+    </form>
+    <br>
+    <b>Lista de tipos de producto</b>
+    <li>
+        {% for t in tipo_productos %}
+        <ul>{{ t.nombre }} <a href="{{ url_for('tipo-productos.update_tipo', id_tipo_producto = t.id)}}">Modificar</a></ul>
+        {% endfor%}
+    </li>
+{% endblock %}

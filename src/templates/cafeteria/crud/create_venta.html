@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h2>{% block title%}Carrito{% endblock %}</h2>
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript" src="{{ url_for('static', filename='js/carrito.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+    <!-- Carrito de compras -->
+
+
+    <label for="producto">Producto</label>
+    <select name="producto" id="producto">
+        {% for producto in productos %}
+        <option value="{{ producto.id }}">{{ producto.nombre }} - {{ producto.categoria.nombre }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="tipo">Tipo de producto</label>
+    <select name="tipo" id="tipo">
+        <!-- Se añadiran dinámicamente los tipos dependiendo del producto -->
+    </select>
+
+    <label for="cantidad">Cantidad</label>
+    <input type="text" name="cantidad" id="cantidad" class="short-input" required="True" autocomplete="off">
+
+    <button id="agregar">Agregar</button>
+    <div id="cart" class="cart">
+        <!-- Aqui irán los productos agregados SIN agregar a la bdd -->
+    </div>
+    <label for="total">Total $</label>
+    <input type="text" name="total" id="total" disabled>
+    <input type="submit" value="Comprar" id="comprar">
+{% endblock %}

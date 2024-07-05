@@ -1,4 +1,4 @@
-from cafeteria_alina import app
+from src import app
 
 from flask import (
     render_template, g, redirect, request, session, url_for

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title%}
+Agregar categoria
+{% endblock %}
+
+
+{% block header %}
+    <h2>Agregar categoría</h2>
+{% endblock %}
+
+
+{% block content %}
+    <form method="POST" autocomplete="off">
+        <label for="categoria">Categoría</label>
+        <input type="text" name="categoria" id="tipo" required> 
+        <br>
+        
+        <label for="descripcion">Descripcion</label>
+        <textarea type="text" name="descripcion" id="descripcion" required></textarea>
+        
+        <br>
+        <input type="submit" value="Agregar">
+    
+    </form>
+    <b>Categorias existentes</b>
+    {% for categoria in categorias %}
+        <div>
+            {{ categoria }} 
+            <a href="{{ url_for('categorias.update_categoria', id_categoria = categoria.id )}}">Modificar</a>
+        </div>
+    {% endfor %}
+{% endblock %}

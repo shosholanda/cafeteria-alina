@@ -1,0 +1,33 @@
+{% extends 'cafeteria/crud/create_categoria.html' %}
+
+{% block title%}
+Editar categoria
+{% endblock %}
+
+
+{% block header %}
+    <h2>Editar categoría: <i>{{ categoria.nombre }}</i></h2>
+{% endblock %}
+
+
+{% block content %}
+    <form method="POST" autocomplete="off">
+        <label for="categoria">Categoría</label>
+        <input type="text" name="categoria" id="tipo" value="{{categoria.nombre }}" required> 
+        <br>
+        
+        <label for="descripcion">Descripcion</label>
+        <textarea type="text" name="descripcion" id="descripcion" required>{{categoria.descripcion}}</textarea>
+        
+        <br>
+        <input type="submit" value="Actualizar">
+    
+    </form>
+    <b>Categorias existentes</b>
+    {% for categoria in categorias %}
+        <div>
+            {{ categoria }} 
+            <a href="{{ url_for('categorias.update_categoria', id_categoria = categoria.id )}}">Modificar</a>
+        </div>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Registro exitoso
+{% endblock %} 
+
+{% block header %}
+    <div>
+        <h4> Cuenta creada con éxito! </h4>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div>
+        <a href="{{ url_for('auth.cerrar_sesion' ) }}">Regresar</a>
+    </div>
+{% endblock %}
