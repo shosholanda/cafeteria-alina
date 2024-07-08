@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block title %} 
+<!-- # AAA Alina debe ser el tipo dinamico del g.usuario.id_sucursal -->
+<title>
+    ALINA - Dashboard
+</title>
+{% endblock %}
+
+
+{% block header %}
+    <div class="encabezado">
+        <div class="icon">
+            <a href="{{ url_for('inicio.main' ) }}">
+                <div>
+                    <img src="../../static/img/icons/home.svg" alt="Home">
+                </div>
+            </a>
+        </div>
+        <div>
+            <!-- # AAA  -->
+            <h1>Cafetería Alina</h1>
+        </div>
+        <div class="icon">
+            <a href="{{ url_for('auth.cerrar_sesion') }}">
+                <img src="../../static/img/icons/logout.svg" alt="Log out">    
+            </a>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+{% endblock %}
+
+{% block nav %}
+    <!-- # AAA Seleccionar menú la sucursal para no estar haciendo mil consultas -->
+    <div class="navbar">
+        <ul>
+            <li>
+                <a href="{{ url_for('perfil.main') }}">Perfil</a>
+            </li>
+            <li>
+                <a href="{{ url_for('productos.main') }}">Productos</a>
+                {% if 'ADMIN' in g.user.tipo_usuario.nombre.upper() %}
+                <div>
+                    <a href={{ url_for('productos.create_producto') }}>Agregar un nuevo producto</a>
+                    <a href={{ url_for('categorias.create_categoria') }}>Agregar una nueva categoria</a>
+                    <a href="{{ url_for('tipo-productos.create_tipo')}}">Agregar un tipo de producto</a>
+                </div>
+                {% endif %}
+                
+            </li>
+            {% if 'ADMIN' in g.user.tipo_usuario.nombre.upper() %}
+            <li>
+                <a href="{{ url_for('ventas.main') }}">Ventas</a>
+                <div>
+                    <a href="{{ url_for('ventas.create_venta' )}}">Nueva cuenta</a>
+                    <a href="{{ url_for('estadisticas.main' )}}">Ver más ventas</a>
+                </div>
+            </li>
+            <li>
+                <a href="{{ url_for('precios.main') }}">Precios</a>
+            </li>
+            <li>
+                <a href="{{ url_for('gastos.main') }}">Gastos</a>
+                <div>
+                    <a href="{{ url_for('gastos.create_gasto')}}">Crear nuevo gasto</a>
+                    <a href="{{ url_for('tipo-gastos.create_tipo')}}">Crear nuevo tipo de gasto</a>
+                </div>
+            </li>
+            <li>
+                <a href="{{ url_for('estadisticas.main') }}">Estadísticas</a>
+            </li>
+            <li>
+                <a href="{{ url_for('sucursales.main') }}">Sucursales</a>
+            </li>
+            <li>
+                <a href="{{ url_for('ayuda.main') }}">Ayuda</a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+{% endblock %}
+
+
+{% block content %}
+
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima dolores reprehenderit, voluptates laudantium eius repellendus aliquam! Illum quaerat unde officiis ut soluta laudantium, eos ea vel? Ipsam nostrum fugiat cupiditate.</p>
+{% endblock %}

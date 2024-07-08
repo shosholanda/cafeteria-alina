@@ -90,7 +90,7 @@ def update_tipo(id_tipo_producto):
             return redirect(url_for('tipo-productos.create_tipo'))
         flash(error)
 
-    return render_template('cafeteria/crud/update_tipo_producto.html', tipo_producto = tipo, tipos = all_tipos)
+    return render_template('cafeteria/crud/update_tipo_producto.html', tipo_producto = tipo, tipo_productos = all_tipos)
 
 
 

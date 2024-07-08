@@ -1,33 +1,38 @@
-{% extends 'base.html' %}
+{% extends 'cafeteria/dashboard.html' %}
 
 {% block title%}
-Agregar categoria
+<title>
+    ALINA - Agregar categoria
+</title>
 {% endblock %}
-
-
-{% block header %}
-    <h2>Agregar categoría</h2>
-{% endblock %}
-
 
 {% block content %}
+    <h2>Crear categoría</h2>
     <form method="POST" autocomplete="off">
-        <label for="categoria">Categoría</label>
-        <input type="text" name="categoria" id="tipo" required> 
-        <br>
-        
-        <label for="descripcion">Descripcion</label>
-        <textarea type="text" name="descripcion" id="descripcion" required></textarea>
-        
-        <br>
+        <div class="campo">
+            <label for="categoria">Categoría</label>
+            <input type="text" name="categoria" id="tipo" required> 
+        </div>
+        <div class="campo">
+            <label for="descripcion">Descripcion</label>
+            <textarea type="text" name="descripcion" id="descripcion" required></textarea>
+        </div>
         <input type="submit" value="Agregar">
     
     </form>
     <b>Categorias existentes</b>
-    {% for categoria in categorias %}
-        <div>
-            {{ categoria }} 
-            <a href="{{ url_for('categorias.update_categoria', id_categoria = categoria.id )}}">Modificar</a>
-        </div>
-    {% endfor %}
+    <ul class="lista disponible">
+        {% for categoria in categorias %}
+        <li>
+            <div>
+                {{ categoria.nombre }} 
+            </div>
+            <div class="option">
+                <a  href="{{ url_for('categorias.update_categoria', id_categoria = categoria.id )}}">
+                    <img src="../../static/img/icons/edit.svg" alt="Modificar categoria">
+                </a>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
 {% endblock %}

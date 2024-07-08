@@ -1,44 +1,47 @@
-{% extends 'base.html' %}
+{% extends 'cafeteria/dashboard.html' %}
 
-{% block header %}
-    <h2>{% block title%}Editar sucursal{% endblock %}</h2>
+{% block title%}
+<title>
+    ALINA - Editar sucursal
+</title>
 {% endblock %}
 
 
 {% block content %}
-    <b>Modificar sucursal</b>
+    <h3>Modificar sucursal</h3>
     <form method="POST" autocomplete="off">
-        <label for="nombre">Nombre</label>
-        <input type="text" name="nombre" value="{{ sucursal.nombre }}"required> 
-        <br>
-
-        <label for="calle">Calle</label>
-        <input type="text" name="calle" value="{{ sucursal.calle}}" required> 
-    
-        <label for="numero">Número exterior</label>
-        <input type="text" name="numero" value="{{ sucursal.numero }}" required> 
-        <br>
-
-        <label for="colonia">Colonia</label>
-        <input type="text" name="colonia" value="{{ sucursal.colonia }}" required> 
-        <br>
-
-        <label for="municipio">Municipio</label>
-        <input type="text" name="municipio" value="{{ sucursal.municipio }}" required> 
-        <br>
-
-        <label for="ciudad">Ciudad</label>
-        <input type="text" name="ciudad" value="{{ sucursal.ciudad}}" required> 
-        <br>
-
-        <label for="pais">País</label>
-        <input type="text" name="pais" value="{{ sucursal.pais }}" required> 
-        <br>
-
-        <label for="fecha">Fecha de inaguración</label>
-        <input type="date" name="fecha" value="{{ sucursal.fecha_inaguracion }}" required> 
-        <br>
-
+        <div class="campo">
+            <label for="nombre">Nombre</label>
+            <input type="text" name="nombre" value="{{ sucursal.nombre }}"required> 
+        </div>
+        <div class="campo">
+            <label for="calle">Calle</label>
+            <input type="text" name="calle" value="{{ sucursal.calle}}" required> 
+        </div>
+        <div class="campo">
+            <label for="numero">Número exterior</label>
+            <input type="text" name="numero" value="{{ sucursal.numero }}" required> 
+        </div>
+        <div class="campo">
+            <label for="colonia">Colonia</label>
+            <input type="text" name="colonia" value="{{ sucursal.colonia }}" required> 
+        </div>
+        <div class="campo">
+            <label for="municipio">Municipio</label>
+            <input type="text" name="municipio" value="{{ sucursal.municipio }}" required> 
+        </div>
+        <div class="campo">
+            <label for="ciudad">Ciudad</label>
+            <input type="text" name="ciudad" value="{{ sucursal.ciudad}}" required> 
+        </div>
+        <div class="campo">
+            <label for="pais">País</label>
+            <input type="text" name="pais" value="{{ sucursal.pais }}" required> 
+        </div>
+        <div class="campo">
+            <label for="fecha">Fecha de inaguración</label>
+            <input type="date" name="fecha" value="{{ sucursal.fecha_inaguracion }}" required> 
+        </div>
         <input type="submit" value="Editar">
 
     </form>

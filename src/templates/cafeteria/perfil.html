@@ -1,27 +1,26 @@
-{% extends 'base.html' %}
+{% extends 'cafeteria/dashboard.html' %}
+
 
 {% block title %}
-Perfil
-{% endblock %}
-
-{% block header %}
-<h2>{{ usuario.nombre }} {{ usuario.apellido_paterno}} {{usuario.apellido_materno}}</h2>
+<title> 
+ALINA - Perfil 
+</title>
 {% endblock %}
 
 {% block content %}
-    <h3>Informacion</h3>
+    <h3>{{ usuario. nombre }} {{ usuario.apellido_paterno }} {{ usuario.apellido_materno }}</h3>
     
-    <a href="{{ url_for('perfil.update_usuario')}}">Actualizar información</a>
-
-    <div>
-        <label for="nombre"><b>Correo</b></label>
-        <input type="text" value="{{ usuario.correo }}" disabled>
+    <div class=".form">
+        <div class="campo">
+            <label for="nombre"><b>Correo</b></label>
+            <input type="text" value="{{ usuario.correo }}" disabled>
+        </div>
+        
+        <div class="campo">
+            <b>Nacimiento</b> {{ usuario.fecha_nacimiento }}
+        </div>
     </div>
-
-    <div>
-        <b>Nacimiento</b> {{ usuario.fecha_nacimiento }}
-    </div>
-
+    
     {% if 'ADMIN' in usuario.tipo_usuario.nombre.upper() %}
     <div>
         <b>Tipo usuario</b> {{usuario.tipo_usuario.nombre}}
@@ -30,5 +29,6 @@ Perfil
         <b>Sucursal</b> {{ usuario.sucursal.nombre }}
     </div>
     {% endif %}
+    <a class="lightbutton" href="{{ url_for('perfil.update_usuario')}}">Actualizar información</a>
     
 {% endblock %}

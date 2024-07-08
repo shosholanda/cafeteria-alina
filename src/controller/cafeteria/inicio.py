@@ -19,4 +19,4 @@ def main():
     user = get_usuario(g.user.correo)
     if not user:
         user = 'persona extraña'
-    return render_template('cafeteria/inicio.html', usuario = user)
+    return render_template('cafeteria/dashboard.html', usuario = user)

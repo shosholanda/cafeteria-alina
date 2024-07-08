@@ -76,7 +76,7 @@ def update_tipo_gasto(id_tipo_gasto):
         
         flash(error)
 
-    return render_template('cafeteria/crud/update_tipo_gasto.html', gasto = gasto)
+    return render_template('cafeteria/crud/update_tipo_gasto.html', gasto = gasto, tipo_gastos = get_all_available_tipo_gasto())
 
 #DELETE PRODUCTO
 @tipo_gastos.route('/eliminar/<int:id_tipo_gasto>')
@@ -87,4 +87,4 @@ def delete_tipo_gasto(id_tipo_gasto):
     if not gasto:
         abort(404)
     hide_tipo_gasto(gasto)
-    return redirect(url_for('tipo-gastos.create_tipo_gasto'))
+    return redirect(url_for('tipo-gastos.create_tipo'))

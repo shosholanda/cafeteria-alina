@@ -1,40 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <link rel="shortcut icon" href="#">
+    <link rel="shortcut icon" href="../../static/img/alpha/cup-icon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
-    {% block style %}
+    {% block title %}
+    <!-- El nombre en la pestaña -->
     {% endblock %}
-    <title>
-        ALINA - 
-        {% block title %}
-        {% endblock %}
-    </title>
+
     {% block script %}
+    <!-- Scripts -->
     {% endblock %}
 </head>
 <body>
     <header>
-        <div>
-            <h1>Cafetería Alina</h1>
-            <a href="{{ url_for('inicio.main' ) }}">Home</a>
-        </div>
-    </header>
-    <section>
-        <header>
-            {% block header %}
-            {% endblock %}
-        </header>
-        {% for message in get_flashed_messages() %}
-            <div>
-                {{ message }}
-            </div>
-        {% endfor %}
-
-        {% block content %}
+        {% block header %}
+        <!-- Titulos de la pagina -->
         {% endblock %}
+    </header>
+    <nav>
+        {% block nav %}
+        <!-- Barra de navegación -->
+        {% endblock %}
+    </nav>
+    <section>
+        <!-- Mensajes de error -->
+        {% for message in get_flashed_messages() %}
+        <div>
+            {{ message }}
+        </div>
+        {% endfor %}
     </section>
+
+    <main>
+        {% block content %}
+        <!-- Contenido principal del bloque -->
+        {% endblock %}
+    </main>
+    <footer>
+        <!-- Pie de página -->
+         <div class="clearfix"></div>
+         <hr>
+         Cafetería ALINA
+         &copy; Todos los derechos reservados
+         <br>
+         <small>cafeteria.alina@hotmail.com</small>
+    </footer>
 </body>
 </html>

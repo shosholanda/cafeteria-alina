@@ -69,11 +69,12 @@ def iniciar_sesion():
         error = None
         
         user = get_usuario(usuario)
-        if user.status == 0:
-            error = 'Cuenta de usuario suspendida'
-
+        
         if not user or not check_password_hash(user.contraseña, contraseña):
             error = 'Usuario o contraseña incorrecta'
+        
+        elif user.status == 0:
+            error = 'Cuenta de usuario suspendida'
     
         if error is None:
             session.clear()
@@ -93,7 +94,8 @@ def cargar_usuarios_logeados():
     if not usuario:
         g.user = None
     else:
-        g.user = Usuario.query.get(usuario)
+        user = get_usuario_and_tipo(usuario)
+        g.user = user
 
 
 # Cerrar sesion
@@ -115,8 +117,9 @@ def requiere_inicio_sesion(vista):
 def admin(vista):
     @functools.wraps(vista)
     def vista_wraped(**kwargs):
-        user = get_usuario_and_tipo(g.user.correo)
-        if not user or not 'ADMIN' in user.tipo_usuario.nombre.upper():
+        if not g.user:
             return redirect(url_for('home'))
+        if not 'ADMIN' in g.user.tipo_usuario.nombre.upper():
+            return redirect(url_for('inicio.main'))
         return vista(**kwargs)
     return vista_wraped

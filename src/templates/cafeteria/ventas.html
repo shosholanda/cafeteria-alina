@@ -1,14 +1,12 @@
-{% extends 'base.html' %}
+{% extends 'cafeteria/dashboard.html' %}
 
-{% block header %}
-    <h2>{% block title%}Ventas{% endblock %}</h2>
+{% block title%}
+<title>
+    ALINA - Ventas
+</title>
 {% endblock %}
 
 {% block content %}
-    <a href="{{ url_for('ventas.create_venta' )}}">Nueva cuenta</a>
-    <br>
-    <a href="{{ url_for('estadisticas.main' )}}">Ver más ventas</a>
-
     <h4>Ventas de hoy</h4>
     {% if total %}
     <p>Acumulado: ${{ total }}</p>

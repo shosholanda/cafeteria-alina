@@ -1,23 +1,23 @@
-{% extends 'base.html' %}
+{% extends 'cafeteria/dashboard.html' %}
 
 {% block title%}
-Estadisticas
-{% endblock %}
-
-{% block header %}
-    <h2>Estadisticas</h2>
+<title>
+    Agregar producto
+</title>
 {% endblock %}
 
 {% block content %}
-
-
+    <h4>Seleccionar un periodo</h4>
     <form method="POST" >
         <!-- TODO: Añadir para se pueda seleccionar por sucursal -->
-        <h4>Seleccionar un periodo</h4>
-        <label for="init">Inicio</label>
-        <input type="date" name="init" value="{{ init }}" id="init">
-        <label for="finish">Fin</label>
-        <input type="date" name="finish" value="{{ finish }}" id="finish">
+        <div class="campo">
+            <label for="init">Inicio</label>
+            <input type="date" name="init" value="{{ init }}" id="init">
+        </div>
+        <div class="campo">
+            <label for="finish">Fin</label>
+            <input type="date" name="finish" value="{{ finish }}" id="finish">
+        </div>
 
         <input type="submit" value="Actualizar">
     </form>

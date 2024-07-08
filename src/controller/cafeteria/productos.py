@@ -26,7 +26,7 @@ productos = Blueprint('productos', __name__, url_prefix='/productos') # Crear la
 def main():
     user = get_usuario(g.user.correo)
     productos =get_all_available_productos_inverse()
-    return render_template('cafeteria/productos.html', productos = productos, usuario = user)
+    return render_template('cafeteria/productos.html', productos = productos)
 
 
 # CREATE PRODUCTO

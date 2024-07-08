@@ -1,54 +1,68 @@
-{% extends 'base.html' %}
+{% extends 'cafeteria/dashboard.html' %}
 
-{% block header %}
-    <h2>{% block title%}Lista de productos{% endblock %}</h2>
+{% block title %}
+<title>
+    ALINA - Productos
+</title>
 {% endblock %}
 
 {% block content %}
-    {% if 'ADMIN' in usuario.tipo_usuario.nombre.upper() %}
-    <div>
-        <a href={{ url_for('productos.create_producto') }}>Agregar un nuevo producto</a>
-    </div>
-    <div>
-        <a href={{ url_for('categorias.create_categoria') }}>Agregar una nueva categoria</a>
-    </div>
-    <div>
-        <a href="{{ url_for('tipo-productos.create_tipo')}}">Agregar un tipo de producto</a>
-    </div>
-    {% endif %}
 
     <h3>Productos disponibles:</h3>
-    <dl class="producto" >
+    <ul class="productos" >
         {% for producto in productos %}
-        <dt>
-            <b>{{ producto.nombre }} | {{ producto.categoria.nombre }}</b>
-            {% if 'ADMIN' in usuario.tipo_usuario.nombre.upper() %}
-            <a href="{{ url_for('productos.update_producto', id_producto = producto.id) }}">Modificar</a>
-            <a href="{{ url_for('productos.delete_producto', id_producto = producto.id) }}">Eliminar</a>
+        <li class="producto">
+            <div class="producto nombre">
+                <p>{{ producto.nombre }}</p>
+                <i>{{ producto.categoria.nombre }}</i>
+                <ul class="precios-producto">
+                    {% for precio in producto.precios %}
+                    {% if precio.status == 1 %}
+                    <li class="precio">
+                        <!-- precio.tipo = {Precio} -> {TipoProducto} -->
+                        <p>
+                           {{ precio.tipo_producto.nombre }} - ${{ precio.precio }}
+                        </p>
+                        {% if 'ADMIN' in g.user.tipo_usuario.nombre.upper() %}
+                        <div class="option">
+                            <a href="{{ url_for('precios.update_precio', id_producto = precio.id_producto, id_tipo_producto= precio.tipo_producto.id) }}">
+                                <img src="../../static/img/icons/edit.svg" alt="Modificar">
+                            </a>
+                        </div>
+                        <div class="option">
+                            <a href="{{ url_for('precios.delete_precio', id_producto = precio.id_producto, id_tipo_producto= precio.tipo_producto.id) }}">
+                                <img src="../../static/img/icons/delete.svg" alt="Eliminar">
+                            </a>
+                        </div>
+                        {% endif %}
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+            {% if 'ADMIN' in g.user.tipo_usuario.nombre.upper() %}
+            <div class="option">
+                <a href="{{ url_for('productos.update_producto', id_producto = producto.id) }}">
+                    <img src="../../static/img/icons/edit.svg" alt="Modificar">
+                </a>
+            </div>
+            <div class="option">
+                <a href="{{ url_for('productos.delete_producto', id_producto = producto.id) }}">
+                    <img src="../../static/img/icons/delete.svg" alt="Eliminar">
+                </a>
+            </div>
+            <div class="option">
+                <a href="{{ url_for('precios.create_precio', id_producto = producto.id) }}">
+                    <img src="../../static/img/icons/add.svg" alt="Agregar">
+                </a>
+            </div>
             {% endif %}
-        </dt>
+            
+        </li>
         
-        {% for precio in producto.precios %}
-        <ul>
-            {% if precio.status == 1 %}
-            <li>
-                <!-- precio.tipo = {Precio} -> {TipoProducto} -->
-                {{ precio.tipo_producto.nombre }} - ${{ precio.precio }}
-                {% if 'ADMIN' in usuario.tipo_usuario.nombre.upper() %}
-                <a href="{{ url_for('precios.update_precio', id_producto = precio.id_producto, id_tipo_producto= precio.tipo_producto.id) }}">Modificar</a>
-                <a href="{{ url_for('precios.delete_precio', id_producto = precio.id_producto, id_tipo_producto= precio.tipo_producto.id) }}">Eliminar</a>
-                {% endif %}
-            </li>
-            {% endif %}
-        </ul>
-        {% endfor %}
-
-        {% if 'ADMIN' in usuario.tipo_usuario.nombre.upper() %}
-        <a href="{{ url_for('precios.create_precio', id_producto = producto.id) }}">Agregar variacion</a>
-        {% endif %}
 
         {% endfor %} 
-    </dl>
+    </ul>
 
 {% endblock %}
 

@@ -12,8 +12,7 @@ def creditos():
 
 @app.route('/')
 def home():
-    if g.user:
-        return redirect(url_for('inicio.main'))
+    '''Página publica'''
     return render_template('home.html')
 
 def cafeteria_alina():

@@ -1,34 +1,43 @@
-{% extends 'base.html' %}
+{% extends 'cafeteria/dashboard.html' %}
 
-{% block header %}
-    <h2>{% block title%}Agregar producto{% endblock %}</h2>
+{% block title%}
+<title>
+    ALINA - Agregar producto
+</title>
 {% endblock %}
 
 {% block content %}
     <form method="POST" autocomplete="off">
-        <label for="nombre">Nombre producto: </label>
-        <input type="text" name="nombre" id="nombre" required>
+        <div class="campo">
+            <label for="nombre">Nombre producto: </label>
+            <input type="text" name="nombre" id="nombre" required>
+        </div>
         <br>
-        <label for="descripcion">Descripción: </label>
-        <textarea type="text" name="descripcion" id="descripcion" ></textarea>
-        <br>
-        <label for="categoria">Categoria</label>
-        <select name="categoria" id="categoria">
-            {% for categoria in categorias %}
-            <option value="{{ categoria.id }}">{{ categoria.nombre }}</option>
-            {% endfor %}
-        </select>
-        <a href="{{ url_for('categorias.create_categoria')}}">Crear una nueva categoria</a>
-
-        <br>
+        <div class="campo">
+            <label for="descripcion">Descripción: </label>
+            <textarea type="text" name="descripcion" id="descripcion" ></textarea>
+        </div>
+        <div class="campo">
+            <label for="categoria">Categoria</label>
+            <select name="categoria" id="categoria">
+                {% for categoria in categorias %}
+                <option value="{{ categoria.id }}">{{ categoria.nombre }}</option>
+                {% endfor %}
+            </select>
+            <div class="option">
+                <a  href="{{ url_for('categorias.create_categoria')}}">
+                    <img src="../../static/img/icons/add.svg" alt="Nueva categoria">
+                </a>
+            </div>
+        </div>
         <input type="submit" value="Agregar">
 
         <br>
-        <b>Productos disponibles</b>
-        <li>
-            {% for p in productos %}
-            <ul> {{ p.nombre }} - {{ p.categoria.nombre }}</ul>
-            {% endfor %}
-        </li>
     </form>
+    <b>Productos disponibles</b>
+    <ul>
+        {% for p in productos %}
+        <li> {{ p.nombre }} - {{ p.categoria.nombre }}</li>
+        {% endfor %}
+    </ul>
 {% endblock %}

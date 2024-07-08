@@ -1,9 +1,10 @@
-{% extends 'base.html' %}
+{% extends 'cafeteria/dashboard.html' %}
 
-{% block header %}
-    <h2>{% block title%}Sucursales{% endblock %}</h2>
+{% block title%}
+<title>
+    Agregar producto
+</title>
 {% endblock %}
-
 {% block content %}
     <div>
         <a href={{ url_for('sucursales.create_sucursal') }}>Agregar una nueva sucursal</a>
@@ -29,6 +30,13 @@
         </tr>
         {% endfor %}
     </table>
+    <h3>Galería</h3>
+    <div class="gallery">
+        <img src="../../static/img/photos/front-view.jpg" alt="front view" class="photograph">
+        <img src="../../static/img/photos/frutos-rojos.jpg" alt="front view" class="photograph">
+        <img src="../../static/img/photos/negocio.jpg" alt="front view" class="photograph">
+    </div>
+
 {% endblock %}
 
         

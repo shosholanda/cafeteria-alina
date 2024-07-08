@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('producto').addEventListener('change', changeID);
 });
 
+/* The fuck is this sort */
 window.onload = function(){
     const getCellValue = (tr, idx) => tr.children[idx].innerText || tr.children[idx].textContent;
 

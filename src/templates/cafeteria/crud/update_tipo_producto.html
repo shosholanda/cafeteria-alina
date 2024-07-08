@@ -1,26 +1,34 @@
-{% extends 'base.html' %}
+{% extends 'cafeteria/dashboard.html' %}
 
 {% block title%}
-Editar tipo
+<title>
+    ALINA - Editar tipo
+</title>
 {% endblock %}
 
-{% block header %}
-    <h2>Editar tipo de producto: <i>{{ tipo_producto.nombre }}</i></h2>
-{% endblock %}
 
 {% block content %}
+    <h2>Editar tipo de producto: <i>{{ tipo_producto.nombre }}</i></h2>
     <form method="POST" autocomplete="off">
-        <label for="nombre">Tipo del producto </label>
-        <input type="text" name="tipo" id="tipo" value="{{ tipo_producto.nombre}}" required> 
-        <br>
+        <div class="campo">
+            <label for="nombre">Tipo del producto </label>
+            <input type="text" name="tipo" id="tipo" value="{{ tipo_producto.nombre}}" required> 
+        </div>
         <input type="submit" value="Actualizar">
-
     </form>
-    <br>
     <b>Lista de tipos de producto</b>
-    <li>
-        {% for t in tipos %}
-        <ul>{{ t.nombre }} <a href="{{ url_for('tipo-productos.update_tipo', id_tipo_producto = t.id)}}">Modificar</a></ul>
-        {% endfor%}
-    </li>
+    <ul class="lista disponible">
+        {% for tipo_producto in tipo_productos %}
+        <li>
+            <div>
+                {{ tipo_producto.nombre }} 
+            </div>
+            <div class="option">
+                <a href="{{ url_for('tipo-productos.update_tipo', id_tipo_producto = tipo_producto.id)}}">
+                    <img src="../../static/img/icons/edit.svg" alt="Modificar tipo producto">
+                </a>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
 {% endblock %}

@@ -1,7 +1,9 @@
-{% extends 'base.html' %}
+{% extends 'cafeteria/dashboard.html' %}
 
-{% block header %}
-    <h2>{% block title%}Lista de Todos los precios {% endblock %}</h2>
+{% block title%}
+<title>
+    ALINA - Precios
+</title>
 {% endblock %}
 {% block script %}
     <script type="text/javascript" src="{{ url_for('static', filename='js/precios.js') }}"></script>
@@ -17,6 +19,7 @@
         {% endfor %}
     </select>
 
+    <hr>
     <!-- AAA Sort by column table -->
     <table>
         <tr>
