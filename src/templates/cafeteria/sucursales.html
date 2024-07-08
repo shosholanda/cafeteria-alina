@@ -1,0 +1,42 @@
+{% extends 'cafeteria/dashboard.html' %}
+
+{% block title%}
+<title>
+    Agregar producto
+</title>
+{% endblock %}
+{% block content %}
+    <div>
+        <a href={{ url_for('sucursales.create_sucursal') }}>Agregar una nueva sucursal</a>
+    </div>
+
+    <h3>Todas las sucursales</h3>
+    <table>
+        <tr>
+            <th>Nombre</th>
+            <th>Direccion</th>
+            <th>Inaguracion</th>
+            <th>Opciones</th>
+        </tr>
+        {% for sucursal in sucursales %}
+        <tr class="available">
+            <td>{{ sucursal.nombre }}</td>
+            <td>{{ sucursal.direccion() }}</td>
+            <td>{{ sucursal.fecha_inaguracion }}</td>
+            <td>
+                <a href="{{ url_for('sucursales.update_sucursal', id_sucursal = sucursal.id )}}">Modificar</a>
+                <a href="{{ url_for('sucursales.delete_sucursal', id_sucursal = sucursal.id )}}">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <h3>Galería</h3>
+    <div class="gallery">
+        <img src="../../static/img/photos/front-view.jpg" alt="front view" class="photograph">
+        <img src="../../static/img/photos/frutos-rojos.jpg" alt="front view" class="photograph">
+        <img src="../../static/img/photos/negocio.jpg" alt="front view" class="photograph">
+    </div>
+
+{% endblock %}
+
+        

@@ -1,0 +1,46 @@
+{% extends 'cafeteria/dashboard.html' %}
+
+{% block title%}
+<title>
+    ALINA - Crear gasto
+</title>
+{% endblock %}
+{% block content %}
+    <form method="POST" autocomplete="off">
+
+        <div class="campo">
+            <label for="sucursal">Sucursal</label>
+            <select name="sucursal" id="sucursal">
+                {% for sucursal in sucursales %}
+                <option value="{{ sucursal.id }}">{{ sucursal.nombre }}</option>
+                {% endfor %}
+            </select>
+            <a href="{{ url_for('sucursales.main')}}">Ver sucursales</a>
+        </div>
+        <div class="campo">
+            <label for="nombre">Nombre del pago </label>
+            <input type="text" name="nombre" id="nombre" required> 
+        </div>
+        <div class="campo">
+            <label for="tipo_gasto">Tipo</label>
+            <select name="tipo_gasto" id="tipo_gasto">
+                {% for tipo_gasto in tipo_gastos %}
+                <option value="{{ tipo_gasto.id }}">{{ tipo_gasto.nombre }}</option>
+                {% endfor %}
+            </select>
+            <div class="option">
+                <a href="{{ url_for('tipo-gastos.create_tipo')}}">
+                    <img src="../../static/img/icons/add.svg" alt="Crear tipo gasto">
+                </a>
+            </div>
+        </div>
+        <div class="campo">
+            <label for="cantidad">Monto $</label>
+            <input type="text" name="cantidad" id="cantidad"  required>
+        </div>
+
+        <input type="submit" value="Agregar">
+
+    </form>
+    
+{% endblock %}

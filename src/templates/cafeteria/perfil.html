@@ -1,0 +1,34 @@
+{% extends 'cafeteria/dashboard.html' %}
+
+
+{% block title %}
+<title> 
+ALINA - Perfil 
+</title>
+{% endblock %}
+
+{% block content %}
+    <h3>{{ usuario. nombre }} {{ usuario.apellido_paterno }} {{ usuario.apellido_materno }}</h3>
+    
+    <div class=".form">
+        <div class="campo">
+            <label for="nombre"><b>Correo</b></label>
+            <input type="text" value="{{ usuario.correo }}" disabled>
+        </div>
+        
+        <div class="campo">
+            <b>Nacimiento</b> {{ usuario.fecha_nacimiento }}
+        </div>
+    </div>
+    
+    {% if 'ADMIN' in usuario.tipo_usuario.nombre.upper() %}
+    <div>
+        <b>Tipo usuario</b> {{usuario.tipo_usuario.nombre}}
+    </div>
+    <div>
+        <b>Sucursal</b> {{ usuario.sucursal.nombre }}
+    </div>
+    {% endif %}
+    <a class="lightbutton" href="{{ url_for('perfil.update_usuario')}}">Actualizar información</a>
+    
+{% endblock %}

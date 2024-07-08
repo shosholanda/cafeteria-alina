@@ -1,0 +1,45 @@
+{% extends 'cafeteria/dashboard.html' %}
+
+{% block title%}
+<title>
+    ALINA - Crear tipo gasto
+</title>
+{% endblock %}
+
+{% block content %}
+    <form method="POST" autocomplete="off">
+
+        <div class="campo">
+            <label for="nombre">Tipo de gasto </label>
+            <input type="text" name="nombre" id="nombre" required> 
+        </div>
+        <div class="campo">
+            <label for="descripcion">Descripcion del gasto</label>
+            <textarea name="descripcion" id="descripcion"></textarea> 
+        </div>
+        <input type="submit" value="Agregar">
+
+    </form>
+    <br>
+    <b>Lista de tipos de gasto</b>
+    <ul class="lista disponible">
+        {% for tipo_gasto in tipo_gastos %}
+        <li>
+            <div>
+                {{ tipo_gasto.nombre }} 
+            </div>
+            <div class="option">
+                <a href="{{ url_for('tipo-gastos.update_tipo_gasto', id_tipo_gasto = tipo_gasto.id )}}">
+                    <img src="../../static/img/icons/edit.svg" alt="Modificar tipo producto">
+                </a>
+            </div>
+            <div class="option">
+                <a href="{{ url_for('tipo-gastos.delete_tipo_gasto', id_tipo_gasto = tipo_gasto.id )}}">
+                    <img src="../../static/img/icons/delete.svg" alt="Modificar tipo producto">
+                </a>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    
+{% endblock %}

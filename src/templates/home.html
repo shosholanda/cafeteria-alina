@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>
+    Cafetería ALINA
+</title>
+{% endblock %}
+
+{% block header %}
+<img class="center" src="../../static/img/alpha/alina.png" alt="Logo cafetería" class="logo">
+{% endblock %}
+
+{% block content %}
+    <div class="login">
+        <h2>¡Bienvenido usuario!</h2>
+        <a class="lightbutton" href="{{ url_for('auth.iniciar_sesion') }}">Iniciar sesion</a>
+        <a class="lightbutton" href="{{ url_for('auth.registrar_usuario')}}">Crear nueva cuenta</a>
+    </div>
+    
+{% endblock %}

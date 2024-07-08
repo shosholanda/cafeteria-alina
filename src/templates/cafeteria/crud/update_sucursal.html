@@ -1,0 +1,48 @@
+{% extends 'cafeteria/dashboard.html' %}
+
+{% block title%}
+<title>
+    ALINA - Editar sucursal
+</title>
+{% endblock %}
+
+
+{% block content %}
+    <h3>Modificar sucursal</h3>
+    <form method="POST" autocomplete="off">
+        <div class="campo">
+            <label for="nombre">Nombre</label>
+            <input type="text" name="nombre" value="{{ sucursal.nombre }}"required> 
+        </div>
+        <div class="campo">
+            <label for="calle">Calle</label>
+            <input type="text" name="calle" value="{{ sucursal.calle}}" required> 
+        </div>
+        <div class="campo">
+            <label for="numero">Número exterior</label>
+            <input type="text" name="numero" value="{{ sucursal.numero }}" required> 
+        </div>
+        <div class="campo">
+            <label for="colonia">Colonia</label>
+            <input type="text" name="colonia" value="{{ sucursal.colonia }}" required> 
+        </div>
+        <div class="campo">
+            <label for="municipio">Municipio</label>
+            <input type="text" name="municipio" value="{{ sucursal.municipio }}" required> 
+        </div>
+        <div class="campo">
+            <label for="ciudad">Ciudad</label>
+            <input type="text" name="ciudad" value="{{ sucursal.ciudad}}" required> 
+        </div>
+        <div class="campo">
+            <label for="pais">País</label>
+            <input type="text" name="pais" value="{{ sucursal.pais }}" required> 
+        </div>
+        <div class="campo">
+            <label for="fecha">Fecha de inaguración</label>
+            <input type="date" name="fecha" value="{{ sucursal.fecha_inaguracion }}" required> 
+        </div>
+        <input type="submit" value="Editar">
+
+    </form>
+{% endblock %}

@@ -1,4 +1,4 @@
-from cafeteria_alina import app
+from src import app
 
 from flask import (
     render_template, g, redirect, request, session, url_for
@@ -12,8 +12,7 @@ def creditos():
 
 @app.route('/')
 def home():
-    if g.user:
-        return redirect(url_for('inicio.main'))
+    '''Página publica'''
     return render_template('home.html')
 
 def cafeteria_alina():

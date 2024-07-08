@@ -1,0 +1,44 @@
+{% extends 'cafeteria/dashboard.html' %}
+
+{% block title%}
+<title>
+    ALINA - Actualizar tipo gasto
+</title>
+{% endblock %}
+
+{% block content %}
+    <h3>Actualizar tipo de gasto</h3>
+    <form method="POST" autocomplete="off">
+        <div class="campo">
+            <label for="nombre">Nuevo nombre</label>
+            <input type="text" name="nombre" id="nombre" value="{{ gasto.nombre }}" required> 
+        </div>
+
+        <div class="campo">
+            <label for="descripcion">Nueva descripcion</label>
+            <textarea name="descripcion" id="descripcion">{{ gasto.descripcion }}</textarea> 
+        </div>
+        <input type="submit" value="Agregar">
+    </form>
+    <br>
+    <b>Lista de tipos de gasto</b>
+    <ul class="lista disponible">
+        {% for tipo_gasto in tipo_gastos %}
+        <li>
+            <div>
+                {{ tipo_gasto.nombre }} 
+            </div>
+            <div class="option">
+                <a href="{{ url_for('tipo-gastos.update_tipo_gasto', id_tipo_gasto = tipo_gasto.id )}}">
+                    <img src="../../static/img/icons/edit.svg" alt="Modificar tipo producto">
+                </a>
+            </div>
+            <div class="option">
+                <a href="{{ url_for('tipo-gastos.delete_tipo_gasto', id_tipo_gasto = tipo_gasto.id )}}">
+                    <img src="../../static/img/icons/delete.svg" alt="Modificar tipo producto">
+                </a>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

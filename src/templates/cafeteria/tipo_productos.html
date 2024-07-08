@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h2>{% block title%}Todos los tipos de producto{% endblock %}</h2>
+{% endblock %}
+
+{% block content %}
+    <p>Lista de todos los tipos de producto. Si el status es 0 solo hay q activarlo</p>
+
+    <form method="POST" autocomplete="off">
+
+        {% for tipo in tipo_productos %}
+        <div>
+            <label for="status">{{ tipo.nombre }}</label>
+            
+            {% if tipo.status %}
+            <input type="checkbox" name="status" checked>
+            {% else %}
+            <input type="checkbox" name="status" >
+            {% endif %}
+            <a href="{{ url_for('tipo-productos.update_tipo', id_tipo_producto = tipo.id) }}">Modificar</a>
+        </div>
+        {% endfor %}
+    </form>
+{% endblock %}
+

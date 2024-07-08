@@ -20,7 +20,7 @@ nohup waitress-serve --host localhost --port=5000 --call main:cafeteria_alina > 
 
 # Wait for the server to start
 date
-sleep 5
+sleep 2
 
 # Check if the server is running
 if ps aux | grep 'waitress-serve' | grep -v 'grep'; then

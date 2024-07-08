@@ -1,0 +1,39 @@
+{% extends 'cafeteria/dashboard.html' %}
+
+{% block title%}
+<title>
+    Gastos
+</title>
+{% endblock %}
+{% block content %}
+    <h4>Gastos de la semana</h4>
+    {% if total %}
+    <p>Total: ${{ total }}</p>
+    {% else %}
+    <p>Sin gastos todavía</p>
+    {% endif %}
+    <table>
+        <tr>
+            <th>Gasto</th>
+            <th>Tipo</th>
+            <th>Cantidad</th>
+            <th>Fecha</th>
+            <th>Sucursal</th>
+            <th>Opciones</th>
+        </tr>
+        {% for gasto in gastos %} 
+        <tr>
+            <td>{{ gasto.nombre }}</td>
+            <td>{{ gasto.tipo_gasto.nombre }}</td>
+            <td>${{ gasto.cantidad }}</td>
+            <td>{{ gasto.fecha.strftime('%a %d, %B %Y - %H:%M:%S %p') }}</td>
+            <td>{{ gasto.sucursal.nombre }}</td>
+            <td>
+                <a href="{{ url_for('gastos.update_gasto', id_gasto = gasto.id) }}">Modificar</a>
+                <a href="{{ url_for('gastos.delete_gasto', id_gasto = gasto.id) }}">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+{% endblock %}

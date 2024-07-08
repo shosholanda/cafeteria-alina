@@ -1,0 +1,44 @@
+{% extends 'cafeteria/dashboard.html' %}
+
+{% block title %}
+<title>
+    ALINA - Carrito
+</title>
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript" src="{{ url_for('static', filename='js/carrito.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+    <!-- Carrito de compras -->
+
+    <div class="params">
+        <label for="producto">Producto</label>
+        <select name="producto" id="producto">
+            {% for producto in productos %}
+            <option value="{{ producto.id }}">{{ producto.nombre }} - {{ producto.categoria.nombre }}</option>
+            {% endfor %}
+        </select>
+    
+        <label for="tipo">Tipo de producto</label>
+        <select name="tipo" id="tipo">
+            <!-- Se añadiran dinámicamente los tipos dependiendo del producto -->
+        </select>
+    
+        <label for="cantidad">Cantidad</label>
+        <input type="text" name="cantidad" id="cantidad" class="short-input" required="True" autocomplete="off">
+        <div class="option" id="agregar">
+            <img src="../../static/img/icons/add.svg" alt="Modificar categoria">
+        </div>
+    </div>
+    <div id="cart" class="cart">
+
+        <!-- Aqui irán los productos agregados SIN agregar a la bdd -->
+    </div>
+    <div class="params">
+        <label for="total">Total $</label>
+        <input type="text" name="total" id="total" disabled>
+        <input type="submit" value="Comprar" id="comprar">
+    </div>
+{% endblock %}

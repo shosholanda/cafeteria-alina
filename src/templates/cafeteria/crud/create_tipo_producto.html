@@ -1,0 +1,34 @@
+{% extends 'cafeteria/dashboard.html' %}
+
+{% block title%}
+<title>
+    ALINA - Agregar tipo
+</title>
+{% endblock %}
+
+{% block content %}
+    <h2>Crear tipos de producto</h2>
+    <form method="POST" autocomplete="off">
+        <div class="campo">
+            <label for="nombre">Tipo del producto </label>
+            <input type="text" name="tipo" id="tipo" required> 
+        </div>
+        <input type="submit" value="Agregar">
+    </form>
+    <br>
+    <b>Lista de tipos de producto</b>
+    <ul class="lista disponible">
+        {% for tipo_producto in tipo_productos %}
+        <li>
+            <div>
+                {{ tipo_producto.nombre }} 
+            </div>
+            <div class="option">
+                <a href="{{ url_for('tipo-productos.update_tipo', id_tipo_producto = tipo_producto.id)}}">
+                    <img src="../../static/img/icons/edit.svg" alt="Modificar tipo producto">
+                </a>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
