@@ -28,5 +28,5 @@ class TipoUsuario(db.Model):
 
     # Representación en cadena
     def __repr__(self) -> str:
-        return f'tipo: {self.nombre}'
+        return f'{self.nombre}'
 

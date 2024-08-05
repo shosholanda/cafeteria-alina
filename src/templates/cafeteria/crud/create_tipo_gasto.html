@@ -8,10 +8,12 @@
 
 {% block content %}
     <form method="POST" autocomplete="off">
-
+        <h3>Crear tipo de gasto</h3>
         <div class="campo">
-            <label for="nombre">Tipo de gasto </label>
-            <input type="text" name="nombre" id="nombre" required> 
+            <div>
+                <label for="nombre">Tipo de gasto </label>
+                <input type="text" name="nombre" id="nombre" required> 
+            </div>
         </div>
         <div class="campo">
             <label for="descripcion">Descripcion del gasto</label>
@@ -26,7 +28,11 @@
         {% for tipo_gasto in tipo_gastos %}
         <li>
             <div>
+                {% if not tipo_gasto.status %}
+                <i><s>{{ tipo_gasto.nombre }} </s></i>
+                {% else %}
                 {{ tipo_gasto.nombre }} 
+                {% endif %}
             </div>
             <div class="option">
                 <a href="{{ url_for('tipo-gastos.update_tipo_gasto', id_tipo_gasto = tipo_gasto.id )}}">
@@ -35,7 +41,7 @@
             </div>
             <div class="option">
                 <a href="{{ url_for('tipo-gastos.delete_tipo_gasto', id_tipo_gasto = tipo_gasto.id )}}">
-                    <img src="../../static/img/icons/delete.svg" alt="Modificar tipo producto">
+                    <img src="../../static/img/icons/delete.svg" alt="Eliminar tipo producto">
                 </a>
             </div>
         </li>

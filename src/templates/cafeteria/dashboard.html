@@ -7,14 +7,11 @@
 </title>
 {% endblock %}
 
-
 {% block header %}
     <div class="encabezado">
         <div class="icon">
             <a href="{{ url_for('inicio.main' ) }}">
-                <div>
-                    <img src="../../static/img/icons/home.svg" alt="Home">
-                </div>
+                <img src="../../static/img/icons/home.svg" alt="Home">
             </a>
         </div>
         <div>
@@ -46,9 +43,16 @@
                     <a href="{{ url_for('tipo-productos.create_tipo')}}">Agregar un tipo de producto</a>
                 </div>
                 {% endif %}
-                
             </li>
-            {% if 'ADMIN' in g.user.tipo_usuario.nombre.upper() %}
+            {% if 'Trabajador' == session['tipo_usuario'] %}
+            <li>
+                <a href="{{ url_for('ventas.main') }}">Ventas</a>
+            </li>
+            <li>
+                <a href="{{ url_for('ventas.create_venta') }}">Nueva venta</a>
+            </li>
+            {% endif %}
+            {% if 'ADMIN' in session.get('tipo_usuario').upper() %}
             <li>
                 <a href="{{ url_for('ventas.main') }}">Ventas</a>
                 <div>
@@ -71,6 +75,9 @@
             </li>
             <li>
                 <a href="{{ url_for('sucursales.main') }}">Sucursales</a>
+                <div>
+                    <a href="{{ url_for('sucursales.create_sucursal')}}">Añadir una nueva sucursal</a>
+                </div>
             </li>
             <li>
                 <a href="{{ url_for('ayuda.main') }}">Ayuda</a>
@@ -83,5 +90,4 @@
 
 {% block content %}
 
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima dolores reprehenderit, voluptates laudantium eius repellendus aliquam! Illum quaerat unde officiis ut soluta laudantium, eos ea vel? Ipsam nostrum fugiat cupiditate.</p>
 {% endblock %}

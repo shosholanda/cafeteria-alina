@@ -21,8 +21,7 @@ class Venta(db.Model):
     # Total de la transacción aplicando el IVA
     total = db.Column('total', db.Float(2), nullable = False)
     # Fecha y hora de la transacción
-    dt = datetime.datetime.now()
-    fecha  = db.Column('fecha', db.DateTime, default = dt)
+    fecha  = db.Column('fecha', db.DateTime)
 
     #Venta.usuario => Usuario() & Usuario.ventas => Venta()
     usuario = db.relationship('Usuario', back_populates='ventas')
@@ -36,6 +35,7 @@ class Venta(db.Model):
         self.total = total
         self.id_usuario = id_usuario
         self.id_sucursal = id_sucursal
+        self.fecha = datetime.datetime.now()
 
     # Representación en cadena
     def __repr__(self) -> str:

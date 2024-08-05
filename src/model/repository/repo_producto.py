@@ -10,6 +10,10 @@ def get_producto(nombre):
     '''Regresa un producto de la base de datos por cadena'''
     return Producto.query.filter(Producto.nombre == nombre).first()
 
+def get_all_productos():
+    '''Regresa todos los productos registrados'''
+    return Producto.query.all()
+
 def get_producto_and_categoria(nombre, categoria):
     # AAA debemos buscar producto que coincida por grupo y producto
     '''Regresa un producto de la base de datos por cadena'''

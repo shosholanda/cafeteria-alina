@@ -10,15 +10,27 @@
     <h3>Actualizar tipo de gasto</h3>
     <form method="POST" autocomplete="off">
         <div class="campo">
-            <label for="nombre">Nuevo nombre</label>
-            <input type="text" name="nombre" id="nombre" value="{{ gasto.nombre }}" required> 
+            <div>
+                <label for="nombre">Nuevo nombre</label>
+                <input type="text" name="nombre" id="nombre" value="{{ gasto.nombre }}" required> 
+            </div>
         </div>
 
         <div class="campo">
             <label for="descripcion">Nueva descripcion</label>
             <textarea name="descripcion" id="descripcion">{{ gasto.descripcion }}</textarea> 
         </div>
-        <input type="submit" value="Agregar">
+        <div class="campo">
+            <div>
+                <label for="status">Status</label>
+                {% if gasto.status %}
+                <input type="checkbox" name="status" id="status" checked autocomplete="off">
+                {% else %}
+                <input type="checkbox" name="status" id="status" autocomplete="off">
+                {% endif %}
+            </div>
+        </div>
+        <input type="submit" value="Actualizar">
     </form>
     <br>
     <b>Lista de tipos de gasto</b>
@@ -26,7 +38,11 @@
         {% for tipo_gasto in tipo_gastos %}
         <li>
             <div>
+                {% if not tipo_gasto.status %}
+                <i><s>{{ tipo_gasto.nombre }} </s></i>
+                {% else %}
                 {{ tipo_gasto.nombre }} 
+                {% endif %}
             </div>
             <div class="option">
                 <a href="{{ url_for('tipo-gastos.update_tipo_gasto', id_tipo_gasto = tipo_gasto.id )}}">

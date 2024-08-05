@@ -1,17 +1,16 @@
-{% extends 'base.html' %}
+{% extends 'home.html' %}
 
 {% block title %}
-Registro exitoso
+ <title>
+    Registro exitoso
+</title>
 {% endblock %} 
 
-{% block header %}
-    <div>
-        <h4> Cuenta creada con éxito! </h4>
-    </div>
-{% endblock %}
-
 {% block content %}
-    <div>
-        <a href="{{ url_for('auth.cerrar_sesion' ) }}">Regresar</a>
+    <div class="container">
+        <h3>Cuenta creada con éxito! Inicia sesion nuevamente</h3>
+        <div>
+            <a class="lightbutton" href="{{ url_for('auth.cerrar_sesion' ) }}">Regresar</a>
+        </div>
     </div>
 {% endblock %}

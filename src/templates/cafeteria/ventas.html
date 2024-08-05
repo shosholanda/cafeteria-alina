@@ -7,6 +7,8 @@
 {% endblock %}
 
 {% block content %}
+<div class="container">
+
     <h4>Ventas de hoy</h4>
     {% if total %}
     <p>Acumulado: ${{ total }}</p>
@@ -15,16 +17,38 @@
     {% endif %}
     <table>
         <tr>
-            <th>Referencia</th>
+            <th>#</th>
+            <th>Productos</th>
             <th>Total</th>
-            <th>Fecha</th>
+            <th>Opciones</th>
+            <th>Hora</th>
         </tr>
         {% for venta in ventas %} 
         <tr>
             <td>{{ venta.referencia }}</td>
+            <td>
+                <ul style="padding: 10px; margin: 0;">
+                    {% for trans in venta.transacciones %}
+                    <li>
+                        <!-- # AAA acomodarlo mejor -->
+                        <i>{{ trans.tipo[:2]}} /</i>
+                        ${{ trans.precio }}
+                        {{ trans.producto }}
+                        <b>(x{{ trans.cantidad }})</b>
+                        <br>
+                        = ${{ trans.subtotal }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </td>
             <td>${{ venta.total }}</td>
-            <td>{{ venta.fecha }}</td>
+            <td>
+                <a href="{{ url_for('ventas.delete_venta', id_referencia = venta.referencia) }}">Eliminar</a>
+            </td>
+            <td>{{ venta['fecha'].split(' ')[1] }}</td>
         </tr>
         {% endfor %}
     </table>
+
+</div>
 {% endblock %}

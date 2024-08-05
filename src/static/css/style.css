@@ -6,27 +6,59 @@
 * {
     box-sizing: border-box;
 }
+
 body {
-    background-color: #fbfcfc;
     background-image: url(../img/alpha/background.png);
     background-size: 30vh;
-    /* background-attachment: fixed; */
     margin: 0;
+
+    /* body será de todo el tamaño */
+    min-height: 100vh;
+    /* Los contenidos serán en columna */
+    display: flex;
+    flex-direction: column;
 }
 
 h1 {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    text-align: center;
+    display: inline;
+    justify-content: center;
+    margin-bottom: 0;
+}
+
+hr {
+    margin-top: 0;
 }
 
 main {
     margin: 20px;
+    margin-top: 0;
+    flex-grow: 1;
+}
+
+select {
+    max-width: 15em;
+    min-width: 5em;
+}
+
+input {
+    max-width: 10em;
 }
 
 footer {
+    width: 100%;
     background-color: #29261F;
     text-align: center;
     color: white;
+}
+
+section div{
+    margin: 10px;
+    background-color: beige;
+    padding: 5px;
+    text-align: center;
+    font-style: italic;
+    align-self: center;
 }
 
 .encabezado {
@@ -35,11 +67,9 @@ footer {
 }
 
 .encabezado div{
-    display: block;
-}
-
-.encabezado a{
     text-align: center;
+    padding-top: .5em;
+    padding-bottom: .5em;
 }
 
 .clearfix::after {
@@ -56,8 +86,8 @@ footer {
 
 .icon{
     text-align: center;
-    padding: 1em;
     cursor: pointer;
+    margin: 0.1em;
 }
 
 .gallery {
@@ -83,7 +113,7 @@ footer {
 */
 
 .lightbutton{
-    background-color: hsla(137, 32%, 74%, 0.776);
+    background-color: hsl(138, 32%, 74%);
     border-radius: 20px;
     text-decoration: none;
     padding: 15px;
@@ -95,11 +125,11 @@ footer {
 }
 
 .lightbutton:hover {
-    background-color: hsla(137, 59%, 86%, 0.217);
+    background-color: hsl(137, 26%, 69%)
 }
 
 .short-input{
-    width: 40px;
+    width: 5em;
 }
 
 /**
@@ -107,13 +137,32 @@ footer {
 * NAVBAR
 * ############################################################################
 */
+
+.navbar{
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: medium;
+}
+
+/* the elements in the navbar */
+.navbar > ul{
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    overflow-x: auto;
+    background-color: #8F7460;
+}
+
+/* alinear de izquierda a derecha los elementos del nav */
+.navbar li{
+    float: left;
+}
+
 .navbar li > a {
     color: white;
     text-decoration: none;
-    padding: 15px;
+    padding: 0.5em;
     display: block;
     text-align: center;
-    font-family: serif;
     cursor: pointer;
 }
 
@@ -123,7 +172,6 @@ footer {
     color: white;
     text-decoration: none;
     text-align: center;
-    font-family: serif;
     position: absolute;
     box-shadow: 2px 2px 5px hsla(0, 0%, 0%, 0.525);
     display: none;
@@ -140,20 +188,6 @@ footer {
     display: block;
 }
 
-
-.navbar {
-    border: 1px solid;
-}
-
-/* the elements in the navbar */
-.navbar ul{
-    list-style-type: none;
-    background-color: #8F7460;
-    padding: 0px;
-    margin: 0px;
-    overflow:auto;
-}
-
 /* Cambio de color on hover */
 .navbar a:hover {
     background-color: #58473a;  
@@ -163,10 +197,6 @@ footer {
     display: block;
 }
 
-/* alinear de izquierda a derecha los elementos del nav */
-.navbar li{
-    float: left;
-}
 
 /**
 * ############################################################################
@@ -177,7 +207,7 @@ footer {
 /* Productos carro */
 .item {
     width: 250px;
-    height: 250px;
+    max-height: 250px;
     background-color: #c5f0d1;
     margin: 10px;
     text-align: center;
@@ -186,6 +216,22 @@ footer {
     border-style: solid;
     border-radius: 10px;
     overflow: scroll;
+}
+
+.item > *{
+    margin: 2px;
+}
+
+.container {
+    margin: 15px
+}
+
+.bold {
+    font-weight: bold
+}
+
+.item div > div{
+    display: inline-block;
 }
 
 .cart {
@@ -203,7 +249,6 @@ footer {
 table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
-    width: 90%;
 }
 
 th {
@@ -217,6 +262,10 @@ td  {
     border: 2px solid hsl(0, 0%, 80%);
     text-align: left;
     padding: 8px;
+}
+
+tr {
+    font-size: small;
 }
 
 tr:nth-child(odd) {
@@ -245,20 +294,22 @@ tr:nth-child(even) {
 }
 
 .producto {
-    min-width: 200px;
-    max-width: 400px;
+    min-width: 9em;
+    max-width: 19em;
     overflow: hidden;
     border: 1px solid;
     border-radius: 10px;
     text-align: left;
+    font-size: small;
     cursor: pointer;
     background-color: hsl(137, 100%, 95%);
     display: flex;
-    padding: 10px;
+    padding: 5px;
 }
 
 .producto.nombre {
     display: block;
+    border-radius: 0;
     text-align: left;
     padding: 0;
     border: none;
@@ -271,7 +322,6 @@ tr:nth-child(even) {
 
 .producto > div:hover {
     background-color: #c5f0d1;
-    border-radius: 10px;
 }
 
 .producto:hover .precios-producto{
@@ -294,11 +344,6 @@ tr:nth-child(even) {
     justify-content: space-between;
 }
 
-.lista.disponible > li {
-    display: flex;
-    align-items: center;
-}
-
 /**
 * ############################################################################
 * OTHERS
@@ -306,39 +351,44 @@ tr:nth-child(even) {
 */
 
 form {
+    width: 60%;
     display: flex;
     flex-direction: column;
     padding: 10px;
     background-color: #c5f0d1;
-    margin: 10px;
+    margin: auto;
+    margin-bottom: 10px;
 }
 
 form .campo {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     margin: 5px;
-    justify-content: flex-start;
 }
 
 form label{
-    width: 40%;
-    text-align: right;
-}
-
-form .campo > input {
-    width: 30%;
+    float: left;
     text-align: left;
+    margin: 5px;
 }
 
 form > input{
-    width: 20%;
-    position: relative;
+    position: static;
     text-align: center;
+    min-width: 7em;
+    max-width: 15em;
+    margin: 5px;
+    margin-left: auto;
+}
+
+form textarea {
+    height: 5em;
+    resize: none;
 }
 
 .params {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
     border-radius: 5px;
     padding: 5px;
@@ -351,6 +401,7 @@ form > input{
     text-decoration: none;
     display: flex;
     justify-content: left;
+    align-items: center;
     padding: 5px
 }
 
@@ -362,9 +413,108 @@ form > input{
     background-color: hsl(137, 100%, 95%);
 }
 
+.campos {
+    background-color: #c5f0d1;
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    text-align: left;
+}
+
+.campos a{
+    text-align: center
+}
+
+.campo {
+    margin: 5px;
+}
+
+.lista {
+    list-style-type: disc;
+    display: flex;
+    flex-direction: column;
+}
+
+.lista > li{
+    display: flex;
+    align-items: center;
+}
+
 .center {
-    display: block;
+    display: flex;
+    align-items: center;
     margin-left: auto;
     margin-right: auto;
+}
+
+.resumen {
+    display: flex;
     text-align: center;
+    justify-content: space-evenly;
+    font-weight: bold;
+    font-size: small;
+    padding: 10px;
+}
+
+.inactive {
+    /* when status = 0 */
+    background-color: hsl(0, 0%, 80%);
+}
+
+.gain{
+    color: green;
+}
+
+.lose{
+    color: red;
+}
+
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+    form {
+        width: 100%;
+        margin: 0;
+    }
+
+    main {
+        margin: 0;
+        padding: 0;
+    }
+
+    .center {
+        padding: 10px;
+        width: 100%;
+    }
+
+    table {
+        margin-bottom: 10px;
+        width: 100%;
+    }
+
+    th, tr, td {
+        padding: 3px;
+        font-size: smaller;
+    }
+
+    .params {
+        background-color: #c5f0d1;
+        margin-left: 0;
+        margin-right: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .campo {
+        margin: 3px;
+    }
+
+    .item {
+        margin: 5px;
+        width: 70%;
+    }
+
+    .cart {
+        min-height: 10px;
+        justify-content: center;
+    }
 }

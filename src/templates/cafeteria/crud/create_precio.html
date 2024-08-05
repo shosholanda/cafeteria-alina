@@ -1,36 +1,53 @@
-{% extends 'base.html' %}
+{% extends 'cafeteria/dashboard.html' %}
 
-{% block header %}
-    <h2>{% block title%}Agregar variación{% endblock %}</h2>
+{% block title%}
+<title>
+    ALINA - Agregar precio
+</title>
 {% endblock %}
 
 {% block content %}
-    <h3>{{producto.categoria.nombre }} - {{ producto.nombre }}</h3>
-    
-    <form method="POST" autocomplete="off">
-        <label for="tipo">Tipo de producto</label>
-        <select name="tipo" id="tipo">
-            {% for tipo in tipos %}
-            <option value="{{ tipo.id }}">{{ tipo.nombre }}</option>
-            {% endfor %}
-        </select>
-        <a href="{{ url_for('tipo-productos.create_tipo') }}">Agregar tipo de producto</a>
-        <br>
-        <label for="precio">Nuevo precio</label>
-        <input type="text" name="precio" id="precio" required>
-        <br>
 
+<h3>{{producto.categoria.nombre }} - {{ producto.nombre }}</h3>
+    <form method="POST" autocomplete="off">
+        <b>Agregar una nueva variación</b>
+        <div class="campo">
+            <div>
+                <label for="tipo">Tipo de producto</label>
+                <select name="tipo" id="tipo">
+                    {% for tipo in tipos %}
+                    <option value="{{ tipo.id }}">{{ tipo.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="campo">
+            <div>
+                <label for="precio">Nuevo precio</label>
+                <input type="text" class="short-input" name="precio" id="precio" required>
+            </div>
+        </div>
         <input type="submit" value="Agregar">
     </form>
 
     <b>Lista de todos los tipos disponibles con precios</b>
-    <li>
+    <ul class="lista">
         {% for p in precios %}
-        <ul>
-            {{ p }} 
-            <a href="{{ url_for('precios.update_precio', id_producto = p.producto.id, id_tipo_producto = p.tipo_producto.id)}}">Modificar</a>
-            <a href="{{ url_for('precios.delete_precio', id_producto = p.producto.id, id_tipo_producto = p.tipo_producto.id)}}">Elimnar</a>
-        </ul>
-        {% endfor %}
-    </li>
+        <li>
+            <div>
+                {{ p.tipo_producto }} : ${{ p.precio }} 
+            </div>
+            <div class="option">
+                <a href="{{ url_for('precios.update_precio', id_producto = p.producto.id, id_tipo_producto = p.tipo_producto.id)}}">
+                    <img src="../../static/img/icons/edit.svg" alt="Modificar precio">
+                </a>
+            </div>
+            <div class="option">
+                <a href="{{ url_for('precios.delete_precio', id_producto = p.producto.id, id_tipo_producto = p.tipo_producto.id)}}">
+                    <img src="../../static/img/icons/delete.svg" alt="Eliminar precio">
+                </a>
+            </div>
+            {% endfor %}
+        </li>
+    </ul>
 {% endblock %}

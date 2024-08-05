@@ -7,28 +7,42 @@ ALINA - Perfil
 </title>
 {% endblock %}
 
+{% block script %}
+    <script type="text/javascript" src="{{ url_for('static', filename='js/perfil.js') }}"></script>
+{% endblock %}
+
 {% block content %}
+<div class="container">
+
     <h3>{{ usuario. nombre }} {{ usuario.apellido_paterno }} {{ usuario.apellido_materno }}</h3>
-    
-    <div class=".form">
+    <div class="campos">
         <div class="campo">
-            <label for="nombre"><b>Correo</b></label>
-            <input type="text" value="{{ usuario.correo }}" disabled>
+            <b>Correo</b> {{ usuario.correo }}
         </div>
         
         <div class="campo">
             <b>Nacimiento</b> {{ usuario.fecha_nacimiento }}
         </div>
+        
+        {% if 'ADMIN' in usuario.tipo_usuario.nombre.upper() %}
+        <div class="campo">
+            <b>Tipo usuario</b> {{usuario.tipo_usuario.nombre}}
+        </div>
+        <div class="campo">
+            <b>Sucursal</b> {{ usuario.sucursal.nombre }}
+        </div>
+        {% endif %}
+        <a class="lightbutton" href="{{ url_for('perfil.update_usuario', correo = g.user.correo )}}">Actualizar información</a>
+        <br>
+
+        {% if 'ADMIN' in usuario.tipo_usuario.nombre.upper() %}
+        <div class="campo">
+            <label for="buscador">Buscar usuario</label>
+            <input type="text" id="buscador" autocomplete="off" >
+        </div>
+        <a class="lightbutton" id="administrate" href="{{ url_for('perfil.main') }}" data-url-base="{{ url_for('perfil.update_usuario', correo = correo)}}">Administrar</a>
+        {% endif %}
     </div>
-    
-    {% if 'ADMIN' in usuario.tipo_usuario.nombre.upper() %}
-    <div>
-        <b>Tipo usuario</b> {{usuario.tipo_usuario.nombre}}
-    </div>
-    <div>
-        <b>Sucursal</b> {{ usuario.sucursal.nombre }}
-    </div>
-    {% endif %}
-    <a class="lightbutton" href="{{ url_for('perfil.update_usuario')}}">Actualizar información</a>
-    
-{% endblock %}
+        
+</div>
+    {% endblock %}

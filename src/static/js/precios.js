@@ -17,11 +17,29 @@ function changeID() {
     url.setAttribute("href", newUrl);
 }
 
+function statusChange(){
+    let id_producto = this.id.split('-')[1]
+    let id_tipo_producto = this.id.split('-')[2]
+
+    if (!this.checked){
+        // UnDelete
+        fetch(`eliminar-precio/${id_producto}&${id_tipo_producto}`)
+    }
+    else{
+        // Delete
+        fetch(`deseliminar-precio/${id_producto}&${id_tipo_producto}`)
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     // Puros trucos.
     changeID();
-
     document.getElementById('producto').addEventListener('change', changeID);
+    let inputs = document.getElementsByTagName('input')
+    for (let i = 0; i < inputs.length; i++){
+        inputs[i].addEventListener('change', statusChange);
+    }
+
 });
 
 /* The fuck is this sort */

@@ -28,7 +28,7 @@ def main():
 @requiere_inicio_sesion
 @admin
 def create_tipo():
-    all_tipos = get_all_available_tipo_producto()
+    all_tipos = get_all_tipo_producto()
     error = None
     if request.method == 'POST':
         nuevo_tipo = request.form.get('tipo')
@@ -61,13 +61,17 @@ def create_tipo():
 @requiere_inicio_sesion
 @admin
 def update_tipo(id_tipo_producto):
-    all_tipos = get_all_available_tipo_producto()
+    all_tipos = get_all_tipo_producto()
     tipo = get_by_id(id_tipo_producto)
     if not tipo:
         abort(404)
     
     if request.method == 'POST':
         nuevo_tipo = request.form.get('tipo')
+        status = request.form.get('status')
+
+        status = True if status else 0
+
         error = None
         if not nuevo_tipo or nuevo_tipo.strip() == '':
            error = 'Agregue un nombre significativo'
@@ -76,17 +80,14 @@ def update_tipo(id_tipo_producto):
         
         nuevo_tipo = nuevo_tipo.strip().upper()
         tipo = get_by_tipo(nuevo_tipo)
-        if not tipo:
-            tipo = TipoProducto(nuevo_tipo)
-            add_tipo_producto(tipo)
-        elif tipo.status == 0:
-            tipo.status = 1
-            add_tipo_producto(tipo)
+        tipo.status = status
+        if tipo:
+            error = 'El tipo ya existe! Especifique otro nombre'
         else:
-            error = 'El tipo ya existe!'
+            add_tipo_producto(tipo)
 
         if not error:
-            flash('tipo de producto agregado!')
+            flash('tipo de producto modificado!')
             return redirect(url_for('tipo-productos.create_tipo'))
         flash(error)
 

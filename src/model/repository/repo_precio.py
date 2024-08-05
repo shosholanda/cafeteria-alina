@@ -14,6 +14,8 @@ def get_tipos_por_producto_available(id_producto):
             .join(Producto, Producto.id == Precio.id_producto)\
             .filter(Producto.id == id_producto, Precio.status == 1)
 
+def get_all_precios():
+    return Precio.query.all()
 
 def get_all_avaliable_precios():
     '''Leer todos los precios que no hayan sido eliminados'''

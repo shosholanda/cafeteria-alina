@@ -7,21 +7,23 @@
 {% endblock %}
 
 {% block content %}
-    <h2>Crear categoría</h2>
+<div class="container">
+
+    <h3>Crea una nueva categoria</h3>
     <form method="POST" autocomplete="off">
         <div class="campo">
-            <label for="categoria">Categoría</label>
+            <label for="categoria">Categoría:</label>
             <input type="text" name="categoria" id="tipo" required> 
         </div>
         <div class="campo">
-            <label for="descripcion">Descripcion</label>
+            <label for="descripcion">Descripción:</label>
             <textarea type="text" name="descripcion" id="descripcion" required></textarea>
         </div>
         <input type="submit" value="Agregar">
     
     </form>
-    <b>Categorias existentes</b>
-    <ul class="lista disponible">
+    <h3>Categorias existentes</h3>
+    <ul class="lista">
         {% for categoria in categorias %}
         <li>
             <div>
@@ -35,4 +37,6 @@
         </li>
         {% endfor %}
     </ul>
+
+</div>
 {% endblock %}

@@ -7,11 +7,15 @@
 {% endblock %}
 
 {% block content %}
-    <h2>Crear tipos de producto</h2>
+<div class="container">
+
+    <h3>Crear tipo de producto</h3>
     <form method="POST" autocomplete="off">
         <div class="campo">
-            <label for="nombre">Tipo del producto </label>
-            <input type="text" name="tipo" id="tipo" required> 
+            <div>
+                <label for="nombre">Nombre</label>
+                <input type="text" name="tipo" id="tipo" required> 
+            </div>
         </div>
         <input type="submit" value="Agregar">
     </form>
@@ -21,14 +25,25 @@
         {% for tipo_producto in tipo_productos %}
         <li>
             <div>
+                {% if not tipo_producto.status %}
+                <i><s>{{ tipo_producto.nombre }} </s></i>
+                {% else %}
                 {{ tipo_producto.nombre }} 
+                {% endif %}
             </div>
             <div class="option">
                 <a href="{{ url_for('tipo-productos.update_tipo', id_tipo_producto = tipo_producto.id)}}">
                     <img src="../../static/img/icons/edit.svg" alt="Modificar tipo producto">
                 </a>
             </div>
+            <div class="option">
+                <a href="{{ url_for('tipo-productos.delete_tipo', id_tipo_producto = tipo_producto.id )}}">
+                    <img src="../../static/img/icons/delete.svg" alt="Eliminar tipo producto">
+                </a>
+            </div>
         </li>
         {% endfor %}
     </ul>
+
+</div>
 {% endblock %}

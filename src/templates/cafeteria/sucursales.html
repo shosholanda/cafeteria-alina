@@ -6,9 +6,15 @@
 </title>
 {% endblock %}
 {% block content %}
-    <div>
-        <a href={{ url_for('sucursales.create_sucursal') }}>Agregar una nueva sucursal</a>
-    </div>
+
+    <form method="post">
+        <label for="active-sucursal">Sucursal seleccionada</label>
+        <select name="active-sucursal">
+            {% for sucursal in sucursales %}
+            <option value="{{ sucursal.id }}">{{ sucursal.nombre }}</option>
+            {% endfor %}
+        </select>
+    </form>
 
     <h3>Todas las sucursales</h3>
     <table>

@@ -18,9 +18,8 @@
         <option value="{{ producto.id }}">{{ producto.nombre }} - {{producto.categoria.nombre}}</option>
         {% endfor %}
     </select>
-
+    <h4>Todos los precios</h4>
     <hr>
-    <!-- AAA Sort by column table -->
     <table>
         <tr>
             <th>Categoria</th>
@@ -28,6 +27,7 @@
             <th>Tipo</th>
             <th>Precio</th>
             <th>Opciones</th>
+            <th>Status</th>
         </tr>
         {% for precio in precios %}
         <tr>
@@ -37,7 +37,15 @@
             <td>${{ precio.precio }}</td>
             <td>
                 <a href="{{ url_for('precios.update_precio', id_producto = precio.id_producto, id_tipo_producto = precio.tipo_producto.id) }}">Modificar</a>
+                <!-- # AAA Debemos de poder eliminar permanentemente. Hay que renombrar endpoints a algo de status_active y delete que sea hard -->
                 <a href="{{ url_for('precios.delete_precio', id_producto = precio.id_producto, id_tipo_producto = precio.tipo_producto.id) }}">Eliminar</a>
+            </td>
+            <td>
+                {% if precio.status %}
+                <input type="checkbox" name="status" id="status-{{precio.id_producto}}-{{precio.tipo_producto.id}}" checked autocomplete="off">
+                {% else %}
+                <input type="checkbox" name="status" id="status-{{precio.id_producto}}-{{precio.tipo_producto.id}}" autocomplete="off">
+                {% endif %}
             </td>
         </tr>
         {% endfor %}

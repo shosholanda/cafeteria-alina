@@ -20,7 +20,7 @@ precios = Blueprint('precios', __name__, url_prefix='/precios') # Crear la sesio
 @requiere_inicio_sesion
 @admin
 def main():
-    precios = get_all_avaliable_precios_by('NOMBRE')
+    precios = get_all_precios()
     productos = get_all_available_productos_inverse()
     return render_template('cafeteria/precios.html', precios = precios, productos = productos)
 
@@ -75,8 +75,10 @@ def create_precio(id_producto):
 def update_precio(id_producto, id_tipo_producto):
     # Siempre va a existir porque no saldría el endpoint
     precio_existente = get_precio_unico(id_producto, id_tipo_producto)
+    if not precio_existente:
+        return "Deja de husmear"
     if precio_existente and precio_existente.status == 0:
-        return "El precio actual no está disponible"
+        return "El precio actual no está disponible. Activalo para poder modificarlo"
     
     tipo_productos = get_all_available_tipo_producto()
     if request.method == 'POST':
@@ -118,5 +120,19 @@ def delete_precio(id_producto, id_tipo_producto):
         abort(404)
     hide_precio(precio)
     flash('Producto eliminado con éxito!')
-    return redirect(url_for('precios.create_precio', id_producto = id_producto))
+    return redirect(url_for('precios.main'))
+
+#UNDELETE PRECIO
+@precios.route('/deseliminar-precio/<int:id_producto>&<int:id_tipo_producto>')
+@requiere_inicio_sesion
+@admin
+def undelete_precio(id_producto, id_tipo_producto):
+    '''Soft delete precio'''
+    precio = get_precio_unico(id_producto, id_tipo_producto)
+    if not precio:
+        abort(404)
+    precio.status = 1
+    add_precio(precio)
+    flash('Producto deseliminado con éxito!')
+    return redirect(url_for('precios.main'))
     
