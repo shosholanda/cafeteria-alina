@@ -1,4 +1,5 @@
 from src import app
+from livereload import Server
 
 from flask import (
     render_template, g, redirect, request, session, url_for
@@ -13,6 +14,8 @@ def creditos():
 @app.route('/')
 def home():
     '''Página publica'''
+    if g.user:
+        return redirect(url_for('inicio.main'))
     return render_template('home.html')
 
 def cafeteria_alina():
@@ -20,6 +23,9 @@ def cafeteria_alina():
     return app
 
 if __name__ == '__main__':
-    # Excecute with flask run
-    app.run()
+    # Excecute with python3 main.py
+    app.debug = True
+    server = Server(app.wsgi_app)
+    server.serve(port=5000)
+
 

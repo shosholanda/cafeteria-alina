@@ -12,7 +12,7 @@ from src.model.repository.repo_tipo_producto import *
 from src.model.repository.repo_categoria import *
 from src.model.repository.repo_usuario import *
 
-from src.controller.auth import requiere_inicio_sesion
+from src.controller.auth import requiere_inicio_sesion, worker
 from src.controller.auth import admin
 
 
@@ -24,14 +24,11 @@ productos = Blueprint('productos', __name__, url_prefix='/productos') # Crear la
 @productos.route('/')
 @requiere_inicio_sesion
 def main():
-    user = get_usuario(g.user.correo)
-    productos =get_all_available_productos_inverse()
+    productos = get_all_productos()
     return render_template('cafeteria/productos.html', productos = productos)
-
 
 # CREATE PRODUCTO
 @productos.route('/agregar-producto', methods=('GET', 'POST'))
-@requiere_inicio_sesion
 @admin
 def create_producto():
     if request.method == 'POST':
@@ -78,7 +75,6 @@ def create_producto():
 
 #UPDATE PRODUCTO
 @productos.route('/editar-producto/<int:id_producto>', methods=('GET', 'POST'))
-@requiere_inicio_sesion
 @admin
 def update_producto(id_producto): 
     producto = get_producto_id(id_producto)

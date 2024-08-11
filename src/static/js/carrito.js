@@ -18,12 +18,13 @@ async function createBox(producto, tipo, cantidad) {
 
     id = `producto-${counter}`
     
-    label = document.createElement('label');
-    label.setAttribute('for', id);
-    label.textContent = 'Producto:';
-    div.appendChild(label);
+    // label = document.createElement('label');
+    // label.setAttribute('for', id);
+    // label.textContent = 'Producto:';
+    // div.appendChild(label);
 
     let product = document.createElement('div');
+    product.setAttribute('class', 'bold')
     product.setAttribute('id', id);
     product.setAttribute('name', 'producto');
     product.setAttribute('value', producto.selectedOptions[0].value);
@@ -42,8 +43,16 @@ async function createBox(producto, tipo, cantidad) {
     label.textContent = 'Tipo:'
     div.appendChild(label);
 
+    // antes de clonar, hay que sacar el valor
+    let valor = tipo.value;
     let type = tipo.cloneNode(true);
     type.setAttribute('id', id);
+    for (var i, j = 0; i = type.options[j]; j++){
+        if (i.value === valor){
+            type.selectedIndex = j;
+            break;
+        }
+    }
     div.appendChild(type);
     item.appendChild(div);
 
@@ -73,7 +82,7 @@ async function createBox(producto, tipo, cantidad) {
 
     label = document.createElement('label');
     label.setAttribute('for', id);
-    label.textContent = 'Precio:';
+    label.textContent = 'Costo: ';
     div.appendChild(label);
 
     let price = document.createElement('div');
@@ -347,7 +356,7 @@ window.onload = function (){
 
         /* Si no existe creamos la caja */
         let nueva_transaccion = await createBox(producto, tipo, cantidad);
-        cart.append(nueva_transaccion);
+        cart.prepend(nueva_transaccion);
 
         producto.value = '';
         tipo.value = '';
@@ -364,11 +373,21 @@ window.onload = function (){
     });
 
     submit.addEventListener('click', function(){
+        if (cart.children.length === 0)
+            return;
         sendCart();
     });
 
     document.addEventListener('keyup', async function(e) {
         if (e.code === 'Enter')
             await add_cart()
-    })
+    });
+      
 }
+
+window.addEventListener('beforeunload', function (e) {
+    var confirmationMessage = 'Are you sure you want to leave this page?';
+    e.returnValue = confirmationMessage;  // Gecko, WebKit, Chrome <34
+    return confirmationMessage;           // Gecko, WebKit, Chrome >=34
+});
+

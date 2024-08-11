@@ -14,6 +14,14 @@
             <label for="nombre">Tipo del producto </label>
             <input type="text" name="tipo" id="tipo" value="{{ tipo_producto.nombre}}" required> 
         </div>
+        <div>
+            <label for="status">Status</label>
+            {% if tipo_producto.status %}
+            <input type="checkbox" name="status" id="status" checked autocomplete="off">
+            {% else %}
+            <input type="checkbox" name="status" id="status" autocomplete="off">
+            {% endif %}
+        </div>
         <input type="submit" value="Actualizar">
     </form>
     <b>Lista de tipos de producto</b>
@@ -21,11 +29,20 @@
         {% for tipo_producto in tipo_productos %}
         <li>
             <div>
+                {% if not tipo_producto.status %}
+                <i><s>{{ tipo_producto.nombre }} </s></i>
+                {% else %}
                 {{ tipo_producto.nombre }} 
+                {% endif %}
             </div>
             <div class="option">
                 <a href="{{ url_for('tipo-productos.update_tipo', id_tipo_producto = tipo_producto.id)}}">
                     <img src="../../static/img/icons/edit.svg" alt="Modificar tipo producto">
+                </a>
+            </div>
+            <div class="option">
+                <a href="{{ url_for('tipo-productos.delete_tipo', id_tipo_producto = tipo_producto.id )}}">
+                    <img src="../../static/img/icons/delete.svg" alt="Eliminar tipo producto">
                 </a>
             </div>
         </li>

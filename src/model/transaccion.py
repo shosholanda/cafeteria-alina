@@ -39,4 +39,4 @@ class Transaccion(db.Model):
 
     # Representación en cadena
     def __repr__(self) -> str:
-        return f'{self.id_referencia} : {self.id_producto.nombre} - {self.cantidad}'
+        return f'{self.id_referencia} : {self.precio.producto.nombre} - {self.cantidad}'

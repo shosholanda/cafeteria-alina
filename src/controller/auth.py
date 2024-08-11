@@ -79,7 +79,9 @@ def iniciar_sesion():
         if error is None:
             session.clear()
             session['usuario'] = user.correo
-            session['sucursal'] = user.id_sucursal
+            session['tipo_usuario'] = user.tipo_usuario.nombre
+            if user.sucursal:
+                session['sucursal'] = user.sucursal.nombre
             return redirect(url_for('inicio.main'))
         else:
             flash(error)
@@ -97,7 +99,6 @@ def cargar_usuarios_logeados():
         user = get_usuario_and_tipo(usuario)
         g.user = user
 
-
 # Cerrar sesion
 @auth.route('/cerrar-sesion')
 def cerrar_sesion():
@@ -106,20 +107,54 @@ def cerrar_sesion():
 
 # REquerir inicio de sesion
 def requiere_inicio_sesion(vista):
+    '''Cliente'''
     @functools.wraps(vista)
-    def vista_wraped(**kwargs):
+    def wrapper(**kwargs):
         if g.user is None:
             return redirect(url_for('home'))
         return vista(**kwargs)
-    return vista_wraped
+    return wrapper
+
+# Es un usuario
+def usuario(vista):
+    '''Trabajador'''
+    @functools.wraps(vista)
+    @requiere_inicio_sesion
+    def wrapper(**kwargs):
+        if 'Cliente' != session.get('tipo_usuario'):
+            return redirect(url_for('inicio.main'))
+        return vista(**kwargs)
+    return wrapper
+
+# Es un worker
+def worker(vista):
+    '''Trabajador'''
+    @functools.wraps(vista)
+    @requiere_inicio_sesion
+    def wrapper(**kwargs):
+        if 'Trabajador' != session.get('tipo_usuario'):
+            return redirect(url_for('inicio.main'))
+        return vista(**kwargs)
+    return wrapper
 
 # Es un admin
 def admin(vista):
+    '''Administrador'''
     @functools.wraps(vista)
-    def vista_wraped(**kwargs):
-        if not g.user:
-            return redirect(url_for('home'))
-        if not 'ADMIN' in g.user.tipo_usuario.nombre.upper():
+    @requiere_inicio_sesion
+    def wrapper(*args, **kwargs):
+        if 'Administrador' != session.get('tipo_usuario'):
             return redirect(url_for('inicio.main'))
-        return vista(**kwargs)
-    return vista_wraped
+        return vista(*args, **kwargs)
+    return wrapper
+
+# Es admin o worker
+def admin_or_worker(vista):
+    @functools.wraps(vista)
+    @requiere_inicio_sesion
+    def wrapper(*args, **kwargs):
+        if  session.get('tipo_usuario') in ['Trabajador', 'Administrador']:
+            return vista(*args, **kwargs)
+        else:
+            return redirect(url_for('inicio.main'))
+    return wrapper

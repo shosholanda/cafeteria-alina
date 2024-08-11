@@ -1,28 +1,31 @@
-{% extends 'base.html' %}
+{% extends 'cafeteria/dashboard.html' %}
 
-{% block header %}
-    {% block title%}
-        <h2>Editar precio del producto</h2> 
-        <b>{{ precio.producto.nombre }}</b>
-        <p>{{ precio }}</p>
-    {% endblock %}
+{% block title%}
+<title>
+    ALINA - Editar producto
+</title>
 {% endblock %}
 
 {% block content %}
+<h3>{{ precio }}</h3>
     <form method="POST" autocomplete="off">
-        Nuevo Tamaño
-        <select name="tipo_producto" id="tipo_producto">
-            {% for tipo_producto in tipo_productos %}
-            <option value="{{ tipo_producto.id }}">{{ tipo_producto.nombre }}</option>
-            {% endfor %}
-        </select>
-        <br>
-        <label for="precio">Nuevo precio</label>
-        <input type="text" name="precio" id="precio" required>
-            
-        <br>
-    
+        <b>Editar información</b>
+        <div class="campo">
+            <div>
+                <label for="tipo_producto">Nuevo tipo:</label>
+                <select name="tipo_producto" id="tipo_producto">
+                    {% for tipo_producto in tipo_productos %}
+                    <option value="{{ tipo_producto.id }}">{{ tipo_producto.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="campo">
+            <div>
+                <label for="precio">Nuevo precio:</label>
+                <input type="text" class="short-input" name="precio" id="precio" required>
+            </div>
+        </div>
         <input type="submit" value="Actualizar">
-
     </form>
 {% endblock %}

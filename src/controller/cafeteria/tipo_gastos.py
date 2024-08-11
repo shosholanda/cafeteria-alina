@@ -18,7 +18,7 @@ tipo_gastos = Blueprint('tipo-gastos', __name__, url_prefix='/tipo-gastos') # Cr
 @requiere_inicio_sesion
 @admin
 def main():
-    tipo_gastos = get_all_available_tipo_gasto()
+    tipo_gastos = get_all_tipo_gasto()
     return render_template('cafeteria/crud/create_tipo_gasto.html', tipo_gastos = tipo_gastos)
 
 
@@ -49,7 +49,7 @@ def create_tipo():
             return redirect(url_for('tipo-gastos.create_tipo'))
         
         flash(error)
-    return render_template('cafeteria/crud/create_tipo_gasto.html', tipo_gastos = get_all_available_tipo_gasto())
+    return render_template('cafeteria/crud/create_tipo_gasto.html', tipo_gastos = get_all_tipo_gasto())
 
 #UPDATE PRODUCTO
 @tipo_gastos.route('/editar/<int:id_tipo_gasto>', methods=('GET', 'POST'))
@@ -61,22 +61,28 @@ def update_tipo_gasto(id_tipo_gasto):
         abort(404)
 
     if request.method == 'POST':
-        gasto.nombre = request.form.get('nombre')
-        gasto.descripcion = request.form.get('descripcion')
+        nombre = request.form.get('nombre')
+        descripcion = request.form.get('descripcion')
+        status = request.form.get('status') 
+
+        status = True if status != None else 0
 
         error = None
-        if not gasto.nombre:
+        if not nombre:
             error = 'Se requiere de al menos un nombre'
         else:
-            if not gasto.descripcion or gasto.descripcion.strip() == '':
+            gasto.nombre = nombre
+            if not descripcion or descripcion.strip() == '':
                 gasto.descripcion = "Sin descripcion"
+            gasto.descripcion = descripcion
+            gasto.status = status
             add_tipo_gasto(gasto)
             flash('Se actualizó correctamente el tipo de gasto!')
             return redirect(url_for('tipo-gastos.update_tipo_gasto', id_tipo_gasto = id_tipo_gasto))
         
         flash(error)
 
-    return render_template('cafeteria/crud/update_tipo_gasto.html', gasto = gasto, tipo_gastos = get_all_available_tipo_gasto())
+    return render_template('cafeteria/crud/update_tipo_gasto.html', gasto = gasto, tipo_gastos = get_all_tipo_gasto())
 
 #DELETE PRODUCTO
 @tipo_gastos.route('/eliminar/<int:id_tipo_gasto>')

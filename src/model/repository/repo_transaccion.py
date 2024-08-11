@@ -15,6 +15,38 @@ from sqlalchemy import desc, func, literal
 #Importar la base de datos.
 from src import db
 
+'''Las transacciones son ventas de 1 solo producto.
+1 venta es el conjunto de transacciones realizadas por varios productos'''
+
+def get_venta_by_id(id_referencia):
+    '''Obtiene una venta por transacción'''
+    return Venta.query.get(id_referencia)
+
+def get_transactions_by_ref(id_referencia):
+    '''Obtiene todas las transacciones asociadas a una referencia'''
+    return Transaccion.query.filter(Transaccion.id_referencia == id_referencia)
+
+def get_full_transaction_by_ref(id_referencia):
+    '''Obtiene toda la información de una venta, con los productos'''
+    return db.session.query(
+                Venta.referencia,
+                Venta.total,
+                Venta.fecha,
+                Transaccion.id_precio,
+                Transaccion.cantidad,
+                Precio.precio,
+                Transaccion.subtotal,
+                Producto.id.label('id_producto'),
+                Producto.nombre.label('producto_nombre'),
+                TipoProducto.id.label('id_tipo_producto'),
+                TipoProducto.nombre.label('tipo_producto_nombre')
+            )\
+            .join(Transaccion, Transaccion.id_referencia ==  Venta.referencia)\
+            .join(Precio, Precio.id == Transaccion.id_precio)\
+            .join(Producto, Precio.id_producto == Producto.id)\
+            .join(TipoProducto, Precio.id_tipo_producto == TipoProducto.id)\
+            .filter(Venta.referencia == id_referencia)
+
 def get_all_transactions():
     '''Obtiene todas las transacciones'''
     return Transaccion.query.all()
@@ -145,4 +177,9 @@ def get_total_ventas_by_date(init, finish):
 def get_last_ref():
     '''Obtiene el numero de la última referencia'''
     return db.session.query(func.max(Venta.referencia)).scalar()
+
+def remove_venta(venta):
+    '''Hard delete de la venta'''
+    db.session.delete(venta)
+    db.session.commit()
 

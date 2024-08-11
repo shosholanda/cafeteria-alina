@@ -10,26 +10,58 @@
     <script type="text/javascript" src="{{ url_for('static', filename='js/carrito.js') }}"></script>
 {% endblock %}
 
+{% block header %}
+    <div class="encabezado">
+        <div class="icon">
+            <a href="{{ url_for('inicio.main' ) }}">
+                <img src="../../static/img/icons/home.svg" alt="Home">
+            </a>
+        </div>
+        <div>
+            <!-- # AAA  -->
+            <h1>Cafetería Alina</h1>
+        </div>
+        <div class="icon">
+            <a href="{{ url_for('auth.cerrar_sesion') }}">
+                <img src="../../static/img/icons/logout.svg" alt="Log out">    
+            </a>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+{% endblock %}
+
+{% block nav %}
+    <hr>
+{% endblock %}
+
 {% block content %}
     <!-- Carrito de compras -->
 
     <div class="params">
-        <label for="producto">Producto</label>
-        <select name="producto" id="producto">
-            {% for producto in productos %}
-            <option value="{{ producto.id }}">{{ producto.nombre }} - {{ producto.categoria.nombre }}</option>
-            {% endfor %}
-        </select>
+        <div class="campo">
+            <label for="producto">Producto</label>
+            <select name="producto" id="producto">
+                {% for producto in productos %}
+                <option value="{{ producto.id }}">{{ producto.nombre }} - {{ producto.categoria.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="campo">
+            <label for="tipo">Tipo de producto</label>
+            <select name="tipo" id="tipo">
+                <!-- Se añadiran dinámicamente los tipos dependiendo del producto -->
+            </select>
+        </div>
     
-        <label for="tipo">Tipo de producto</label>
-        <select name="tipo" id="tipo">
-            <!-- Se añadiran dinámicamente los tipos dependiendo del producto -->
-        </select>
     
-        <label for="cantidad">Cantidad</label>
-        <input type="text" name="cantidad" id="cantidad" class="short-input" required="True" autocomplete="off">
+        <div class="campo">
+            <label for="cantidad">Cantidad</label>
+            <input type="text" name="cantidad" id="cantidad" class="short-input" required="True" autocomplete="off">
+        </div>
         <div class="option" id="agregar">
-            <img src="../../static/img/icons/add.svg" alt="Modificar categoria">
+            <label for="add"> Agregar </label>
+            <img id="add" src="../../static/img/icons/add.svg" alt="Agregar al carro">
         </div>
     </div>
     <div id="cart" class="cart">
@@ -37,8 +69,10 @@
         <!-- Aqui irán los productos agregados SIN agregar a la bdd -->
     </div>
     <div class="params">
-        <label for="total">Total $</label>
-        <input type="text" name="total" id="total" disabled>
+        <div class="campo">
+            <label for="total">Total $</label>
+            <input type="text" name="total" id="total" disabled>
+        </div>
         <input type="submit" value="Comprar" id="comprar">
     </div>
 {% endblock %}

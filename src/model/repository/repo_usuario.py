@@ -29,6 +29,10 @@ def add_usuario(usuario):
     db.session.add(usuario) #Añadir
     db.session.commit()     #Guardar y actualizar
 
+def remove_usuario(usuario):
+    db.session.delete(usuario)
+    db.session.commit()
+
 def get_all_tipo_usuario():
     '''Regresa todos los tipos de usuario disponibles'''
     return TipoUsuario.query.all()

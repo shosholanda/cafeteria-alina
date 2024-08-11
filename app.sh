@@ -16,7 +16,7 @@ fi
 LOGFILE="$HOME/.logs/cafeteria_alina.log"
 
 # Levantar el servidor
-nohup waitress-serve --host localhost --port=5000 --call main:cafeteria_alina > $LOGFILE 2>&1 &
+nohup waitress-serve --host 10.0.0.14 --port=5000 --call main:cafeteria_alina > $LOGFILE 2>&1 &
 
 # Wait for the server to start
 date

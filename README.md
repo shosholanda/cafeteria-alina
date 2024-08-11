@@ -1,6 +1,8 @@
 # cafeteria-alina
 Punto de venta para la cafetería ALINA
 
+![](src/static/img/home.png)
+
 
 # Instalación de programas necesarios para ejecutar el punto de venta
 

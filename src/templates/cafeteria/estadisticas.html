@@ -7,46 +7,72 @@
 {% endblock %}
 
 {% block content %}
+
+
+<div class="container">
     <h4>Seleccionar un periodo</h4>
-    <form method="POST" >
-        <!-- TODO: Añadir para se pueda seleccionar por sucursal -->
-        <div class="campo">
+</div>
+
+<div class="container">
+
+</div>
+
+<form method="POST" >
+    <!-- TODO: Añadir para se pueda seleccionar por sucursal -->
+    <div class="campo">
+        <div>
             <label for="init">Inicio</label>
             <input type="date" name="init" value="{{ init }}" id="init">
         </div>
-        <div class="campo">
+    </div>
+    <div class="campo">
+        <div>
             <label for="finish">Fin</label>
             <input type="date" name="finish" value="{{ finish }}" id="finish">
         </div>
-
-        <input type="submit" value="Actualizar">
-    </form>
-
-
-    <h3>Resumen</h3>
-    <div>
-        <i><a href="{{ url_for('ventas.main')}}">Ganancias</a></i>
-        <b>{{ ganancias }}</b>
-    </div>
-    <div>
-        <i><a href="{{ url_for('gastos.main')}}">Perdidas</a></i>
-        <b>{{ perdidas }}</b>
-    </div>
-
-    <div>
-        <u>Ganancia neta</u> 
-        {% if ganancias >= perdidas %}
-        <b style="color: green;"> +{{ ganancias-perdidas }}</b>
-        {% else %}
-        <b style="color: red;"> {{ ganancias - perdidas }} </b>
-        {% endif %}
     </div>
     
+    <input type="submit" value="Actualizar">
+</form>
+
+
+<div class="container">
+    <h4>Resumen mensual</h4>
+    <div class="resumen">
+
+        <div class="value">
+            <div class="gain">
+                {{ ganancias }}
+            </div>
+            <i>Ganancias</i>
+        </div>
+        <div>-</div>
+        <div class="value">
+            <div class="lose">
+                {{ perdidas }}
+            </div>
+            <i>Perdidas</i>
+        </div>
+        <div>=</div>
+        <div class="value">
+            {% if ganancias >= perdidas %}
+            <div class="gain">
+                <b> +{{ ganancias-perdidas }}</b>
+                {% else %}
+            <div class="lose">
+                <b> {{ ganancias - perdidas }} </b>
+                {% endif %}
+            </div>
+            <i>Ganancia neta</i>
+        </div>
+    </div>
+    
+</div>
     <!-- TODO: Guardas las gráficas en base64 
     https://stackoverflow.com/questions/48717794/matplotlib-embed-figures-in-auto-generated-html
     -->
 
-    <h3>Top productos más vendidos</h3>
+    <h3>Top 10 productos más vendidos</h3>
     <table>
         <tr>
             <th>Producto</th>

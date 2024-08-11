@@ -27,7 +27,7 @@ def get_all_weekly_gastos():
     Y terminando en el día que se esté'''
     today = datetime.datetime.now()
     last_day = today.weekday()
-    init = today.replace(day=today.day - last_day)
+    init = today - datetime.timedelta(days=last_day)
     return get_all_gastos_by_date(init, today)
 
 def get_all_gastos_by_date(init, finish):
@@ -40,7 +40,7 @@ def get_all_weekly_total_gastos():
     Y terminando en el día que se esté'''
     today = datetime.datetime.now()
     last_day = today.weekday()
-    init = today.replace(day=today.day - last_day)
+    init = today - datetime.timedelta(days=last_day)
     return get_total_gastos_by_date(init, today)
 
 def get_daily_total_gastos():

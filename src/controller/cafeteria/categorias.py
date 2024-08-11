@@ -9,7 +9,6 @@ from src.model.repository.repo_categoria import *
 
 from src.controller.auth import requiere_inicio_sesion, admin
 
-
 ''' Controlador para las operaciones de producto '''
 
 categorias = Blueprint('categorias', __name__, url_prefix='/categorias') # Crear la sesion
@@ -18,6 +17,7 @@ categorias = Blueprint('categorias', __name__, url_prefix='/categorias') # Crear
 # GET
 @categorias.route('/')
 @requiere_inicio_sesion
+@admin
 def main():
     return redirect(url_for('categorias.create_categoria'))
 

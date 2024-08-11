@@ -1,5 +1,5 @@
 from flask import (
-    jsonify, render_template, Blueprint, flash, g, redirect, request, session, url_for
+    json, jsonify, render_template, Blueprint, flash, g, redirect, request, session, url_for
 )
 
 from src.model.repository.repo_precio import *
@@ -11,7 +11,7 @@ from src.model.repository.repo_usuario import *
 from src.model.transaccion import Transaccion
 from src.model.venta import Venta
 
-from src.controller.auth import requiere_inicio_sesion, admin
+from src.controller.auth import admin, admin_or_worker
 
 ''' Controlador para las operaciones de producto '''
 
@@ -19,20 +19,36 @@ ventas = Blueprint('ventas', __name__,url_prefix='/ventas') # Crear la sesion
 
 # Ventana de ventas
 @ventas.route('/')
-@requiere_inicio_sesion
-# Trabajador
-@admin
+@admin_or_worker
 def main():
     today = datetime.datetime.now()
     ventas_del_dia = get_daily_transactions(today)
     total_del_dia = get_daily_total_ventas(today)
-    return render_template('cafeteria/ventas.html', ventas = ventas_del_dia, total = total_del_dia)
+
+    tipos_json = []
+    for v in ventas_del_dia:
+        data= {}
+        transactions_by_ref = get_full_transaction_by_ref(v.referencia).all()
+        data['transacciones'] = [{
+            'cantidad': x.cantidad,
+            'producto': x.producto_nombre,
+            'tipo': x.tipo_producto_nombre,
+            'precio': x.precio,
+            'subtotal': x.subtotal,
+        } for x in transactions_by_ref]
+        
+        data['fecha'] = str(v.fecha)
+        data['referencia'] = v.referencia
+        data['total'] = v.total
+
+        tipos_json.append(data)
+    
+    #print(json.dumps(tipos_json, indent=4))
+    return render_template('cafeteria/ventas.html', ventas = tipos_json, total = total_del_dia)
 
 # Crear una venta (confirmar)
 @ventas.route('/nueva-venta', methods=['GET', 'POST'])
-@requiere_inicio_sesion
-#Trabajador
-@admin
+@admin_or_worker
 def create_venta():
     productos = get_ordered_productos_by_name()
     tipos = get_all_available_tipo_producto()
@@ -73,11 +89,23 @@ def create_venta():
         
     return render_template('cafeteria/crud/create_venta.html', productos = productos, tipos = tipos)
 
+# Eliminar una venta (Hard)
+@ventas.route('/eliminar-venta/<int:id_referencia>', methods=['GET', 'POST'])
+@admin_or_worker
+def delete_venta(id_referencia):
+    venta_a_borrar = get_venta_by_id(id_referencia)
+    transacciones_a_borrar = get_transactions_by_ref(id_referencia)
+    print(transacciones_a_borrar)
+    for t in transacciones_a_borrar:
+        remove_venta(t)
+
+    remove_venta(venta_a_borrar)
+   
+    return render_template(url_for('ventas.main'))
+    
 #QUERY para cambiar de id_tipo_producto
 @ventas.route('/get-tipos-por-producto/<int:id_producto>')
-@requiere_inicio_sesion
-#Trabajador
-@admin
+@admin_or_worker
 def get_tipos_por_producto(id_producto):
     tipos = get_tipos_por_producto_available(id_producto)
     # Convertir a JSON la consulta
@@ -87,9 +115,7 @@ def get_tipos_por_producto(id_producto):
 
 #QUERY para obtener el precio de un producto
 @ventas.route('/get-precio/<int:id_producto>&<int:id_tipo_producto>')
-@requiere_inicio_sesion
-#Trabajador
-@admin
+@admin_or_worker
 def get_precio(id_producto, id_tipo_producto):
     precio = get_precio_unico(id_producto, id_tipo_producto)
     # Convertir a JSON la consulta

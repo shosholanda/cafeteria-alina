@@ -1,13 +1,18 @@
-{% extends 'base.html' %}
+{% extends 'cafeteria/dashboard.html' %}
 
-{% block header %}
-    <h2>{% block title%}Agregar sucursal{% endblock %}</h2>
+{% block title%}
+<title>
+    ALINA - Agregar Sucursal
+</title>
 {% endblock %}
 
 
 {% block content %}
     <b>Nueva sucursal</b>
     <form method="POST" autocomplete="off">
+        <div class="row">
+
+        </div>
         <label for="nombre">Nombre</label>
         <input type="text" name="nombre" required> 
         <br>
